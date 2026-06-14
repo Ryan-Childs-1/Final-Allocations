@@ -97,8 +97,47 @@ def _alias_key(x: object) -> str:
     return s
 
 
+def _coalesce_duplicate_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Return a copy with unique column names.
+
+    Some allocation workbooks can contain duplicate headers after Excel header
+    detection or alias normalization.  In pandas, ``df["Rank"]`` returns a
+    DataFrame when duplicate ``Rank`` columns exist, which then breaks
+    ``pd.to_numeric`` and the Streamlit prediction path.
+
+    For model columns, duplicate headers are collapsed row-by-row by taking the
+    first nonblank value from left to right.  Non-model duplicate columns keep
+    their first occurrence because the model never consumes them directly.
+    """
+    if df.columns.is_unique:
+        return df
+
+    canonical_cols = set(APPROVED_COLUMNS + [TARGET_COLUMN])
+    result = {}
+    used = set()
+    for col in list(df.columns):
+        if col in used:
+            continue
+        used.add(col)
+        block = df.loc[:, df.columns == col]
+        if not isinstance(block, pd.DataFrame) or block.shape[1] == 1:
+            result[col] = block.iloc[:, 0] if isinstance(block, pd.DataFrame) else block
+            continue
+
+        if col in canonical_cols:
+            tmp = block.copy()
+            # Treat blank strings as missing so a later duplicate can supply
+            # the value. This preserves the left-most valid source column.
+            tmp = tmp.replace(r"^\s*$", np.nan, regex=True)
+            result[col] = tmp.bfill(axis=1).iloc[:, 0]
+        else:
+            result[col] = block.iloc[:, 0]
+
+    return pd.DataFrame(result, index=df.index)
+
+
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
-    """Rename common workbook headers to canonical approved names."""
+    """Rename common workbook headers to canonical approved names and dedupe them."""
     out = df.copy()
     ren = {}
     seen = set()
@@ -109,6 +148,7 @@ def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
             ren[col] = canon
             seen.add(canon)
     out = out.rename(columns=ren)
+    out = _coalesce_duplicate_columns(out)
     return out
 
 
@@ -149,10 +189,20 @@ def ensure_columns(df: pd.DataFrame, include_target: bool = False) -> pd.DataFra
     return out
 
 
-def numeric_series(df: pd.DataFrame, col: str) -> pd.Series:
+def _column_as_series(df: pd.DataFrame, col: str, default) -> pd.Series:
+    """Fetch one logical column even if a duplicate header slipped through."""
     if col not in df.columns:
-        return pd.Series(np.zeros(len(df)), index=df.index)
-    return pd.to_numeric(df[col], errors="coerce").fillna(0.0)
+        return pd.Series([default] * len(df), index=df.index)
+    obj = df[col]
+    if isinstance(obj, pd.DataFrame):
+        tmp = obj.replace(r"^\s*$", np.nan, regex=True)
+        return tmp.bfill(axis=1).iloc[:, 0]
+    return obj
+
+
+def numeric_series(df: pd.DataFrame, col: str) -> pd.Series:
+    s = _column_as_series(df, col, 0.0)
+    return pd.to_numeric(s, errors="coerce").fillna(0.0)
 
 
 def text_series(df: pd.DataFrame, col: str) -> pd.Series:
@@ -160,10 +210,10 @@ def text_series(df: pd.DataFrame, col: str) -> pd.Series:
 
     Pandas 2.2+ warns when fillna silently downcasts object arrays.  Casting to
     the nullable string dtype before filling keeps behavior explicit and stable.
+    Duplicate logical columns are collapsed to the first nonblank value.
     """
-    if col not in df.columns:
-        return pd.Series([""] * len(df), index=df.index, dtype=object)
-    s = df[col].astype("string").fillna("")
+    s = _column_as_series(df, col, "")
+    s = s.astype("string").fillna("")
     return s.astype(str).map(lambda x: _clean_name(x))
 
 

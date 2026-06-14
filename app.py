@@ -158,6 +158,27 @@ def int_or_blank(values) -> pd.Series:
     return pd.Series(np.where(arr > 0, arr.astype(object), ""))
 
 
+def recommendation_display_frame(df: pd.DataFrame, columns: Optional[List[str]] = None) -> pd.DataFrame:
+    """Return a display/download copy where zero allocation recommendations are blank.
+
+    The model still keeps numeric recommendation units internally for charts, filters,
+    metrics, and business-rule checks. This helper is only for user-facing tables
+    and exported recommendation CSVs.
+    """
+    out = df.copy()
+    if columns is None:
+        columns = [
+            "Predicted Final Alloc",
+            "Predicted Final Alloc Audit",
+            "Recommended Final Alloc",
+            "Model Recommended Final Alloc",
+        ]
+    for col in columns:
+        if col in out.columns:
+            out[col] = int_or_blank(out[col]).values
+    return out
+
+
 def find_target_column(df: pd.DataFrame) -> Optional[str]:
     aliases = {"final alloc", "final alloc.", "final allocate", "final allocation"}
     for c in df.columns:
@@ -668,10 +689,12 @@ with predict_tab:
                 "Class Name", "Line Name", "Item", "Product ID", "Site", "State", "Flag", "MIL", "FLM", "L30", "D30", "D60", "LW", "TTM", "Supply", "Dc Avail", "Proj. Demand", "Alloc. Rec.",
                 "Predicted Final Alloc", "Predicted Final Supply", "signal__classifier_probability", "signal__rank_priority", "signal__pred_flms_raw", "signal__shared_demand_score", "signal__target_final_supply_prediction", "allocator__decision_reason",
             ] if c in view.columns]
-            st.dataframe(view[display_cols].head(1000), use_container_width=True)
+            display_view = recommendation_display_frame(view[display_cols])
+            st.dataframe(display_view.head(1000), use_container_width=True)
 
+            audit_download = recommendation_display_frame(audit)
             st.download_button("Download filled CSV", output.to_csv(index=False).encode("utf-8"), file_name="allocation_filled_output.csv", mime="text/csv", key="pred_download_output")
-            st.download_button("Download prediction audit CSV", audit.to_csv(index=False).encode("utf-8"), file_name="allocation_prediction_audit.csv", mime="text/csv", key="pred_download_audit")
+            st.download_button("Download prediction audit CSV", audit_download.to_csv(index=False).encode("utf-8"), file_name="allocation_prediction_audit.csv", mime="text/csv", key="pred_download_audit")
             st.download_button("Download item group audit CSV", group_audit.to_csv(index=False).encode("utf-8"), file_name="allocation_item_group_audit.csv", mime="text/csv", key="pred_download_group")
             if show_trace:
                 st.markdown("### Iterative cycle trace")
@@ -758,9 +781,10 @@ with audit_tab:
                     view = view.loc[view["False Negative"]]
                 elif error_filter == "Outside 1 FLM":
                     view = view.loc[~view["Within 1 FLM"]]
-                st.dataframe(view.head(1000), use_container_width=True)
+                st.dataframe(recommendation_display_frame(view).head(1000), use_container_width=True)
+                row_audit_download = recommendation_display_frame(row_audit)
                 st.download_button("Download audit metrics CSV", metrics.to_csv(index=False).encode("utf-8"), file_name="audit_metrics.csv", mime="text/csv", key="audit_metrics_download")
-                st.download_button("Download row-level audit CSV", row_audit.to_csv(index=False).encode("utf-8"), file_name="row_level_audit.csv", mime="text/csv", key="audit_row_download")
+                st.download_button("Download row-level audit CSV", row_audit_download.to_csv(index=False).encode("utf-8"), file_name="row_level_audit.csv", mime="text/csv", key="audit_row_download")
         except Exception as exc:
             st.error("Audit failed.")
             st.exception(exc)

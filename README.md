@@ -23,3 +23,8 @@ Required model artifacts beside `app.py`:
 - review_auxiliary_model.npz
 - review_regressor_model.npz
 - iterative_flm_step_scorer_model.npz
+
+
+Notes:
+- `prediction_detail.csv` is intentionally excluded from the flat package because it is large. The app still shows test results from the lighter summary, business-rule, component, group audit, cycle trace, and largest-error files.
+- Every Plotly chart is rendered with a unique Streamlit key to avoid duplicate element ID errors on Streamlit Cloud.

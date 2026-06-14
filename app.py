@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import io
+import itertools
 import json
 import math
 import tempfile
@@ -56,6 +57,7 @@ except ImportError:
 
 APP_DIR = Path(__file__).resolve().parent
 ART = APP_DIR
+_PLOTLY_CHART_COUNTER = itertools.count(1)
 
 st.set_page_config(
     page_title="Allocation Iterative FLM Model",
@@ -471,7 +473,7 @@ def plot_line(df, x, y, title, color=None, height=420):
 
 def show_plot(fig):
     if fig is not None:
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
 
 
 # -----------------------------------------------------------------------------
@@ -720,13 +722,13 @@ with audit_tab:
                     plot_df = metrics[["segment", "exact_rate", "within_1_flm_rate"]].melt("segment", var_name="metric", value_name="rate")
                     fig = px.bar(plot_df, x="segment", y="rate", color="metric", barmode="group", title="Exact and within-1-FLM rates by segment")
                     fig.update_yaxes(tickformat=".0%")
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
                 with col2:
                     scatter_df = pd.DataFrame({"Actual Final Alloc": actual, "Predicted Final Alloc": pred, "FLM": flm})
                     fig = px.scatter(scatter_df.sample(min(len(scatter_df), 5000), random_state=42), x="Actual Final Alloc", y="Predicted Final Alloc", size="FLM", opacity=0.55, title="Predicted vs actual Final Alloc. sample")
                     maxv = max(float(scatter_df["Actual Final Alloc"].max()), float(scatter_df["Predicted Final Alloc"].max()), 1.0)
                     fig.add_trace(go.Scatter(x=[0, maxv], y=[0, maxv], mode="lines", name="Perfect match"))
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
 
                 st.markdown("### Segment metrics")
                 st.dataframe(metrics, use_container_width=True)
@@ -884,7 +886,7 @@ with features_tab:
         source_counts = feature_table["source"].value_counts().reset_index()
         source_counts.columns = ["source", "count"]
         fig = px.pie(source_counts, names="source", values="count", title="Feature source mix")
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
 
     st.markdown("### Feature families and what they mean")
     st.markdown(
@@ -1062,7 +1064,7 @@ with test_tab:
             melted = plot_df.melt("segment", var_name="metric", value_name="rate")
             fig = px.bar(melted, x="segment", y="rate", color="metric", barmode="group", title="Test accuracy by segment")
             fig.update_yaxes(tickformat=".0%")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
         st.dataframe(overall, use_container_width=True)
 
     col1, col2 = st.columns(2)
@@ -1110,7 +1112,7 @@ with test_tab:
             tmp = cycle_static.copy()
             tmp["cycle_score"] = pd.to_numeric(tmp["cycle_score"], errors="coerce")
             fig = px.histogram(tmp.dropna(subset=["cycle_score"]).sample(min(len(tmp), 20000), random_state=42), x="cycle_score", color="model_segment", nbins=40, title="Recorded neural step-score distribution")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
         st.dataframe(cycle_static.head(1500), use_container_width=True)
 
     if not largest.empty:

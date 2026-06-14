@@ -427,6 +427,88 @@ def _repair_units_to_group_dc(canon: pd.DataFrame, units: np.ndarray, priority: 
                 break
     return np.rint(np.maximum(fixed, 0.0)).astype(int)
 
+def _final_hard_safety_repair(
+    canon: pd.DataFrame,
+    units: np.ndarray,
+    signals: pd.DataFrame | None,
+    optimizer_config: Dict,
+) -> Tuple[np.ndarray, pd.DataFrame]:
+    """Final non-negotiable safety layer for the Streamlit app.
+
+    This is intentionally applied after the Allocate direct path and the Review
+    iterative path are combined. It guarantees two business rules regardless of
+    upstream model behavior:
+
+    1. Row cap: Final Alloc. <= Alloc. Rec. + max_above_rec_flm * FLM.
+    2. Item/DC cap: total Final Alloc. for an item group <= Left in DC / Dc Avail.
+
+    Reductions are made from the lowest-priority rows first, using the model
+    signals only to decide which already-positive rows to reduce when a repair
+    is required. The repair never adds units; it only removes unsafe units.
+    """
+    original = np.maximum(np.asarray(units, dtype=float), 0.0)
+    fixed = original.copy()
+    n = len(canon)
+
+    row_cap = _row_cap_units(canon, optimizer_config)
+    before_row_cap = fixed.copy()
+    fixed = np.minimum(fixed, row_cap)
+    row_cap_reduction = np.maximum(before_row_cap - fixed, 0.0)
+
+    # Extra guard: non-eligible rows should never receive units even if a file
+    # unexpectedly reaches this function with rows outside Allocate/Review.
+    eligible = eligible_mask(canon)
+    before_eligible = fixed.copy()
+    fixed[~eligible] = 0.0
+    eligibility_reduction = np.maximum(before_eligible - fixed, 0.0)
+
+    if signals is not None and len(signals) == n:
+        classifier = pd.to_numeric(signals.get("classifier_probability", pd.Series(np.zeros(n))), errors="coerce").fillna(0.0).to_numpy(float)
+        rank = pd.to_numeric(signals.get("rank_priority", pd.Series(np.zeros(n))), errors="coerce").fillna(0.0).to_numpy(float)
+        pred_flms = pd.to_numeric(signals.get("pred_flms_raw", pd.Series(np.zeros(n))), errors="coerce").fillna(0.0).to_numpy(float)
+        zero_out = pd.to_numeric(signals.get("aux_zero_out", pd.Series(np.zeros(n))), errors="coerce").fillna(0.0).to_numpy(float)
+        priority = classifier + 0.20 * rank + 0.03 * pred_flms - 0.25 * zero_out
+    else:
+        priority = np.zeros(n, dtype=float)
+
+    dc_reduction = np.zeros(n, dtype=float)
+    keys = item_group_key(canon).reset_index(drop=True)
+    for _, positions in keys.groupby(keys, sort=False).groups.items():
+        idxs = np.asarray(list(positions), dtype=int)
+        if len(idxs) == 0:
+            continue
+        group_dc = _group_dc_pool(canon, idxs)
+        excess = float(fixed[idxs].sum() - group_dc)
+        if excess <= 1e-9:
+            continue
+        # Remove from least-confident rows first. Tie-break by reducing larger
+        # allocations first so the repair converges quickly.
+        order = sorted(idxs, key=lambda i: (priority[i], -fixed[i]))
+        for idx in order:
+            if excess <= 1e-9:
+                break
+            if fixed[idx] <= 0:
+                continue
+            take = min(float(fixed[idx]), excess)
+            fixed[idx] -= take
+            dc_reduction[idx] += take
+            excess -= take
+
+    # Final integer floor guarantees we never round back above row/DC caps.
+    fixed = np.floor(np.maximum(fixed, 0.0) + 1e-9).astype(int)
+
+    repair = pd.DataFrame({
+        "row_index": np.arange(n, dtype=int),
+        "final_safety_original_units": original,
+        "final_safety_row_cap_units": row_cap,
+        "final_safety_row_cap_reduction_units": row_cap_reduction,
+        "final_safety_eligibility_reduction_units": eligibility_reduction,
+        "final_safety_dc_reduction_units": dc_reduction,
+        "final_safety_total_reduction_units": np.maximum(original - fixed, 0.0),
+        "final_safety_repair_applied": (np.maximum(original - fixed, 0.0) > 1e-9),
+    })
+    return fixed, repair
+
 
 def _remaining_dc_for_review(canon: pd.DataFrame, allocate_units: np.ndarray) -> np.ndarray:
     """Return a Dc Avail vector where Review rows see DC left after direct Allocate spend."""
@@ -572,17 +654,29 @@ def predict_dataframe(df: pd.DataFrame, bundle: Dict) -> Tuple[pd.DataFrame, pd.
                     row_explain.at[idx, col] = row[col]
                 row_explain.at[idx, "final_decision_path"] = "Review iterative FLM scorer"
 
-    final_units = np.asarray(allocate_units, dtype=int) + np.asarray(review_units, dtype=int)
+    raw_final_units = np.asarray(allocate_units, dtype=int) + np.asarray(review_units, dtype=int)
+    final_units, final_safety = _final_hard_safety_repair(canon, raw_final_units, signals, optimizer_config)
+
+    # Keep path-level unit columns consistent after final safety repairs. Since
+    # rows are routed either to Allocate direct or Review iterative, the repaired
+    # final value can be assigned back to the same path without ambiguity.
+    alloc_mask = allocate_mask(canon)
+    rev_mask_all = review_mask(canon)
+    allocate_units = np.where(alloc_mask, final_units, 0).astype(int)
+    review_units = np.where(rev_mask_all, final_units, 0).astype(int)
     group_audit = _combine_group_audit(canon, allocate_units, review_units, review_group_audit)
 
     flm = np.maximum(numeric_series(canon, "FLM").to_numpy(float), 1.0)
     supply = numeric_series(canon, "Supply").to_numpy(float)
+    row_explain = pd.concat([row_explain, final_safety.drop(columns=["row_index"])], axis=1)
     row_explain["predicted_final_alloc"] = final_units.astype(int)
     row_explain["predicted_final_supply"] = supply + final_units
     row_explain["allocated_flms"] = final_units / flm
     row_explain.loc[allocate_mask(canon) & (final_units <= 0), "decision_reason"] = "blank: direct Allocate neural regressor recommended zero"
     row_explain.loc[allocate_mask(canon) & (final_units > 0), "decision_reason"] = "allocated by direct Allocate neural regressor"
     row_explain.loc[review_mask(canon) & (final_units <= 0) & row_explain["decision_reason"].eq("pending Review iterative scorer"), "decision_reason"] = "blank: Review iterative scorer recommended zero"
+    row_explain.loc[row_explain["final_safety_row_cap_reduction_units"] > 0, "decision_reason"] = row_explain["decision_reason"].astype(str) + "; final safety cap: reduced to Alloc. Rec. + 1 FLM"
+    row_explain.loc[row_explain["final_safety_dc_reduction_units"] > 0, "decision_reason"] = row_explain["decision_reason"].astype(str) + "; final safety repair: reduced to available Left in DC"
 
     audit = canon.copy()
     audit["Predicted Final Alloc"] = final_units.astype(int)

@@ -1,0 +1,1127 @@
+allocation_group,allocation_group_quality,dc_start,allocated_units,dc_remaining,rows_in_group,eligible_rows_in_group,cycles_run,partial_used,over_allocated,stop_reason,trace_truncated
+100285,item,1128.0,72.0,1056.0,4,4,4,False,False,best score below threshold (0.000 < 0.400),False
+107495,item,648.0,144.0,504.0,11,11,7,False,False,best score below threshold (0.103 < 0.400),False
+1983214,item,64.0,1.0,63.0,1,1,2,False,False,best score below threshold (0.009 < 0.400),False
+1319715,item,124.0,90.0,34.0,51,51,91,False,False,best score below threshold (0.276 < 0.400),False
+1319717,item,176.0,27.0,149.0,15,15,28,False,False,best score below threshold (0.260 < 0.400),False
+1517830,item,472.0,17.0,455.0,16,16,18,False,False,best score below threshold (0.316 < 0.400),False
+1517831,item,49.0,7.0,42.0,13,13,8,False,False,best score below threshold (0.361 < 0.400),False
+1712465,item,199.0,39.0,160.0,24,24,40,False,False,best score below threshold (0.039 < 0.400),False
+1896710,item,179.0,33.0,146.0,20,20,34,False,False,best score below threshold (0.051 < 0.400),False
+1896712,item,92.0,15.0,77.0,15,15,16,False,False,best score below threshold (0.283 < 0.400),False
+1967029,item,2290.0,60.0,2230.0,11,11,61,False,False,best score below threshold (0.374 < 0.400),False
+1971201,item,499.0,60.0,439.0,11,11,61,False,False,best score below threshold (0.200 < 0.400),False
+1618320,item,3092.0,188.0,2904.0,26,26,48,False,False,best score below threshold (0.086 < 0.400),False
+1713509,item,1350.0,94.0,1256.0,30,30,48,False,False,best score below threshold (0.354 < 0.400),False
+1713510,item,1360.0,338.0,1022.0,79,79,170,False,False,best score below threshold (0.289 < 0.400),False
+1028289,item,6217.0,144.0,6073.0,7,7,7,False,False,best score below threshold (0.378 < 0.400),False
+1194782,item,3050.0,120.0,2930.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1291277,item,3453.0,36.0,3417.0,2,2,4,False,False,best score below threshold (0.000 < 0.400),False
+1859147,item,776.0,292.0,484.0,115,115,147,False,False,best score below threshold (0.363 < 0.400),False
+1983842,item,61.0,11.0,50.0,7,7,12,False,False,best score below threshold (0.353 < 0.400),False
+1916683,item,381.0,96.0,285.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1916685,item,123.0,56.0,67.0,40,40,57,False,False,best score below threshold (0.335 < 0.400),False
+1916686,item,189.0,29.0,160.0,15,15,30,False,False,best score below threshold (0.248 < 0.400),False
+1627954,item,44.0,0.0,44.0,4,4,1,False,False,no eligible row above threshold,False
+1854818,item,1074.0,22.0,1052.0,7,7,23,False,False,best score below threshold (0.328 < 0.400),False
+1854820,item,1312.0,16.0,1296.0,5,5,5,False,False,best score below threshold (0.000 < 0.400),False
+1923200,item,40.0,18.0,22.0,11,11,19,False,False,best score below threshold (0.031 < 0.400),False
+1647208,item,408.0,23.0,385.0,8,8,16,False,False,best score below threshold (0.009 < 0.400),False
+1982902,item,467.0,24.0,443.0,14,14,25,False,False,best score below threshold (0.128 < 0.400),False
+1216752,item,5868.0,308.0,5560.0,8,8,12,False,False,best score below threshold (0.012 < 0.400),False
+1022298,item,413.0,37.0,376.0,18,18,38,False,False,best score below threshold (0.265 < 0.400),False
+1018204,item,1475.0,438.0,1037.0,122,122,220,False,False,best score below threshold (0.340 < 0.400),False
+1113079,item,1268.0,344.0,924.0,97,97,173,False,False,best score below threshold (0.384 < 0.400),False
+1251114,item,129.0,38.0,91.0,21,21,39,False,False,best score below threshold (0.384 < 0.400),False
+1496202,item,626.0,90.0,536.0,30,30,57,False,False,best score below threshold (0.022 < 0.400),False
+1928202,item,222.0,114.0,108.0,117,117,115,False,False,best score below threshold (0.391 < 0.400),False
+1665326,item,3728.0,94.0,3634.0,29,29,48,False,False,best score below threshold (0.396 < 0.400),False
+1665328,item,842.0,92.0,750.0,22,22,24,False,False,best score below threshold (0.400 < 0.400),False
+1665331,item,1644.0,24.0,1620.0,8,8,13,False,False,best score below threshold (0.008 < 0.400),False
+1665344,item,2938.0,160.0,2778.0,63,63,81,False,False,best score below threshold (0.334 < 0.400),False
+1770747,item,1149.0,92.0,1057.0,28,28,47,False,False,best score below threshold (0.112 < 0.400),False
+1853984,item,960.0,103.0,857.0,43,43,104,False,False,best score below threshold (0.320 < 0.400),False
+1853994,item,917.0,49.0,868.0,35,35,50,False,False,best score below threshold (0.222 < 0.400),False
+1853996,item,755.0,117.0,638.0,65,65,118,False,False,best score below threshold (0.345 < 0.400),False
+1853997,item,314.0,314.0,0.0,164,164,314,False,False,DC exhausted,False
+1853999,item,1503.0,144.0,1359.0,41,41,145,False,False,best score below threshold (0.339 < 0.400),False
+100001,item,23688.0,1692.0,21996.0,40,40,142,False,False,best score below threshold (0.255 < 0.400),False
+1967030,item,1449.0,29.0,1420.0,5,5,30,False,False,best score below threshold (0.165 < 0.400),False
+1907097,item,746.0,17.0,729.0,13,13,18,False,False,best score below threshold (0.012 < 0.400),False
+1859148,item,320.0,164.0,156.0,90,90,83,False,False,best score below threshold (0.299 < 0.435),False
+1916687,item,166.0,12.0,154.0,8,8,13,False,False,best score below threshold (0.004 < 0.400),False
+1654405,item,447.0,18.0,429.0,6,6,19,False,False,best score below threshold (0.006 < 0.400),False
+1853998,item,420.0,174.0,246.0,114,114,175,False,False,best score below threshold (0.405 < 0.435),False
+1883354,item,898.0,314.0,584.0,120,120,315,False,False,best score below threshold (0.433 < 0.435),False
+1981652,item,627.0,57.0,570.0,37,37,58,False,False,best score below threshold (0.213 < 0.400),False
+1894104,item,278.0,65.0,213.0,12,12,16,False,False,best score below threshold (0.384 < 0.400),False
+1894105,item,332.0,86.0,246.0,24,24,17,False,False,best score below threshold (0.251 < 0.400),False
+1894107,item,175.0,105.0,70.0,23,23,21,False,False,best score below threshold (0.182 < 0.400),False
+1894108,item,516.0,66.0,450.0,16,16,12,False,False,best score below threshold (0.004 < 0.400),False
+1894110,item,247.0,73.0,174.0,14,14,14,False,False,best score below threshold (0.367 < 0.400),False
+1894111,item,276.0,75.0,201.0,25,25,16,False,False,best score below threshold (0.372 < 0.400),False
+1501178,item,349.0,294.0,55.0,51,51,50,False,False,best score below threshold (0.254 < 0.400),False
+1281440,item,251.0,52.0,199.0,24,24,27,False,False,best score below threshold (0.363 < 0.400),False
+1750956,item,168.0,70.0,98.0,33,33,36,False,False,best score below threshold (0.027 < 0.400),False
+1532613,item,104.0,78.0,26.0,15,15,14,False,False,best score below threshold (0.177 < 0.400),False
+1908276,item,278.0,66.0,212.0,11,11,12,False,False,best score below threshold (0.000 < 0.400),False
+1950869,item,94.0,48.0,46.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+1950870,item,248.0,66.0,182.0,9,9,12,False,False,best score below threshold (0.000 < 0.400),False
+1950872,item,154.0,42.0,112.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1960233,item,245.0,102.0,143.0,19,19,18,False,False,best score below threshold (0.011 < 0.435),False
+1960518,item,1068.0,204.0,864.0,16,16,18,False,False,best score below threshold (0.005 < 0.400),False
+108055,item,490.0,168.0,322.0,8,8,8,False,False,best score below threshold (0.159 < 0.400),False
+1839632,item,146.0,0.0,146.0,6,6,1,False,False,no eligible row above threshold,False
+1839636,item,75.0,40.0,35.0,11,11,6,False,False,best score below threshold (0.000 < 0.400),False
+1857807,item,151.0,80.0,71.0,16,16,11,False,False,best score below threshold (0.000 < 0.400),False
+1950803,item,166.0,54.0,112.0,9,9,10,False,False,best score below threshold (0.000 < 0.400),False
+1950805,item,191.0,48.0,143.0,7,7,9,False,False,best score below threshold (0.002 < 0.400),False
+1983223,item,258.0,42.0,216.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1125263,item,251.0,36.0,215.0,12,12,10,False,False,best score below threshold (0.001 < 0.400),False
+1168527,item,210.0,84.0,126.0,20,20,15,False,False,best score below threshold (0.057 < 0.400),False
+1168528,item,377.0,126.0,251.0,21,21,22,False,False,best score below threshold (0.003 < 0.400),False
+1168529,item,90.0,42.0,48.0,6,6,8,False,False,best score below threshold (0.001 < 0.400),False
+1168530,item,300.0,212.0,88.0,49,49,54,False,False,best score below threshold (0.248 < 0.400),False
+1168531,item,303.0,112.0,191.0,37,37,29,False,False,best score below threshold (0.043 < 0.435),False
+1407218,item,174.0,54.0,120.0,15,15,10,False,False,best score below threshold (0.093 < 0.400),False
+1407219,item,174.0,24.0,150.0,8,8,5,False,False,best score below threshold (0.000 < 0.400),False
+1407221,item,120.0,36.0,84.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1414848,item,336.0,240.0,96.0,51,51,41,False,False,best score below threshold (0.035 < 0.400),False
+1862823,item,69.0,67.0,2.0,68,68,68,False,False,best score below threshold (0.370 < 0.400),False
+1864203,item,98.0,98.0,0.0,72,72,49,False,False,DC exhausted,False
+1864205,item,98.0,96.0,2.0,64,64,49,False,False,best score below threshold (0.092 < 0.400),False
+1864206,item,98.0,60.0,38.0,54,54,61,False,False,best score below threshold (0.235 < 0.400),False
+1864207,item,96.0,90.0,6.0,90,90,91,False,False,best score below threshold (0.305 < 0.400),False
+1928445,item,120.0,12.0,108.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1928446,item,228.0,84.0,144.0,14,14,15,False,False,best score below threshold (0.000 < 0.400),False
+107921,item,327.0,210.0,117.0,11,11,8,False,False,best score below threshold (0.344 < 0.435),False
+1259508,item,737.0,204.0,533.0,17,17,18,False,False,best score below threshold (0.000 < 0.400),False
+1259509,item,462.0,72.0,390.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1440658,item,525.0,60.0,465.0,5,5,6,False,False,best score below threshold (0.006 < 0.400),False
+1440659,item,662.0,48.0,614.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1988398,item,1283.0,432.0,851.0,159,159,37,False,False,best score below threshold (0.067 < 0.400),False
+1988399,item,960.0,240.0,720.0,196,196,21,False,False,best score below threshold (0.373 < 0.400),False
+1988402,item,550.0,168.0,382.0,14,14,15,False,False,best score below threshold (0.006 < 0.400),False
+1764026,item,2799.0,492.0,2307.0,42,42,42,False,False,best score below threshold (0.130 < 0.400),False
+1764027,item,3455.0,900.0,2555.0,75,75,76,False,False,best score below threshold (0.000 < 0.400),False
+1764029,item,2604.0,516.0,2088.0,43,43,44,False,False,best score below threshold (0.000 < 0.400),False
+1988201,item,104.0,70.0,34.0,11,11,8,False,False,best score below threshold (0.001 < 0.435),False
+1988202,item,70.0,30.0,40.0,3,3,4,False,False,best score below threshold (0.001 < 0.400),False
+1988203,item,5036.0,72.0,4964.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1652705,item,1261.0,375.0,886.0,63,63,76,False,False,best score below threshold (0.308 < 0.400),False
+1652706,item,773.0,250.0,523.0,41,41,51,False,False,best score below threshold (0.037 < 0.400),False
+1736933,item,1200.0,545.0,655.0,108,108,110,False,False,best score below threshold (0.323 < 0.400),False
+1947202,item,724.0,255.0,469.0,43,43,52,False,False,best score below threshold (0.037 < 0.400),False
+1947203,item,1892.0,435.0,1457.0,63,63,88,False,False,best score below threshold (0.020 < 0.400),False
+1947205,item,3006.0,495.0,2511.0,75,75,100,False,False,best score below threshold (0.313 < 0.400),False
+1947206,item,480.0,185.0,295.0,30,30,38,False,False,best score below threshold (0.001 < 0.400),False
+1987220,item,2410.0,415.0,1995.0,61,61,84,False,False,best score below threshold (0.004 < 0.400),False
+1987221,item,1369.0,220.0,1149.0,37,37,45,False,False,best score below threshold (0.010 < 0.400),False
+1514374,item,1296.0,444.0,852.0,37,37,38,False,False,best score below threshold (0.285 < 0.400),False
+1514376,item,1920.0,1044.0,876.0,77,77,88,False,False,best score below threshold (0.023 < 0.400),False
+1943714,item,1008.0,72.0,936.0,6,6,7,False,False,best score below threshold (0.012 < 0.400),False
+1697042,item,79.0,0.0,79.0,13,13,1,False,False,no eligible row above threshold,False
+1697045,item,20.0,4.0,16.0,16,16,3,False,False,best score below threshold (0.002 < 0.400),False
+1858860,item,1.0,0.0,1.0,2,2,1,False,False,best score below threshold (0.027 < 0.400),False
+1858861,item,1.0,0.0,1.0,2,2,1,False,False,best score below threshold (0.004 < 0.400),False
+1858862,item,12.0,2.0,10.0,7,7,3,False,False,best score below threshold (0.000 < 0.400),False
+1858863,item,2.0,0.0,2.0,3,3,1,False,False,no eligible row above threshold,False
+1858874,item,4.0,1.0,3.0,6,6,2,False,False,best score below threshold (0.001 < 0.400),False
+1858878,item,4.0,1.0,3.0,7,7,2,False,False,best score below threshold (0.364 < 0.400),False
+100553,item,31.0,6.0,25.0,9,9,4,False,False,best score below threshold (0.001 < 0.400),False
+1000811,item,14.0,2.0,12.0,9,9,2,False,False,best score below threshold (0.012 < 0.400),False
+1000817,item,103.0,6.0,97.0,7,7,4,False,False,best score below threshold (0.008 < 0.400),False
+1000819,item,50.0,34.0,16.0,19,19,18,False,False,best score below threshold (0.335 < 0.400),False
+1000820,item,46.0,14.0,32.0,7,7,8,False,False,best score below threshold (0.212 < 0.400),False
+1475913,item,40.0,14.0,26.0,11,11,8,False,False,best score below threshold (0.016 < 0.400),False
+1983215,item,8.0,0.0,8.0,25,25,1,False,False,no eligible row above threshold,False
+1983216,item,10.0,0.0,10.0,20,20,1,False,False,no eligible row above threshold,False
+1866178,item,627.0,420.0,207.0,38,38,36,False,False,best score below threshold (0.368 < 0.435),False
+1866179,item,1090.0,264.0,826.0,21,21,23,False,False,best score below threshold (0.000 < 0.400),False
+1866182,item,382.0,264.0,118.0,24,24,23,False,False,best score below threshold (0.032 < 0.435),False
+1866183,item,468.0,228.0,240.0,28,28,20,False,False,best score below threshold (0.009 < 0.435),False
+1201266,item,1240.0,1100.0,140.0,157,157,111,False,False,best score below threshold (0.259 < 0.435),False
+1201267,item,930.0,650.0,280.0,106,106,66,False,False,best score below threshold (0.226 < 0.400),False
+1201268,item,1250.0,1140.0,110.0,116,116,115,False,False,best score below threshold (0.337 < 0.400),False
+1808823,item,450.0,320.0,130.0,33,33,33,False,False,best score below threshold (0.250 < 0.435),False
+1854424,item,312.0,144.0,168.0,17,17,13,False,False,best score below threshold (0.000 < 0.435),False
+1868542,item,384.0,216.0,168.0,18,18,19,False,False,best score below threshold (0.001 < 0.400),False
+1868543,item,192.0,120.0,72.0,10,10,11,False,False,best score below threshold (0.000 < 0.400),False
+1938555,item,1250.0,1220.0,30.0,130,130,123,False,False,best score below threshold (0.308 < 0.400),False
+1941165,item,444.0,312.0,132.0,31,31,27,False,False,best score below threshold (0.004 < 0.400),False
+1955389,item,912.0,192.0,720.0,16,16,17,False,False,best score below threshold (0.003 < 0.400),False
+1955390,item,1728.0,252.0,1476.0,20,20,22,False,False,best score below threshold (0.001 < 0.400),False
+1955391,item,1728.0,84.0,1644.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1153331,item,840.0,137.0,703.0,81,81,138,False,False,best score below threshold (0.371 < 0.400),False
+1440422,item,1920.0,58.0,1862.0,36,36,59,False,False,best score below threshold (0.396 < 0.400),False
+1504349,item,141.0,28.0,113.0,10,10,15,False,False,best score below threshold (0.001 < 0.400),False
+1504352,item,1200.0,61.0,1139.0,41,41,62,False,False,best score below threshold (0.025 < 0.400),False
+1504356,item,695.0,4.0,691.0,3,3,3,False,False,best score below threshold (0.005 < 0.400),False
+1504357,item,220.0,8.0,212.0,12,12,5,False,False,best score below threshold (0.001 < 0.400),False
+1504358,item,15.0,10.0,5.0,9,9,6,False,False,best score below threshold (0.035 < 0.400),False
+1530435,item,960.0,40.0,920.0,27,27,41,False,False,best score below threshold (0.009 < 0.400),False
+1554787,item,10.0,5.0,5.0,11,11,6,False,False,best score below threshold (0.003 < 0.400),False
+1642162,item,102.0,12.0,90.0,5,5,3,False,False,best score below threshold (0.000 < 0.400),False
+1642163,item,66.0,8.0,58.0,9,9,5,False,False,best score below threshold (0.046 < 0.400),False
+1924159,item,843.0,31.0,812.0,17,17,32,False,False,best score below threshold (0.380 < 0.400),False
+1871842,item,2059.0,336.0,1723.0,39,39,85,False,False,best score below threshold (0.121 < 0.400),False
+1990172,item,688.0,6.0,682.0,5,5,2,False,False,best score below threshold (0.000 < 0.400),False
+1990173,item,240.0,18.0,222.0,5,5,4,False,False,best score below threshold (0.000 < 0.400),False
+1534332,item,255.0,144.0,111.0,36,36,25,False,False,best score below threshold (0.007 < 0.435),False
+1808824,item,268.0,234.0,34.0,44,44,40,False,False,best score below threshold (0.002 < 0.435),False
+1539350,item,155.0,16.0,139.0,10,10,5,False,False,best score below threshold (0.000 < 0.400),False
+1646205,item,95.0,60.0,35.0,24,24,31,False,False,best score below threshold (0.002 < 0.400),False
+1833766,item,64.0,48.0,16.0,34,34,13,False,False,best score below threshold (0.188 < 0.400),False
+1833768,item,111.0,56.0,55.0,17,17,15,False,False,best score below threshold (0.001 < 0.400),False
+1980266,item,135.0,48.0,87.0,16,16,13,False,False,best score below threshold (0.015 < 0.435),False
+1980268,item,912.0,240.0,672.0,21,21,21,False,False,best score below threshold (0.004 < 0.435),False
+1994691,item,36.0,16.0,20.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1993994,item,456.0,36.0,420.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1738937,item,325.0,144.0,181.0,25,25,25,False,False,best score below threshold (0.086 < 0.400),False
+1738938,item,351.0,96.0,255.0,16,16,17,False,False,best score below threshold (0.000 < 0.400),False
+1917045,item,66.0,24.0,42.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1946813,item,252.0,144.0,108.0,9,9,9,False,False,best score below threshold (0.000 < 0.400),False
+1285129,item,708.0,108.0,600.0,10,10,10,False,False,best score below threshold (0.019 < 0.400),False
+1518900,item,823.0,56.0,767.0,13,13,15,False,False,best score below threshold (0.177 < 0.400),False
+1472756,item,72.0,12.0,60.0,8,8,3,False,False,best score below threshold (0.000 < 0.400),False
+1990141,item,72.0,6.0,66.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1990145,item,168.0,12.0,156.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1990163,item,76.0,12.0,64.0,3,3,3,False,False,best score below threshold (0.000 < 0.400),False
+1990168,item,78.0,12.0,66.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1801071,item,6674.0,1746.0,4928.0,135,135,98,False,False,best score below threshold (0.227 < 0.400),False
+1918082,item,12.0,12.0,0.0,2,2,2,False,False,DC exhausted,False
+1918088,item,198.0,84.0,114.0,14,14,15,False,False,best score below threshold (0.000 < 0.400),False
+1942439,item,360.0,84.0,276.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1959201,item,540.0,168.0,372.0,14,14,15,False,False,best score below threshold (0.001 < 0.400),False
+1860011,item,150.0,37.0,113.0,28,28,38,False,False,best score below threshold (0.323 < 0.400),False
+1994187,item,62.0,6.0,56.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1395752,item,1620.0,1250.0,370.0,167,167,626,False,False,best score below threshold (0.425 < 0.435),False
+1963402,item,768.0,72.0,696.0,9,9,10,False,False,best score below threshold (0.000 < 0.400),False
+1963403,item,688.0,360.0,328.0,44,44,46,False,False,best score below threshold (0.001 < 0.400),False
+1986451,item,343.0,39.0,304.0,8,8,19,False,False,best score below threshold (0.312 < 0.400),False
+1980270,item,682.0,278.0,404.0,139,139,279,False,False,best score below threshold (0.002 < 0.400),False
+1990266,item,534.0,72.0,462.0,9,9,10,False,False,best score below threshold (0.001 < 0.400),False
+1990267,item,520.0,240.0,280.0,30,30,31,False,False,best score below threshold (0.002 < 0.400),False
+1125629,item,3489.0,56.0,3433.0,17,17,15,False,False,best score below threshold (0.017 < 0.400),False
+1302593,item,1240.0,38.0,1202.0,20,20,20,False,False,best score below threshold (0.130 < 0.400),False
+1499687,item,7215.0,484.0,6731.0,76,76,122,False,False,best score below threshold (0.391 < 0.400),False
+1512859,item,1299.0,84.0,1215.0,21,21,22,False,False,best score below threshold (0.001 < 0.400),False
+1687348,item,132.0,52.0,80.0,24,24,27,False,False,best score below threshold (0.346 < 0.400),False
+1911564,item,412.0,6.0,406.0,3,3,4,False,False,best score below threshold (0.004 < 0.400),False
+1915389,item,372.0,65.0,307.0,39,39,66,False,False,best score below threshold (0.208 < 0.400),False
+1915391,item,401.0,96.0,305.0,18,18,17,False,False,best score below threshold (0.000 < 0.400),False
+1915392,item,724.0,48.0,676.0,8,8,9,False,False,best score below threshold (0.002 < 0.400),False
+1915393,item,402.0,48.0,354.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+1915394,item,714.0,84.0,630.0,14,14,15,False,False,best score below threshold (0.000 < 0.400),False
+1915395,item,940.0,96.0,844.0,16,16,17,False,False,best score below threshold (0.001 < 0.400),False
+1915398,item,630.0,66.0,564.0,11,11,12,False,False,best score below threshold (0.004 < 0.400),False
+1915400,item,234.0,84.0,150.0,14,14,15,False,False,best score below threshold (0.000 < 0.400),False
+1915401,item,1212.0,96.0,1116.0,16,16,17,False,False,best score below threshold (0.002 < 0.400),False
+1915403,item,906.0,96.0,810.0,12,12,17,False,False,best score below threshold (0.007 < 0.400),False
+1915404,item,174.0,30.0,144.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1915460,item,378.0,30.0,348.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1915461,item,738.0,42.0,696.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1915462,item,275.0,72.0,203.0,12,12,13,False,False,best score below threshold (0.000 < 0.400),False
+1991938,item,54.0,24.0,30.0,11,11,13,False,False,best score below threshold (0.002 < 0.400),False
+1991939,item,51.0,8.0,43.0,4,4,5,False,False,best score below threshold (0.005 < 0.400),False
+1991948,item,42.0,30.0,12.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1512100,item,240.0,32.0,208.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1960519,item,996.0,144.0,852.0,12,12,13,False,False,best score below threshold (0.002 < 0.400),False
+1870603,item,72.0,48.0,24.0,7,7,7,False,False,best score below threshold (0.008 < 0.435),False
+1950801,item,56.0,8.0,48.0,2,2,2,False,False,best score below threshold (0.000 < 0.400),False
+1950804,item,108.0,18.0,90.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1950806,item,36.0,24.0,12.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1983224,item,192.0,6.0,186.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1259512,item,110.0,0.0,110.0,2,2,1,False,False,no eligible row above threshold,False
+1995061,item,540.0,90.0,450.0,8,8,10,False,False,best score below threshold (0.039 < 0.400),False
+1000821,item,58.0,6.0,52.0,3,3,4,False,False,best score below threshold (0.003 < 0.400),False
+1866180,item,395.0,180.0,215.0,15,15,16,False,False,best score below threshold (0.017 < 0.400),False
+1990176,item,658.0,72.0,586.0,6,6,7,False,False,best score below threshold (0.009 < 0.400),False
+1530432,item,12.0,10.0,2.0,8,8,11,False,False,best score below threshold (0.009 < 0.400),False
+1530433,item,25.0,14.0,11.0,8,8,8,False,False,best score below threshold (0.009 < 0.400),False
+1413977,item,96.0,42.0,54.0,8,8,8,False,False,best score below threshold (0.000 < 0.400),False
+1413979,item,96.0,42.0,54.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1533424,item,68.0,68.0,0.0,35,35,17,False,False,DC exhausted,False
+1715502,item,68.0,64.0,4.0,23,23,17,False,False,best score below threshold (0.000 < 0.400),False
+1752182,item,479.0,276.0,203.0,26,26,24,False,False,best score below threshold (0.132 < 0.435),False
+1936051,item,384.0,384.0,0.0,53,53,32,False,False,DC exhausted,False
+1936055,item,120.0,60.0,60.0,15,15,7,False,False,best score below threshold (0.000 < 0.400),False
+1936056,item,240.0,170.0,70.0,22,22,18,False,False,best score below threshold (0.070 < 0.400),False
+1936058,item,360.0,190.0,170.0,26,26,20,False,False,best score below threshold (0.001 < 0.435),False
+1948561,item,1200.0,1110.0,90.0,100,100,112,False,False,best score below threshold (0.002 < 0.400),False
+1948562,item,530.0,160.0,370.0,18,18,17,False,False,best score below threshold (0.003 < 0.400),False
+1980267,item,396.0,12.0,384.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1980269,item,88.0,52.0,36.0,23,23,14,False,False,best score below threshold (0.000 < 0.400),False
+1994685,item,36.0,36.0,0.0,13,13,9,False,False,DC exhausted,False
+1994688,item,24.0,16.0,8.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1994690,item,34.0,34.0,0.0,20,20,9,True,False,DC exhausted,False
+1994692,item,72.0,32.0,40.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+1993989,item,48.0,8.0,40.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1993991,item,510.0,54.0,456.0,9,9,10,False,False,best score below threshold (0.000 < 0.400),False
+1993993,item,498.0,30.0,468.0,4,4,6,False,False,best score below threshold (0.000 < 0.400),False
+1518901,item,827.0,36.0,791.0,8,8,10,False,False,best score below threshold (0.001 < 0.400),False
+1518902,item,900.0,40.0,860.0,10,10,11,False,False,best score below threshold (0.000 < 0.400),False
+1946804,item,564.0,204.0,360.0,17,17,18,False,False,best score below threshold (0.005 < 0.400),False
+1990318,item,632.0,112.0,520.0,15,15,15,False,False,best score below threshold (0.005 < 0.400),False
+1990321,item,56.0,10.0,46.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1990144,item,11.0,0.0,11.0,2,2,1,False,False,no eligible row above threshold,False
+1918087,item,30.0,12.0,18.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1918097,item,42.0,24.0,18.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+100243,item,12.0,2.0,10.0,3,3,2,False,False,best score below threshold (0.001 < 0.400),False
+1991940,item,6.0,6.0,0.0,3,3,1,False,False,DC exhausted,False
+100369,item,180.0,75.0,105.0,43,43,76,False,False,best score below threshold (0.157 < 0.400),False
+101003,item,180.0,77.0,103.0,34,34,78,False,False,best score below threshold (0.318 < 0.400),False
+107832,item,50.0,13.0,37.0,13,13,13,False,False,best score below threshold (0.053 < 0.400),False
+1100710,item,240.0,30.0,210.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1122879,item,180.0,96.0,84.0,35,35,33,False,False,best score below threshold (0.042 < 0.400),False
+1182471,item,51.0,7.0,44.0,7,7,8,False,False,best score below threshold (0.004 < 0.400),False
+1255428,item,20.0,13.0,7.0,18,18,14,False,False,best score below threshold (0.016 < 0.400),False
+1285428,item,96.0,32.0,64.0,23,23,33,False,False,best score below threshold (0.272 < 0.400),False
+1299686,item,72.0,49.0,23.0,43,43,50,False,False,best score below threshold (0.045 < 0.435),False
+1304651,item,97.0,36.0,61.0,25,25,37,False,False,best score below threshold (0.179 < 0.400),False
+1319979,item,13.0,7.0,6.0,5,5,8,False,False,best score below threshold (0.004 < 0.400),False
+1366789,item,518.0,28.0,490.0,24,24,29,False,False,best score below threshold (0.138 < 0.400),False
+1398755,item,56.0,12.0,44.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1698523,item,23.0,8.0,15.0,5,5,9,False,False,best score below threshold (0.027 < 0.400),False
+1449764,item,63.0,6.0,57.0,6,6,7,False,False,best score below threshold (0.002 < 0.400),False
+1969966,item,71.0,34.0,37.0,15,15,35,False,False,best score below threshold (0.003 < 0.400),False
+100051,item,379.0,0.0,379.0,8,8,1,False,False,no eligible row above threshold,False
+100052,item,896.0,144.0,752.0,12,12,13,False,False,best score below threshold (0.001 < 0.400),False
+100053,item,360.0,0.0,360.0,2,2,1,False,False,no eligible row above threshold,False
+100056,item,468.0,30.0,438.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+100058,item,404.0,72.0,332.0,16,16,19,False,False,best score below threshold (0.065 < 0.400),False
+100080,item,665.0,120.0,545.0,10,10,11,False,False,best score below threshold (0.001 < 0.400),False
+100863,item,560.0,96.0,464.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+100864,item,191.0,36.0,155.0,8,8,7,False,False,best score below threshold (0.014 < 0.400),False
+100872,item,517.0,156.0,361.0,12,12,14,False,False,best score below threshold (0.090 < 0.400),False
+100892,item,252.0,24.0,228.0,2,2,3,False,False,best score below threshold (0.001 < 0.400),False
+1870604,item,528.0,96.0,432.0,8,8,9,False,False,best score below threshold (0.025 < 0.400),False
+100940,item,169.0,52.0,117.0,20,20,27,False,False,best score below threshold (0.092 < 0.400),False
+100943,item,490.0,192.0,298.0,27,27,33,False,False,best score below threshold (0.004 < 0.400),False
+100945,item,259.0,3.0,256.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+101369,item,237.0,24.0,213.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+101545,item,77.0,16.0,61.0,5,5,9,False,False,best score below threshold (0.003 < 0.400),False
+101812,item,140.0,16.0,124.0,7,7,9,False,False,best score below threshold (0.001 < 0.400),False
+101813,item,290.0,20.0,270.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+101848,item,283.0,42.0,241.0,6,6,8,False,False,best score below threshold (0.002 < 0.400),False
+101952,item,264.0,180.0,84.0,22,22,31,False,False,best score below threshold (0.004 < 0.400),False
+101955,item,244.0,12.0,232.0,5,5,7,False,False,best score below threshold (0.005 < 0.400),False
+102011,item,142.0,64.0,78.0,23,23,33,False,False,best score below threshold (0.212 < 0.400),False
+102289,item,64.0,32.0,32.0,8,8,9,False,False,best score below threshold (0.001 < 0.400),False
+102290,item,349.0,12.0,337.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+105238,item,366.0,34.0,332.0,11,11,18,False,False,best score below threshold (0.143 < 0.400),False
+105244,item,249.0,28.0,221.0,11,11,8,False,False,best score below threshold (0.013 < 0.400),False
+1030546,item,45.0,4.0,41.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1030547,item,132.0,24.0,108.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1313594,item,335.0,144.0,191.0,12,12,13,False,False,best score below threshold (0.001 < 0.400),False
+1385766,item,186.0,36.0,150.0,13,13,19,False,False,best score below threshold (0.002 < 0.400),False
+1403542,item,864.0,48.0,816.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1403543,item,435.0,36.0,399.0,4,4,4,False,False,best score below threshold (0.069 < 0.400),False
+1521062,item,44.0,28.0,16.0,13,13,15,False,False,best score below threshold (0.037 < 0.400),False
+1731059,item,50.0,20.0,30.0,8,8,6,False,False,best score below threshold (0.001 < 0.435),False
+1857814,item,24.0,10.0,14.0,15,15,11,False,False,best score below threshold (0.017 < 0.400),False
+1857816,item,48.0,22.0,26.0,14,14,12,False,False,best score below threshold (0.387 < 0.435),False
+1857821,item,60.0,17.0,43.0,15,15,18,False,False,best score below threshold (0.194 < 0.400),False
+1417380,item,637.0,57.0,580.0,28,28,58,False,False,best score below threshold (0.056 < 0.400),False
+1893411,item,12.0,9.0,3.0,6,6,10,False,False,best score below threshold (0.018 < 0.400),False
+1855891,item,60.0,23.0,37.0,24,24,24,False,False,best score below threshold (0.200 < 0.400),False
+1964061,item,145.0,34.0,111.0,22,22,35,False,False,best score below threshold (0.048 < 0.400),False
+1964063,item,77.0,28.0,49.0,20,20,29,False,False,best score below threshold (0.004 < 0.400),False
+1964064,item,89.0,11.0,78.0,10,10,12,False,False,best score below threshold (0.002 < 0.400),False
+1964065,item,104.0,13.0,91.0,4,4,14,False,False,best score below threshold (0.002 < 0.400),False
+1400744,item,72.0,18.0,54.0,4,4,4,False,False,best score below threshold (0.000 < 0.400),False
+1629075,item,243.0,18.0,225.0,8,8,10,False,False,best score below threshold (0.008 < 0.400),False
+1918149,item,52.0,28.0,24.0,18,18,29,False,False,best score below threshold (0.095 < 0.400),False
+1938615,item,666.0,48.0,618.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+100172,item,215.0,24.0,191.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+100193,item,106.0,64.0,42.0,14,14,17,False,False,best score below threshold (0.063 < 0.400),False
+103522,item,503.0,42.0,461.0,12,12,15,False,False,best score below threshold (0.006 < 0.400),False
+105046,item,64.0,20.0,44.0,9,9,6,False,False,best score below threshold (0.001 < 0.400),False
+108072,item,90.0,54.0,36.0,25,25,19,False,False,best score below threshold (0.001 < 0.400),False
+108073,item,241.0,18.0,223.0,3,3,7,False,False,best score below threshold (0.001 < 0.400),False
+108074,item,153.0,18.0,135.0,5,5,7,False,False,best score below threshold (0.000 < 0.400),False
+108077,item,93.0,38.0,55.0,19,19,39,False,False,best score below threshold (0.004 < 0.400),False
+108078,item,91.0,36.0,55.0,20,20,37,False,False,best score below threshold (0.026 < 0.400),False
+1113671,item,144.0,70.0,74.0,34,34,71,False,False,best score below threshold (0.241 < 0.400),False
+1215005,item,374.0,18.0,356.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1243291,item,51.0,18.0,33.0,9,9,19,False,False,best score below threshold (0.004 < 0.400),False
+1298022,item,250.0,30.0,220.0,10,10,16,False,False,best score below threshold (0.013 < 0.400),False
+1298023,item,255.0,14.0,241.0,6,6,8,False,False,best score below threshold (0.001 < 0.400),False
+1298028,item,102.0,24.0,78.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1386752,item,51.0,12.0,39.0,7,7,5,False,False,best score below threshold (0.060 < 0.400),False
+1386753,item,151.0,4.0,147.0,3,3,3,False,False,best score below threshold (0.000 < 0.400),False
+1391806,item,371.0,48.0,323.0,8,8,9,False,False,best score below threshold (0.022 < 0.400),False
+1449136,item,147.0,20.0,127.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1492260,item,144.0,84.0,60.0,18,18,22,False,False,best score below threshold (0.004 < 0.400),False
+1500198,item,97.0,48.0,49.0,11,11,9,False,False,best score below threshold (0.001 < 0.435),False
+1500199,item,48.0,44.0,4.0,10,10,12,False,False,best score below threshold (0.010 < 0.400),False
+1536010,item,154.0,12.0,142.0,9,9,7,False,False,best score below threshold (0.238 < 0.400),False
+1680072,item,36.0,15.0,21.0,4,4,6,False,False,best score below threshold (0.000 < 0.400),False
+1866327,item,475.0,99.0,376.0,24,24,34,False,False,best score below threshold (0.366 < 0.400),False
+1301947,item,184.0,4.0,180.0,3,3,5,False,False,best score below threshold (0.002 < 0.400),False
+1324842,item,45.0,7.0,38.0,4,4,8,False,False,best score below threshold (0.006 < 0.400),False
+1556719,item,158.0,5.0,153.0,3,3,6,False,False,best score below threshold (0.132 < 0.400),False
+1859944,item,47.0,21.0,26.0,16,16,22,False,False,best score below threshold (0.030 < 0.400),False
+1859952,item,2.0,2.0,0.0,2,2,2,False,False,DC exhausted,False
+1950263,item,1187.0,16.0,1171.0,6,6,9,False,False,best score below threshold (0.001 < 0.400),False
+1950264,item,468.0,8.0,460.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1986498,item,1619.0,48.0,1571.0,12,12,34,False,False,best score below threshold (0.060 < 0.400),False
+1986502,item,1126.0,59.0,1067.0,15,15,40,False,False,best score below threshold (0.029 < 0.400),False
+1986503,item,2116.0,82.0,2034.0,24,24,68,False,False,best score below threshold (0.067 < 0.400),False
+1986505,item,1616.0,27.0,1589.0,8,8,23,False,False,best score below threshold (0.109 < 0.400),False
+1986507,item,1197.0,6.0,1191.0,2,2,7,False,False,best score below threshold (0.003 < 0.400),False
+1986508,item,1617.0,37.0,1580.0,9,9,13,False,False,best score below threshold (0.009 < 0.400),False
+1986514,item,1477.0,2.0,1475.0,1,1,3,False,False,best score below threshold (0.002 < 0.400),False
+1262522,item,18.0,12.0,6.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1870227,item,102.0,6.0,96.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1870232,item,50.0,21.0,29.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1990156,item,142.0,30.0,112.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1990167,item,120.0,12.0,108.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1015818,item,57.0,20.0,37.0,9,9,11,False,False,best score below threshold (0.001 < 0.400),False
+1109301,item,104.0,24.0,80.0,10,10,25,False,False,best score below threshold (0.002 < 0.400),False
+1249511,item,568.0,40.0,528.0,9,9,11,False,False,best score below threshold (0.001 < 0.400),False
+1867203,item,183.0,6.0,177.0,2,2,7,False,False,best score below threshold (0.003 < 0.400),False
+1867204,item,231.0,30.0,201.0,16,16,31,False,False,best score below threshold (0.292 < 0.400),False
+1980254,item,9.0,8.0,1.0,15,15,9,False,False,best score below threshold (0.002 < 0.400),False
+1688672,item,91.0,10.0,81.0,32,32,6,False,False,best score below threshold (0.007 < 0.400),False
+1814613,item,496.0,9.0,487.0,8,8,10,False,False,best score below threshold (0.002 < 0.400),False
+1915385,item,250.0,18.0,232.0,7,7,10,False,False,best score below threshold (0.078 < 0.400),False
+1915388,item,219.0,6.0,213.0,2,2,4,False,False,best score below threshold (0.001 < 0.400),False
+1210008,item,43.0,13.0,30.0,8,8,14,False,False,best score below threshold (0.018 < 0.400),False
+1248514,item,10.0,5.0,5.0,4,4,6,False,False,best score below threshold (0.002 < 0.400),False
+1285599,item,52.0,21.0,31.0,15,15,22,False,False,best score below threshold (0.007 < 0.400),False
+1316764,item,79.0,11.0,68.0,9,9,12,False,False,best score below threshold (0.002 < 0.400),False
+1427645,item,565.0,12.0,553.0,6,6,3,False,False,best score below threshold (0.005 < 0.400),False
+1427646,item,25.0,12.0,13.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1460512,item,1822.0,300.0,1522.0,47,47,51,False,False,best score below threshold (0.180 < 0.400),False
+1460514,item,1433.0,192.0,1241.0,30,30,33,False,False,best score below threshold (0.119 < 0.400),False
+1475040,item,853.0,174.0,679.0,28,28,30,False,False,best score below threshold (0.000 < 0.400),False
+1504714,item,86.0,18.0,68.0,15,15,19,False,False,best score below threshold (0.222 < 0.400),False
+1512842,item,20.0,12.0,8.0,18,18,13,False,False,best score below threshold (0.006 < 0.400),False
+1512843,item,22.0,4.0,18.0,3,3,5,False,False,best score below threshold (0.033 < 0.400),False
+1855959,item,9.0,4.0,5.0,3,3,5,False,False,best score below threshold (0.004 < 0.400),False
+1875487,item,624.0,36.0,588.0,7,7,7,False,False,best score below threshold (0.066 < 0.400),False
+1875491,item,537.0,64.0,473.0,14,14,17,False,False,best score below threshold (0.004 < 0.400),False
+1875494,item,340.0,56.0,284.0,12,12,15,False,False,best score below threshold (0.009 < 0.400),False
+1875495,item,344.0,28.0,316.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1881413,item,325.0,30.0,295.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1881419,item,864.0,78.0,786.0,11,11,14,False,False,best score below threshold (0.006 < 0.400),False
+1881420,item,980.0,24.0,956.0,4,4,5,False,False,best score below threshold (0.240 < 0.400),False
+1881431,item,669.0,6.0,663.0,2,2,2,False,False,best score below threshold (0.320 < 0.400),False
+1881432,item,384.0,12.0,372.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1881449,item,420.0,16.0,404.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1881450,item,284.0,20.0,264.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1882813,item,848.0,18.0,830.0,5,5,4,False,False,best score below threshold (0.000 < 0.400),False
+1895455,item,466.0,44.0,422.0,11,11,12,False,False,best score below threshold (0.000 < 0.400),False
+1895460,item,593.0,48.0,545.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+1895472,item,51.0,21.0,30.0,18,18,22,False,False,best score below threshold (0.006 < 0.400),False
+1940761,item,564.0,42.0,522.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1940764,item,433.0,32.0,401.0,8,8,9,False,False,best score below threshold (0.000 < 0.400),False
+1940765,item,1117.0,78.0,1039.0,12,12,14,False,False,best score below threshold (0.000 < 0.400),False
+1940766,item,582.0,42.0,540.0,6,6,8,False,False,best score below threshold (0.000 < 0.400),False
+1940770,item,27.0,2.0,25.0,1,1,3,False,False,best score below threshold (0.001 < 0.400),False
+1952626,item,1428.0,90.0,1338.0,13,13,16,False,False,best score below threshold (0.000 < 0.400),False
+1952627,item,1032.0,42.0,990.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+1952628,item,618.0,60.0,558.0,14,14,16,False,False,best score below threshold (0.000 < 0.400),False
+1952630,item,26.0,14.0,12.0,14,14,15,False,False,best score below threshold (0.005 < 0.400),False
+1952631,item,14.0,4.0,10.0,11,11,5,False,False,best score below threshold (0.000 < 0.435),False
+1955628,item,67.0,7.0,60.0,1,1,8,False,False,best score below threshold (0.000 < 0.400),False
+1955631,item,6.0,5.0,1.0,2,2,6,False,False,best score below threshold (0.005 < 0.400),False
+1955632,item,116.0,4.0,112.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1960542,item,196.0,39.0,157.0,17,17,40,False,False,best score below threshold (0.015 < 0.400),False
+1982765,item,363.0,25.0,338.0,18,18,26,False,False,best score below threshold (0.005 < 0.400),False
+1982766,item,418.0,47.0,371.0,31,31,48,False,False,best score below threshold (0.009 < 0.400),False
+1985745,item,76.0,73.0,3.0,15,15,74,False,False,best score below threshold (0.381 < 0.400),False
+1985746,item,220.0,25.0,195.0,5,5,26,False,False,best score below threshold (0.128 < 0.400),False
+1985747,item,44.0,23.0,21.0,13,13,24,False,False,best score below threshold (0.010 < 0.435),False
+100356,item,41.0,21.0,20.0,31,31,22,False,False,best score below threshold (0.037 < 0.400),False
+103401,item,2012.0,77.0,1935.0,33,33,78,False,False,best score below threshold (0.312 < 0.400),False
+1125270,item,14.0,3.0,11.0,4,4,4,False,False,best score below threshold (0.001 < 0.400),False
+1872432,item,4.0,1.0,3.0,2,2,2,False,False,best score below threshold (0.000 < 0.400),False
+1983213,item,92.0,1.0,91.0,1,1,2,False,False,best score below threshold (0.001 < 0.400),False
+1984724,item,25.0,1.0,24.0,1,1,2,False,False,best score below threshold (0.001 < 0.400),False
+100780,item,193.0,24.0,169.0,1,1,3,False,False,best score below threshold (0.000 < 0.400),False
+101371,item,159.0,6.0,153.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1983221,item,29.0,2.0,27.0,1,1,3,False,False,best score below threshold (0.008 < 0.400),False
+103523,item,480.0,120.0,360.0,39,39,41,False,False,best score below threshold (0.336 < 0.435),False
+1124216,item,80.0,36.0,44.0,36,36,37,False,False,best score below threshold (0.080 < 0.400),False
+1170138,item,72.0,33.0,39.0,32,32,34,False,False,best score below threshold (0.009 < 0.400),False
+1170141,item,60.0,47.0,13.0,41,41,48,False,False,best score below threshold (0.392 < 0.400),False
+1243289,item,144.0,94.0,50.0,76,76,95,False,False,best score below threshold (0.041 < 0.400),False
+1536006,item,720.0,207.0,513.0,58,58,70,False,False,best score below threshold (0.372 < 0.400),False
+1680068,item,180.0,105.0,75.0,49,49,36,False,False,best score below threshold (0.167 < 0.400),False
+1950261,item,1086.0,8.0,1078.0,4,4,5,False,False,best score below threshold (0.004 < 0.400),False
+1950266,item,3598.0,20.0,3578.0,3,3,11,False,False,best score below threshold (0.005 < 0.400),False
+1950268,item,3268.0,6.0,3262.0,2,2,4,False,False,best score below threshold (0.003 < 0.400),False
+1986513,item,413.0,6.0,407.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1994594,item,51.0,6.0,45.0,1,1,2,False,False,best score below threshold (0.012 < 0.400),False
+1996099,item,2000.0,786.0,1214.0,131,131,132,False,False,best score below threshold (0.000 < 0.400),False
+1980255,item,41.0,8.0,33.0,6,6,9,False,False,best score below threshold (0.112 < 0.400),False
+1688674,item,196.0,2.0,194.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1915384,item,277.0,6.0,271.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1968321,item,124.0,1.0,123.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1991945,item,269.0,0.0,269.0,132,132,1,False,False,best score below threshold (0.005 < 0.400),False
+1144151,item,96.0,55.0,41.0,35,35,56,False,False,best score below threshold (0.360 < 0.400),False
+1290967,item,30.0,24.0,6.0,17,17,25,False,False,best score below threshold (0.336 < 0.400),False
+1298626,item,48.0,7.0,41.0,8,8,8,False,False,best score below threshold (0.010 < 0.435),False
+1300576,item,63.0,45.0,18.0,40,40,46,False,False,best score below threshold (0.118 < 0.400),False
+1504716,item,96.0,52.0,44.0,61,61,53,False,False,best score below threshold (0.256 < 0.400),False
+1797934,item,66.0,36.0,30.0,27,27,37,False,False,best score below threshold (0.010 < 0.400),False
+1875484,item,952.0,344.0,608.0,80,80,87,False,False,best score below threshold (0.000 < 0.400),False
+1875485,item,167.0,60.0,107.0,20,20,16,False,False,best score below threshold (0.000 < 0.400),False
+1875492,item,399.0,12.0,387.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1881414,item,262.0,0.0,262.0,1,1,1,False,False,best score below threshold (0.073 < 0.400),False
+1881417,item,720.0,532.0,188.0,132,132,134,False,False,best score below threshold (0.001 < 0.400),False
+1955627,item,171.0,3.0,168.0,1,1,4,False,False,best score below threshold (0.002 < 0.400),False
+1960560,item,720.0,580.0,140.0,145,145,581,False,False,best score below threshold (0.002 < 0.400),False
+1998738,item,960.0,876.0,84.0,146,146,147,False,False,best score below threshold (0.000 < 0.400),False
+1998740,item,960.0,876.0,84.0,146,146,147,False,False,best score below threshold (0.000 < 0.400),False
+1998744,item,160.0,158.0,2.0,79,79,159,False,False,best score below threshold (0.005 < 0.400),False
+1950866,item,43.0,36.0,7.0,8,8,7,False,False,best score below threshold (0.027 < 0.435),False
+1960227,item,30.0,30.0,0.0,5,5,5,False,False,DC exhausted,False
+1960240,item,23.0,12.0,11.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1652707,item,845.0,440.0,405.0,76,76,89,False,False,best score below threshold (0.285 < 0.400),False
+1947204,item,3000.0,395.0,2605.0,74,74,80,False,False,best score below threshold (0.007 < 0.400),False
+1962647,item,588.0,48.0,540.0,4,4,5,False,False,best score below threshold (0.004 < 0.400),False
+1000815,item,34.0,8.0,26.0,5,5,5,False,False,best score below threshold (0.032 < 0.400),False
+1008192,item,43.0,14.0,29.0,5,5,8,False,False,best score below threshold (0.001 < 0.400),False
+1866181,item,167.0,96.0,71.0,12,12,9,False,False,best score below threshold (0.001 < 0.400),False
+1995065,item,750.0,131.0,619.0,131,131,132,False,False,best score below threshold (0.001 < 0.400),False
+1833767,item,43.0,20.0,23.0,11,11,6,False,False,best score below threshold (0.000 < 0.435),False
+1946812,item,540.0,144.0,396.0,10,10,9,False,False,best score below threshold (0.031 < 0.435),False
+1918085,item,36.0,30.0,6.0,6,6,6,False,False,best score below threshold (0.001 < 0.435),False
+1942440,item,456.0,132.0,324.0,13,13,12,False,False,best score below threshold (0.001 < 0.435),False
+1942441,item,696.0,264.0,432.0,38,38,23,False,False,best score below threshold (0.022 < 0.435),False
+1531518,item,311.0,7.0,304.0,6,6,8,False,False,best score below threshold (0.308 < 0.400),False
+1915397,item,180.0,6.0,174.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1915399,item,601.0,18.0,583.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1868549,item,288.0,36.0,252.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1475912,item,22.0,6.0,16.0,3,3,4,False,False,best score below threshold (0.001 < 0.400),False
+1528514,item,8.0,8.0,0.0,5,5,1,False,False,DC exhausted,False
+1963406,item,4768.0,48.0,4720.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1296738,item,696.0,72.0,624.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1376548,item,376.0,72.0,304.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1497406,item,775.0,72.0,703.0,3,3,4,False,False,best score below threshold (0.004 < 0.400),False
+1837084,item,406.0,110.0,296.0,44,44,56,False,False,best score below threshold (0.019 < 0.400),False
+1837085,item,403.0,76.0,327.0,33,33,39,False,False,best score below threshold (0.086 < 0.400),False
+1960237,item,115.0,42.0,73.0,8,8,8,False,False,best score below threshold (0.006 < 0.435),False
+1960241,item,36.0,6.0,30.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+100081,item,87.0,24.0,63.0,5,5,7,False,False,best score below threshold (0.001 < 0.400),False
+100827,item,42.0,12.0,30.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+100833,item,180.0,60.0,120.0,6,6,6,False,False,best score below threshold (0.000 < 0.400),False
+100840,item,76.0,8.0,68.0,16,16,3,False,False,best score below threshold (0.000 < 0.400),False
+100907,item,150.0,30.0,120.0,5,5,6,False,False,best score below threshold (0.001 < 0.400),False
+102186,item,747.0,120.0,627.0,12,12,6,False,False,best score below threshold (0.103 < 0.400),False
+102986,item,397.0,60.0,337.0,18,18,31,False,False,best score below threshold (0.311 < 0.400),False
+103319,item,246.0,42.0,204.0,7,7,8,False,False,best score below threshold (0.000 < 0.400),False
+103324,item,120.0,36.0,84.0,3,3,4,False,False,best score below threshold (0.003 < 0.400),False
+107332,item,24.0,24.0,0.0,3,3,2,False,False,DC exhausted,False
+1002120,item,12.0,12.0,0.0,2,2,1,False,False,DC exhausted,False
+1122669,item,222.0,18.0,204.0,5,5,4,False,False,best score below threshold (0.013 < 0.400),False
+1238280,item,383.0,36.0,347.0,6,6,7,False,False,best score below threshold (0.242 < 0.400),False
+1257290,item,255.0,116.0,139.0,26,26,30,False,False,best score below threshold (0.038 < 0.400),False
+1384894,item,188.0,52.0,136.0,12,12,14,False,False,best score below threshold (0.000 < 0.400),False
+1489608,item,44.0,12.0,32.0,3,3,3,False,False,best score below threshold (0.003 < 0.400),False
+1564192,item,171.0,12.0,159.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1623369,item,258.0,60.0,198.0,15,15,16,False,False,best score below threshold (0.001 < 0.400),False
+1721305,item,55.0,6.0,49.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1721310,item,351.0,36.0,315.0,17,17,10,False,False,best score below threshold (0.012 < 0.400),False
+1870613,item,308.0,48.0,260.0,12,12,9,False,False,best score below threshold (0.102 < 0.400),False
+1870617,item,66.0,0.0,66.0,5,5,1,False,False,best score below threshold (0.011 < 0.400),False
+1870623,item,822.0,30.0,792.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1916199,item,230.0,12.0,218.0,3,3,5,False,False,best score below threshold (0.012 < 0.400),False
+1921452,item,80.0,20.0,60.0,10,10,11,False,False,best score below threshold (0.000 < 0.400),False
+1921455,item,91.0,20.0,71.0,6,6,6,False,False,best score below threshold (0.009 < 0.400),False
+1921456,item,48.0,12.0,36.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1922786,item,636.0,12.0,624.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1922787,item,603.0,16.0,587.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1489733,item,1432.0,91.0,1341.0,42,42,92,False,False,best score below threshold (0.142 < 0.400),False
+1519389,item,259.0,104.0,155.0,38,38,53,False,False,best score below threshold (0.265 < 0.400),False
+1619048,item,1283.0,63.0,1220.0,22,22,64,False,False,best score below threshold (0.370 < 0.400),False
+1665665,item,1982.0,130.0,1852.0,47,47,131,False,False,best score below threshold (0.368 < 0.400),False
+1712702,item,1192.0,78.0,1114.0,36,36,79,False,False,best score below threshold (0.225 < 0.400),False
+1712703,item,226.0,90.0,136.0,53,53,91,False,False,best score below threshold (0.241 < 0.400),False
+1773610,item,208.0,64.0,144.0,35,35,65,False,False,best score below threshold (0.395 < 0.400),False
+1850704,item,309.0,35.0,274.0,32,32,36,False,False,best score below threshold (0.036 < 0.400),False
+1850705,item,259.0,59.0,200.0,36,36,60,False,False,best score below threshold (0.299 < 0.400),False
+1909040,item,889.0,67.0,822.0,31,31,68,False,False,best score below threshold (0.289 < 0.400),False
+1993152,item,137.0,29.0,108.0,8,8,30,False,False,best score below threshold (0.124 < 0.400),False
+1988139,item,96.0,16.0,80.0,8,8,17,False,False,best score below threshold (0.007 < 0.400),False
+1275943,item,118.0,8.0,110.0,3,3,5,False,False,best score below threshold (0.001 < 0.400),False
+1413058,item,142.0,30.0,112.0,5,5,6,False,False,best score below threshold (0.009 < 0.400),False
+1519756,item,477.0,78.0,399.0,13,13,14,False,False,best score below threshold (0.000 < 0.400),False
+1556715,item,704.0,201.0,503.0,71,71,202,False,False,best score below threshold (0.356 < 0.400),False
+1665765,item,348.0,122.0,226.0,76,76,123,False,False,best score below threshold (0.399 < 0.400),False
+1665766,item,657.0,364.0,293.0,95,95,183,False,False,best score below threshold (0.371 < 0.400),False
+1797235,item,794.0,376.0,418.0,77,77,95,False,False,best score below threshold (0.338 < 0.400),False
+1797236,item,591.0,345.0,246.0,79,79,116,False,False,best score below threshold (0.290 < 0.400),False
+1881662,item,302.0,38.0,264.0,20,20,39,False,False,best score below threshold (0.328 < 0.400),False
+1154239,item,88.0,14.0,74.0,9,9,15,False,False,best score below threshold (0.002 < 0.400),False
+1947784,item,344.0,6.0,338.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1921982,item,4109.0,66.0,4043.0,12,12,12,False,False,best score below threshold (0.035 < 0.400),False
+1026243,item,144.0,60.0,84.0,15,15,16,False,False,best score below threshold (0.000 < 0.400),False
+1931356,item,17.0,12.0,5.0,3,3,8,False,False,best score below threshold (0.000 < 0.500),False
+1931360,item,24.0,6.0,18.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1931361,item,6.0,6.0,0.0,3,3,1,False,False,DC exhausted,False
+1869521,item,8423.0,258.0,8165.0,27,27,44,False,False,best score below threshold (0.354 < 0.400),False
+1752183,item,658.0,600.0,58.0,55,55,51,False,False,best score below threshold (0.434 < 0.435),False
+1936052,item,336.0,336.0,0.0,39,39,28,False,False,DC exhausted,False
+1994686,item,39.0,0.0,39.0,1,1,1,False,False,no eligible row above threshold,False
+1994687,item,95.0,12.0,83.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1361004,item,587.0,72.0,515.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+1765300,item,67.0,24.0,43.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1993990,item,672.0,32.0,640.0,3,3,5,False,False,best score below threshold (0.000 < 0.400),False
+1374345,item,1128.0,12.0,1116.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1441746,item,954.0,222.0,732.0,37,37,38,False,False,best score below threshold (0.000 < 0.400),False
+1441747,item,300.0,128.0,172.0,35,35,33,False,False,best score below threshold (0.000 < 0.400),False
+1472865,item,900.0,72.0,828.0,6,6,7,False,False,best score below threshold (0.001 < 0.400),False
+1138270,item,79.0,12.0,67.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1620351,item,1278.0,12.0,1266.0,2,2,3,False,False,best score below threshold (0.004 < 0.400),False
+1730028,item,1440.0,576.0,864.0,80,80,97,False,False,best score below threshold (0.036 < 0.400),False
+1927223,item,2027.0,168.0,1859.0,14,14,15,False,False,best score below threshold (0.000 < 0.400),False
+1927224,item,168.0,60.0,108.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1162128,item,305.0,30.0,275.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1532067,item,340.0,152.0,188.0,35,35,39,False,False,best score below threshold (0.004 < 0.400),False
+100677,item,4406.0,500.0,3906.0,13,13,11,False,False,best score below threshold (0.154 < 0.400),False
+411763,item,287.0,115.0,172.0,23,23,24,False,False,best score below threshold (0.047 < 0.400),False
+1301982,item,74.0,23.0,51.0,13,13,24,False,False,best score below threshold (0.100 < 0.400),False
+1301984,item,147.0,49.0,98.0,21,21,50,False,False,best score below threshold (0.140 < 0.400),False
+1021848,item,888.0,18.0,870.0,4,4,4,False,False,best score below threshold (0.009 < 0.400),False
+1021850,item,961.0,24.0,937.0,3,3,3,False,False,best score below threshold (0.000 < 0.400),False
+1022267,item,396.0,48.0,348.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1108842,item,18.0,0.0,18.0,4,4,1,False,False,no eligible row above threshold,False
+1234702,item,2382.0,78.0,2304.0,27,27,40,False,False,best score below threshold (0.040 < 0.400),False
+1238834,item,2491.0,14.0,2477.0,5,5,8,False,False,best score below threshold (0.001 < 0.400),False
+1286157,item,70.0,40.0,30.0,18,18,21,False,False,best score below threshold (0.114 < 0.400),False
+1320052,item,96.0,6.0,90.0,5,5,7,False,False,best score below threshold (0.051 < 0.400),False
+1449505,item,608.0,16.0,592.0,8,8,9,False,False,best score below threshold (0.099 < 0.400),False
+1462839,item,18.0,8.0,10.0,15,15,9,False,False,best score below threshold (0.065 < 0.400),False
+1531275,item,2310.0,126.0,2184.0,64,64,64,False,False,best score below threshold (0.374 < 0.400),False
+1531279,item,54.0,22.0,32.0,11,11,12,False,False,best score below threshold (0.050 < 0.400),False
+1663346,item,110.0,32.0,78.0,14,14,17,False,False,best score below threshold (0.012 < 0.400),False
+1663347,item,136.0,12.0,124.0,18,18,7,False,False,best score below threshold (0.070 < 0.400),False
+1698574,item,259.0,52.0,207.0,22,22,27,False,False,best score below threshold (0.042 < 0.400),False
+1698575,item,294.0,60.0,234.0,16,16,31,False,False,best score below threshold (0.018 < 0.400),False
+1698577,item,52.0,6.0,46.0,5,5,4,False,False,best score below threshold (0.001 < 0.400),False
+1818855,item,552.0,12.0,540.0,12,12,7,False,False,best score below threshold (0.001 < 0.400),False
+1464734,item,60.0,35.0,25.0,19,19,36,False,False,best score below threshold (0.097 < 0.400),False
+1621116,item,240.0,88.0,152.0,25,25,45,False,False,best score below threshold (0.324 < 0.400),False
+1621117,item,358.0,74.0,284.0,33,33,38,False,False,best score below threshold (0.368 < 0.400),False
+1679467,item,262.0,42.0,220.0,21,21,22,False,False,best score below threshold (0.294 < 0.400),False
+1735353,item,188.0,26.0,162.0,12,12,14,False,False,best score below threshold (0.221 < 0.400),False
+1736326,item,108.0,20.0,88.0,8,8,11,False,False,best score below threshold (0.203 < 0.400),False
+1736327,item,600.0,136.0,464.0,72,72,69,False,False,best score below threshold (0.281 < 0.400),False
+1858899,item,215.0,12.0,203.0,7,7,7,False,False,best score below threshold (0.273 < 0.400),False
+1858900,item,481.0,58.0,423.0,30,30,30,False,False,best score below threshold (0.361 < 0.435),False
+1912646,item,259.0,28.0,231.0,14,14,29,False,False,best score below threshold (0.008 < 0.400),False
+1739051,item,322.0,210.0,112.0,33,33,36,False,False,best score below threshold (0.001 < 0.400),False
+1866061,item,78.0,10.0,68.0,11,11,11,False,False,best score below threshold (0.295 < 0.400),False
+1905963,item,1200.0,362.0,838.0,114,114,182,False,False,best score below threshold (0.321 < 0.400),False
+1905964,item,1440.0,416.0,1024.0,132,132,209,False,False,best score below threshold (0.005 < 0.400),False
+1916844,item,1440.0,514.0,926.0,130,130,258,False,False,best score below threshold (0.396 < 0.400),False
+1868548,item,103.0,72.0,31.0,7,7,7,False,False,best score below threshold (0.011 < 0.400),False
+1868550,item,168.0,36.0,132.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1950871,item,79.0,79.0,0.0,13,13,14,True,False,DC exhausted,False
+1960226,item,45.0,36.0,9.0,8,8,7,False,False,best score below threshold (0.000 < 0.400),False
+1960242,item,119.0,66.0,53.0,10,10,12,False,False,best score below threshold (0.000 < 0.400),False
+1960516,item,120.0,84.0,36.0,25,25,15,False,False,best score below threshold (0.012 < 0.435),False
+108058,item,35.0,35.0,0.0,2,2,2,True,False,DC exhausted,False
+108060,item,120.0,96.0,24.0,5,5,5,False,False,best score below threshold (0.035 < 0.435),False
+1257847,item,299.0,72.0,227.0,6,6,7,False,False,best score below threshold (0.001 < 0.400),False
+1301460,item,177.0,96.0,81.0,19,19,9,False,False,best score below threshold (0.093 < 0.435),False
+1967028,item,78.0,24.0,54.0,7,7,3,False,False,best score below threshold (0.059 < 0.435),False
+1122726,item,1124.0,60.0,1064.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1259511,item,156.0,72.0,84.0,6,6,7,False,False,best score below threshold (0.001 < 0.400),False
+1298624,item,390.0,30.0,360.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1938556,item,547.0,60.0,487.0,6,6,7,False,False,best score below threshold (0.001 < 0.400),False
+1694902,item,12.0,0.0,12.0,1,1,1,False,False,no eligible row above threshold,False
+1694904,item,17.0,6.0,11.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1931355,item,6.0,6.0,0.0,1,1,1,False,False,DC exhausted,False
+1808825,item,119.0,114.0,5.0,59,59,20,False,False,best score below threshold (0.381 < 0.500),False
+1505804,item,288.0,144.0,144.0,17,17,13,False,False,best score below threshold (0.002 < 0.400),False
+1993987,item,504.0,8.0,496.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1993988,item,351.0,24.0,327.0,2,2,4,False,False,best score below threshold (0.000 < 0.400),False
+1993992,item,492.0,24.0,468.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1993995,item,528.0,24.0,504.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1993996,item,461.0,6.0,455.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1528515,item,88.0,18.0,70.0,8,8,4,False,False,best score below threshold (0.000 < 0.400),False
+1738939,item,210.0,136.0,74.0,50,50,18,False,False,best score below threshold (0.001 < 0.435),False
+1867208,item,121.0,16.0,105.0,3,3,3,False,False,best score below threshold (0.000 < 0.400),False
+1917048,item,352.0,16.0,336.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1946809,item,159.0,30.0,129.0,8,8,6,False,False,best score below threshold (0.000 < 0.400),False
+1946810,item,160.0,160.0,0.0,49,49,20,False,False,DC exhausted,False
+1946811,item,40.0,16.0,24.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1946815,item,140.0,20.0,120.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1285127,item,540.0,228.0,312.0,44,44,20,False,False,best score below threshold (0.002 < 0.400),False
+1285128,item,756.0,96.0,660.0,11,11,9,False,False,best score below threshold (0.000 < 0.400),False
+1622334,item,420.0,24.0,396.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1855712,item,431.0,104.0,327.0,12,12,14,False,False,best score below threshold (0.000 < 0.400),False
+1946805,item,308.0,36.0,272.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1946807,item,140.0,126.0,14.0,9,9,10,False,False,best score below threshold (0.004 < 0.400),False
+1990317,item,419.0,72.0,347.0,10,10,10,False,False,best score below threshold (0.002 < 0.400),False
+1990319,item,512.0,80.0,432.0,11,11,11,False,False,best score below threshold (0.000 < 0.400),False
+1990320,item,404.0,40.0,364.0,4,4,6,False,False,best score below threshold (0.002 < 0.400),False
+1990322,item,255.0,16.0,239.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1942438,item,539.0,204.0,335.0,18,18,18,False,False,best score below threshold (0.010 < 0.435),False
+1514659,item,310.0,120.0,190.0,13,13,13,False,False,best score below threshold (0.001 < 0.435),False
+1697437,item,411.0,70.0,341.0,11,11,8,False,False,best score below threshold (0.000 < 0.400),False
+1778319,item,123.0,100.0,23.0,16,16,11,False,False,best score below threshold (0.000 < 0.400),False
+1434363,item,4092.0,800.0,3292.0,7,7,9,False,False,best score below threshold (0.000 < 0.400),False
+1125630,item,20.0,20.0,0.0,7,7,5,False,False,DC exhausted,False
+1546551,item,234.0,198.0,36.0,41,41,34,False,False,best score below threshold (0.254 < 0.400),False
+1721365,item,204.0,20.0,184.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1721371,item,142.0,8.0,134.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1830069,item,98.0,80.0,18.0,33,33,41,False,False,best score below threshold (0.089 < 0.400),False
+1830070,item,288.0,170.0,118.0,94,94,86,False,False,best score below threshold (0.377 < 0.400),False
+1830071,item,560.0,108.0,452.0,48,48,55,False,False,best score below threshold (0.002 < 0.400),False
+1830089,item,188.0,82.0,106.0,32,32,42,False,False,best score below threshold (0.012 < 0.400),False
+1830092,item,702.0,360.0,342.0,53,53,61,False,False,best score below threshold (0.093 < 0.400),False
+1859146,item,488.0,80.0,408.0,20,20,21,False,False,best score below threshold (0.000 < 0.400),False
+1927245,item,529.0,272.0,257.0,84,84,137,False,False,best score below threshold (0.371 < 0.400),False
+1980784,item,239.0,27.0,212.0,14,14,28,False,False,best score below threshold (0.009 < 0.400),False
+1980788,item,344.0,77.0,267.0,32,32,78,False,False,best score below threshold (0.208 < 0.400),False
+1980790,item,187.0,183.0,4.0,92,92,184,False,False,best score below threshold (0.156 < 0.435),False
+1980791,item,184.0,18.0,166.0,8,8,19,False,False,best score below threshold (0.002 < 0.400),False
+1980792,item,174.0,76.0,98.0,36,36,77,False,False,best score below threshold (0.023 < 0.400),False
+1987356,item,10.0,10.0,0.0,6,6,10,False,False,DC exhausted,False
+1537849,item,207.0,16.0,191.0,12,12,17,False,False,best score below threshold (0.012 < 0.400),False
+1541951,item,490.0,100.0,390.0,20,20,26,False,False,best score below threshold (0.023 < 0.400),False
+1541952,item,671.0,84.0,587.0,19,19,22,False,False,best score below threshold (0.004 < 0.400),False
+1541953,item,976.0,188.0,788.0,39,39,48,False,False,best score below threshold (0.044 < 0.400),False
+1541954,item,757.0,344.0,413.0,74,74,87,False,False,best score below threshold (0.295 < 0.400),False
+1541960,item,400.0,140.0,260.0,21,21,29,False,False,best score below threshold (0.002 < 0.400),False
+1671858,item,955.0,208.0,747.0,41,41,53,False,False,best score below threshold (0.331 < 0.400),False
+1671860,item,493.0,104.0,389.0,23,23,27,False,False,best score below threshold (0.094 < 0.400),False
+1707248,item,1006.0,90.0,916.0,33,33,46,False,False,best score below threshold (0.180 < 0.400),False
+1707249,item,1049.0,124.0,925.0,37,37,63,False,False,best score below threshold (0.305 < 0.400),False
+1707250,item,431.0,0.0,431.0,16,16,1,False,False,no eligible row above threshold,False
+1707251,item,485.0,2.0,483.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1707255,item,1280.0,108.0,1172.0,31,31,55,False,False,best score below threshold (0.029 < 0.400),False
+1707257,item,1816.0,168.0,1648.0,53,53,85,False,False,best score below threshold (0.363 < 0.400),False
+1889894,item,297.0,10.0,287.0,12,12,6,False,False,best score below threshold (0.164 < 0.400),False
+1446444,item,377.0,176.0,201.0,64,64,89,False,False,best score below threshold (0.307 < 0.400),False
+1446445,item,111.0,66.0,45.0,74,74,34,False,False,best score below threshold (0.180 < 0.400),False
+1446447,item,130.0,20.0,110.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1446448,item,76.0,46.0,30.0,43,43,24,False,False,best score below threshold (0.048 < 0.400),False
+1490937,item,1067.0,114.0,953.0,47,47,115,False,False,best score below threshold (0.302 < 0.400),False
+1910233,item,732.0,27.0,705.0,18,18,28,False,False,best score below threshold (0.269 < 0.400),False
+1910236,item,533.0,11.0,522.0,7,7,12,False,False,best score below threshold (0.006 < 0.400),False
+1915129,item,429.0,18.0,411.0,15,15,19,False,False,best score below threshold (0.067 < 0.400),False
+1915130,item,21.0,21.0,0.0,22,22,21,False,False,DC exhausted,False
+1698526,item,127.0,23.0,104.0,13,13,24,False,False,best score below threshold (0.152 < 0.400),False
+1623374,item,522.0,30.0,492.0,4,4,6,False,False,best score below threshold (0.000 < 0.400),False
+1870612,item,857.0,68.0,789.0,34,34,35,False,False,best score below threshold (0.354 < 0.400),False
+1270533,item,393.0,156.0,237.0,24,24,27,False,False,best score below threshold (0.002 < 0.400),False
+1276966,item,16.0,2.0,14.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1519357,item,19.0,1.0,18.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1545854,item,17.0,2.0,15.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1629321,item,4.0,2.0,2.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1703390,item,6.0,4.0,2.0,5,5,5,False,False,best score below threshold (0.194 < 0.400),False
+1703391,item,11.0,4.0,7.0,3,3,5,False,False,best score below threshold (0.020 < 0.400),False
+1703398,item,2.0,2.0,0.0,1,1,2,False,False,DC exhausted,False
+1703407,item,4.0,3.0,1.0,3,3,4,False,False,best score below threshold (0.006 < 0.400),False
+1890039,item,17.0,3.0,14.0,2,2,4,False,False,best score below threshold (0.003 < 0.400),False
+1448721,item,693.0,468.0,225.0,36,36,40,False,False,best score below threshold (0.094 < 0.400),False
+1900075,item,904.0,768.0,136.0,137,137,97,False,False,best score below threshold (0.265 < 0.435),False
+1944130,item,212.0,0.0,212.0,4,4,1,False,False,no eligible row above threshold,False
+1426932,item,28.0,23.0,5.0,15,15,24,False,False,best score below threshold (0.093 < 0.400),False
+1627588,item,31.0,22.0,9.0,15,15,23,False,False,best score below threshold (0.008 < 0.400),False
+1872042,item,24.0,19.0,5.0,13,13,20,False,False,best score below threshold (0.024 < 0.435),False
+1757908,item,30.0,9.0,21.0,6,6,10,False,False,best score below threshold (0.004 < 0.400),False
+1776689,item,107.0,5.0,102.0,2,2,6,False,False,best score below threshold (0.006 < 0.400),False
+1671405,item,180.0,70.0,110.0,34,34,71,False,False,best score below threshold (0.031 < 0.400),False
+1671406,item,197.0,43.0,154.0,23,23,44,False,False,best score below threshold (0.240 < 0.400),False
+1782923,item,106.0,40.0,66.0,8,8,11,False,False,best score below threshold (0.000 < 0.400),False
+1782926,item,263.0,20.0,243.0,4,4,6,False,False,best score below threshold (0.000 < 0.400),False
+1912387,item,182.0,46.0,136.0,27,27,47,False,False,best score below threshold (0.209 < 0.400),False
+1912388,item,95.0,35.0,60.0,16,16,36,False,False,best score below threshold (0.358 < 0.400),False
+1629420,item,1.0,1.0,0.0,1,1,1,False,False,DC exhausted,False
+1750960,item,551.0,224.0,327.0,45,45,57,False,False,best score below threshold (0.201 < 0.400),False
+1750973,item,217.0,172.0,45.0,35,35,44,False,False,best score below threshold (0.001 < 0.400),False
+1808292,item,315.0,186.0,129.0,37,37,32,False,False,best score below threshold (0.006 < 0.435),False
+1994601,item,390.0,90.0,300.0,15,15,16,False,False,best score below threshold (0.001 < 0.400),False
+1994602,item,482.0,18.0,464.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1436688,item,17.0,7.0,10.0,7,7,8,False,False,best score below threshold (0.145 < 0.400),False
+1436710,item,6.0,1.0,5.0,3,3,2,False,False,best score below threshold (0.000 < 0.400),False
+1503352,item,12.0,3.0,9.0,2,2,4,False,False,best score below threshold (0.002 < 0.400),False
+1503356,item,20.0,7.0,13.0,6,6,8,False,False,best score below threshold (0.176 < 0.400),False
+1503357,item,25.0,8.0,17.0,8,8,9,False,False,best score below threshold (0.184 < 0.400),False
+1503361,item,9.0,6.0,3.0,11,11,7,False,False,best score below threshold (0.008 < 0.400),False
+1503365,item,21.0,13.0,8.0,10,10,14,False,False,best score below threshold (0.013 < 0.400),False
+1526954,item,1.0,1.0,0.0,1,1,1,False,False,DC exhausted,False
+1562462,item,29.0,2.0,27.0,2,2,3,False,False,best score below threshold (0.001 < 0.400),False
+1644677,item,28.0,2.0,26.0,2,2,3,False,False,best score below threshold (0.045 < 0.400),False
+1644685,item,29.0,3.0,26.0,2,2,4,False,False,best score below threshold (0.000 < 0.400),False
+1644691,item,29.0,2.0,27.0,2,2,3,False,False,best score below threshold (0.001 < 0.400),False
+1644694,item,28.0,3.0,25.0,2,2,4,False,False,best score below threshold (0.000 < 0.400),False
+1824810,item,13.0,10.0,3.0,10,10,10,False,False,best score below threshold (0.130 < 0.400),False
+1824813,item,20.0,4.0,16.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1824821,item,2.0,2.0,0.0,1,1,1,False,False,DC exhausted,False
+1824826,item,11.0,7.0,4.0,7,7,6,False,False,best score below threshold (0.365 < 0.400),False
+1824829,item,21.0,6.0,15.0,3,3,4,False,False,best score below threshold (0.001 < 0.400),False
+1914583,item,35.0,7.0,28.0,5,5,8,False,False,best score below threshold (0.245 < 0.400),False
+1914590,item,27.0,5.0,22.0,4,4,6,False,False,best score below threshold (0.003 < 0.400),False
+1395270,item,215.0,72.0,143.0,12,12,13,False,False,best score below threshold (0.000 < 0.400),False
+1395271,item,36.0,30.0,6.0,6,6,6,False,False,best score below threshold (0.000 < 0.400),False
+1395273,item,163.0,163.0,0.0,30,30,28,True,False,DC exhausted,False
+1464935,item,240.0,192.0,48.0,34,34,33,False,False,best score below threshold (0.343 < 0.400),False
+1984062,item,180.0,36.0,144.0,7,7,7,False,False,best score below threshold (0.156 < 0.400),False
+1462450,item,31.0,26.0,5.0,33,33,14,False,False,best score below threshold (0.412 < 0.435),False
+1925600,item,238.0,64.0,174.0,22,22,33,False,False,best score below threshold (0.076 < 0.400),False
+1925601,item,122.0,54.0,68.0,20,20,28,False,False,best score below threshold (0.292 < 0.400),False
+1925602,item,191.0,60.0,131.0,14,14,31,False,False,best score below threshold (0.294 < 0.400),False
+1290971,item,710.0,18.0,692.0,8,8,10,False,False,best score below threshold (0.001 < 0.400),False
+100922,item,59.0,48.0,11.0,8,8,9,False,False,best score below threshold (0.001 < 0.400),False
+100924,item,19.0,15.0,4.0,8,8,6,False,False,best score below threshold (0.001 < 0.435),False
+100925,item,94.0,9.0,85.0,3,3,4,False,False,best score below threshold (0.002 < 0.400),False
+100929,item,20.0,10.0,10.0,8,8,11,False,False,best score below threshold (0.006 < 0.400),False
+1177782,item,9.0,2.0,7.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1868723,item,104.0,60.0,44.0,30,30,61,False,False,best score below threshold (0.184 < 0.400),False
+1764727,item,2.0,1.0,1.0,1,1,2,False,False,best score below threshold (0.002 < 0.400),False
+102093,item,1094.0,222.0,872.0,34,34,38,False,False,best score below threshold (0.001 < 0.400),False
+1801103,item,342.0,268.0,74.0,101,101,68,False,False,best score below threshold (0.161 < 0.435),False
+1408102,item,88.0,46.0,42.0,22,22,24,False,False,best score below threshold (0.188 < 0.400),False
+1627354,item,30.0,22.0,8.0,14,14,12,False,False,best score below threshold (0.025 < 0.400),False
+1739471,item,35.0,22.0,13.0,13,13,23,False,False,best score below threshold (0.189 < 0.400),False
+1871603,item,46.0,42.0,4.0,39,39,22,False,False,best score below threshold (0.008 < 0.435),False
+100664,item,216.0,72.0,144.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+100665,item,354.0,62.0,292.0,25,25,32,False,False,best score below threshold (0.196 < 0.400),False
+1447520,item,361.0,266.0,95.0,83,83,134,False,False,best score below threshold (0.263 < 0.400),False
+1503071,item,208.0,90.0,118.0,14,14,16,False,False,best score below threshold (0.001 < 0.400),False
+1538120,item,96.0,76.0,20.0,43,43,39,False,False,best score below threshold (0.235 < 0.400),False
+1869515,item,95.0,84.0,11.0,60,60,43,False,False,best score below threshold (0.217 < 0.435),False
+1181592,item,18.0,18.0,0.0,4,4,3,False,False,DC exhausted,False
+1741651,item,63.0,20.0,43.0,8,8,11,False,False,best score below threshold (0.007 < 0.400),False
+1741654,item,59.0,44.0,15.0,20,20,23,False,False,best score below threshold (0.001 < 0.400),False
+1721382,item,463.0,47.0,416.0,72,72,48,False,False,best score below threshold (0.298 < 0.400),False
+1721383,item,397.0,139.0,258.0,60,60,140,False,False,best score below threshold (0.383 < 0.400),False
+1721386,item,757.0,187.0,570.0,67,67,188,False,False,best score below threshold (0.354 < 0.400),False
+1830083,item,91.0,18.0,73.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1430909,item,19.0,2.0,17.0,2,2,3,False,False,best score below threshold (0.002 < 0.400),False
+1475954,item,1.0,0.0,1.0,4,4,1,False,False,no eligible row above threshold,False
+1133649,item,1.0,1.0,0.0,1,1,1,False,False,DC exhausted,False
+1503362,item,12.0,1.0,11.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1824812,item,24.0,4.0,20.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1824814,item,10.0,4.0,6.0,3,3,3,False,False,best score below threshold (0.036 < 0.400),False
+1824828,item,19.0,1.0,18.0,1,1,2,False,False,best score below threshold (0.002 < 0.400),False
+1914585,item,35.0,3.0,32.0,2,2,4,False,False,best score below threshold (0.000 < 0.400),False
+1962362,item,29.0,4.0,25.0,2,2,5,False,False,best score below threshold (0.001 < 0.400),False
+1999000,item,1123.0,0.0,1123.0,2,2,1,False,False,no eligible row above threshold,False
+1462449,item,72.0,34.0,38.0,39,39,18,False,False,best score below threshold (0.023 < 0.400),False
+1627759,item,96.0,70.0,26.0,42,42,36,False,False,best score below threshold (0.006 < 0.400),False
+1627768,item,72.0,72.0,0.0,47,47,36,False,False,DC exhausted,False
+1736850,item,74.0,60.0,14.0,64,64,31,False,False,best score below threshold (0.002 < 0.435),False
+1808307,item,120.0,92.0,28.0,36,36,47,False,False,best score below threshold (0.004 < 0.400),False
+1864886,item,180.0,124.0,56.0,88,88,63,False,False,best score below threshold (0.412 < 0.435),False
+1864891,item,179.0,116.0,63.0,42,42,59,False,False,best score below threshold (0.006 < 0.400),False
+1864893,item,180.0,152.0,28.0,68,68,77,False,False,best score below threshold (0.220 < 0.400),False
+1983320,item,180.0,9.0,171.0,8,8,10,False,False,best score below threshold (0.001 < 0.400),False
+1983321,item,240.0,39.0,201.0,21,21,40,False,False,best score below threshold (0.010 < 0.400),False
+1983322,item,360.0,26.0,334.0,22,22,27,False,False,best score below threshold (0.001 < 0.400),False
+1934405,item,1109.0,6.0,1103.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1934406,item,531.0,30.0,501.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1962446,item,21.0,2.0,19.0,2,2,3,False,False,best score below threshold (0.003 < 0.400),False
+1962447,item,21.0,1.0,20.0,1,1,2,False,False,best score below threshold (0.002 < 0.400),False
+1503353,item,6.0,2.0,4.0,6,6,3,False,False,best score below threshold (0.224 < 0.435),False
+1914584,item,35.0,1.0,34.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1181589,item,90.0,6.0,84.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1296737,item,756.0,72.0,684.0,3,3,4,False,False,best score below threshold (0.000 < 0.400),False
+1473945,item,462.0,24.0,438.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+100046,item,60.0,12.0,48.0,1,1,2,False,False,best score below threshold (0.001 < 0.400),False
+100778,item,96.0,0.0,96.0,1,1,1,False,False,no eligible row above threshold,False
+100804,item,204.0,60.0,144.0,10,10,11,False,False,best score below threshold (0.000 < 0.400),False
+100810,item,56.0,12.0,44.0,4,4,2,False,False,best score below threshold (0.000 < 0.400),False
+100829,item,132.0,12.0,120.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+100881,item,60.0,48.0,12.0,9,9,5,False,False,best score below threshold (0.001 < 0.400),False
+100886,item,60.0,36.0,24.0,15,15,7,False,False,best score below threshold (0.331 < 0.400),False
+100904,item,151.0,24.0,127.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+103305,item,108.0,36.0,72.0,11,11,4,False,False,best score below threshold (0.265 < 0.400),False
+103316,item,145.0,12.0,133.0,2,2,2,False,False,best score below threshold (0.008 < 0.435),False
+107325,item,24.0,24.0,0.0,2,2,2,False,False,DC exhausted,False
+1447592,item,100.0,40.0,60.0,14,14,11,False,False,best score below threshold (0.000 < 0.400),False
+1870611,item,49.0,24.0,25.0,6,6,5,False,False,best score below threshold (0.000 < 0.400),False
+1870618,item,108.0,0.0,108.0,7,7,1,False,False,best score below threshold (0.011 < 0.400),False
+1916197,item,1543.0,12.0,1531.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1921453,item,12.0,12.0,0.0,5,5,3,False,False,DC exhausted,False
+1921454,item,32.0,28.0,4.0,7,7,8,False,False,best score below threshold (0.008 < 0.435),False
+1922785,item,289.0,4.0,285.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1922788,item,342.0,32.0,310.0,13,13,9,False,False,best score below threshold (0.375 < 0.400),False
+1519388,item,107.0,50.0,57.0,41,41,51,False,False,best score below threshold (0.170 < 0.400),False
+1391268,item,54.0,48.0,6.0,8,8,9,False,False,best score below threshold (0.010 < 0.435),False
+1994013,item,21.0,18.0,3.0,6,6,7,False,False,best score below threshold (0.001 < 0.400),False
+1154241,item,2.0,2.0,0.0,4,4,2,False,False,DC exhausted,False
+1474981,item,228.0,12.0,216.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1871142,item,162.0,92.0,70.0,131,131,47,False,False,best score below threshold (0.139 < 0.400),False
+1871143,item,24.0,14.0,10.0,33,33,8,False,False,best score below threshold (0.005 < 0.435),False
+1765293,item,49.0,15.0,34.0,11,11,16,False,False,best score below threshold (0.391 < 0.435),False
+1415528,item,528.0,24.0,504.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1463341,item,312.0,12.0,300.0,2,2,2,False,False,best score below threshold (0.000 < 0.400),False
+1620353,item,3141.0,24.0,3117.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1270040,item,186.0,90.0,96.0,35,35,16,False,False,best score below threshold (0.001 < 0.435),False
+1387056,item,216.0,188.0,28.0,62,62,48,False,False,best score below threshold (0.259 < 0.400),False
+1441919,item,216.0,196.0,20.0,55,55,50,False,False,best score below threshold (0.123 < 0.400),False
+1460457,item,129.0,18.0,111.0,23,23,4,False,False,best score below threshold (0.069 < 0.435),False
+1460459,item,113.0,36.0,77.0,6,6,7,False,False,best score below threshold (0.000 < 0.400),False
+411680,item,315.0,130.0,185.0,30,30,27,False,False,best score below threshold (0.011 < 0.400),False
+1274830,item,56.0,32.0,24.0,20,20,17,False,False,best score below threshold (0.118 < 0.400),False
+1184292,item,14.0,10.0,4.0,5,5,6,False,False,best score below threshold (0.017 < 0.400),False
+1307504,item,284.0,92.0,192.0,17,17,24,False,False,best score below threshold (0.011 < 0.400),False
+1379089,item,1092.0,4.0,1088.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1532617,item,294.0,92.0,202.0,20,20,24,False,False,best score below threshold (0.080 < 0.400),False
+1617612,item,71.0,24.0,47.0,4,4,5,False,False,best score below threshold (0.000 < 0.400),False
+1698582,item,19.0,8.0,11.0,12,12,5,False,False,best score below threshold (0.001 < 0.435),False
+1967919,item,323.0,36.0,287.0,3,3,4,False,False,best score below threshold (0.002 < 0.400),False
+1139276,item,262.0,24.0,238.0,8,8,13,False,False,best score below threshold (0.344 < 0.400),False
+1407764,item,234.0,2.0,232.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1464738,item,162.0,3.0,159.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1524146,item,240.0,10.0,230.0,5,5,6,False,False,best score below threshold (0.000 < 0.400),False
+1524147,item,241.0,24.0,217.0,8,8,13,False,False,best score below threshold (0.004 < 0.400),False
+1958542,item,245.0,6.0,239.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1857138,item,134.0,109.0,25.0,58,58,110,False,False,best score below threshold (0.099 < 0.400),False
+103307,item,12.0,12.0,0.0,1,1,1,False,False,DC exhausted,False
+1870614,item,6.0,6.0,0.0,3,3,1,False,False,DC exhausted,False
+1921983,item,2164.0,2.0,2162.0,1,1,3,False,False,no eligible row above threshold,False
+1967920,item,179.0,12.0,167.0,1,1,2,False,False,best score below threshold (0.000 < 0.400),False
+1858897,item,78.0,6.0,72.0,2,2,3,False,False,best score below threshold (0.000 < 0.400),False
+1958543,item,44.0,12.0,32.0,2,2,3,False,False,best score below threshold (0.101 < 0.400),False
+107494,item,156.0,76.0,80.0,425,425,20,False,False,best score below threshold (0.141 < 0.435),False
+1283313,item,78.0,6.0,72.0,353,353,4,False,False,best score below threshold (0.008 < 0.435),False
+1916684,item,4.0,0.0,4.0,1,1,1,False,False,no eligible row above threshold,False
+701082,item,41.0,20.0,21.0,14,14,6,False,False,best score below threshold (0.001 < 0.435),False
+701566,item,1.0,1.0,0.0,11,11,1,True,False,DC exhausted,False
+1476608,item,20.0,0.0,20.0,12,12,1,False,False,no eligible row above threshold,False
+1633678,item,838.0,402.0,436.0,390,390,202,False,False,best score below threshold (0.361 < 0.435),False
+1930593,item,4.0,2.0,2.0,2,2,3,False,False,best score below threshold (0.023 < 0.435),False
+1665336,item,665.0,570.0,95.0,373,373,286,False,False,best score below threshold (0.427 < 0.435),False
+1770744,item,1.0,0.0,1.0,116,116,1,False,False,no eligible row above threshold,False
+1476610,item,2.0,2.0,0.0,38,38,1,True,False,DC exhausted,False
+1532612,item,5.0,0.0,5.0,64,64,1,False,False,best score below threshold (0.016 < 0.500),False
+1508310,item,220.0,220.0,0.0,84,84,110,False,False,DC exhausted,False
+1862822,item,98.0,98.0,0.0,118,118,49,False,False,DC exhausted,False
+1862824,item,104.0,94.0,10.0,248,248,95,False,False,best score below threshold (0.397 < 0.435),False
+1862825,item,132.0,132.0,0.0,98,98,132,False,False,DC exhausted,False
+1862826,item,123.0,108.0,15.0,132,132,109,False,False,best score below threshold (0.391 < 0.435),False
+1864202,item,92.0,86.0,6.0,117,117,87,False,False,best score below threshold (0.404 < 0.435),False
+1864204,item,100.0,94.0,6.0,135,135,48,False,False,best score below threshold (0.364 < 0.435),False
+1697039,item,72.0,35.0,37.0,135,135,36,False,False,best score below threshold (0.364 < 0.435),False
+1736838,item,6.0,4.0,2.0,14,14,5,False,False,best score below threshold (0.048 < 0.435),False
+1858859,item,4.0,1.0,3.0,7,7,2,False,False,best score below threshold (0.122 < 0.435),False
+1858867,item,2.0,1.0,1.0,17,17,2,False,False,best score below threshold (0.169 < 0.435),False
+1858868,item,6.0,0.0,6.0,48,48,1,False,False,no eligible row above threshold,False
+1858870,item,6.0,5.0,1.0,83,83,6,False,False,best score below threshold (0.108 < 0.435),False
+1858876,item,4.0,3.0,1.0,21,21,4,False,False,best score below threshold (0.009 < 0.435),False
+1448526,item,2.0,2.0,0.0,17,17,1,False,False,DC exhausted,False
+1433381,item,1.0,0.0,1.0,13,13,1,False,False,best score below threshold (0.470 < 0.500),False
+1201265,item,1160.0,1120.0,40.0,242,242,113,False,False,best score below threshold (0.358 < 0.435),False
+1854423,item,300.0,180.0,120.0,27,27,16,False,False,best score below threshold (0.401 < 0.435),False
+1854425,item,228.0,168.0,60.0,22,22,15,False,False,best score below threshold (0.405 < 0.435),False
+1868544,item,296.0,296.0,0.0,49,49,37,False,False,DC exhausted,False
+1381859,item,2.0,0.0,2.0,120,120,1,False,False,no eligible row above threshold,False
+1738936,item,8.0,0.0,8.0,7,7,1,False,False,no eligible row above threshold,False
+1285126,item,228.0,144.0,84.0,53,53,13,False,False,best score below threshold (0.065 < 0.435),False
+1529926,item,79.0,68.0,11.0,98,98,69,False,False,best score below threshold (0.405 < 0.435),False
+706126,item,1.0,0.0,1.0,123,123,1,False,False,no eligible row above threshold,False
+1440596,item,108.0,84.0,24.0,25,25,8,False,False,best score below threshold (0.041 < 0.435),False
+1912644,item,33.0,6.0,27.0,77,77,7,False,False,best score below threshold (0.310 < 0.435),False
+1988400,item,274.0,192.0,82.0,157,157,17,False,False,best score below threshold (0.036 < 0.435),False
+1520097,item,84.0,84.0,0.0,36,36,21,False,False,DC exhausted,False
+1533422,item,92.0,92.0,0.0,38,38,23,False,False,DC exhausted,False
+1833765,item,48.0,48.0,0.0,34,34,12,False,False,DC exhausted,False
+1833772,item,120.0,120.0,0.0,63,63,30,False,False,DC exhausted,False
+1936049,item,380.0,380.0,0.0,86,86,32,True,False,DC exhausted,False
+1936053,item,236.0,236.0,0.0,82,82,20,True,False,DC exhausted,False
+1936054,item,480.0,468.0,12.0,55,55,40,False,False,best score below threshold (0.402 < 0.435),False
+1948560,item,567.0,567.0,0.0,107,107,57,True,False,DC exhausted,False
+1994689,item,46.0,46.0,0.0,28,28,12,True,False,DC exhausted,False
+1917046,item,22.0,22.0,0.0,76,76,4,True,False,DC exhausted,False
+1855709,item,144.0,64.0,80.0,121,121,9,False,False,best score below threshold (0.017 < 0.435),False
+1855710,item,256.0,144.0,112.0,114,114,19,False,False,best score below threshold (0.162 < 0.435),False
+1855711,item,240.0,96.0,144.0,106,106,13,False,False,best score below threshold (0.007 < 0.435),False
+100364,item,120.0,72.0,48.0,49,49,73,False,False,best score below threshold (0.145 < 0.435),False
+100365,item,61.0,21.0,40.0,143,143,22,False,False,best score below threshold (0.022 < 0.435),False
+100366,item,26.0,17.0,9.0,168,168,18,False,False,best score below threshold (0.026 < 0.435),False
+100367,item,1.0,1.0,0.0,77,77,1,False,False,DC exhausted,False
+100370,item,1.0,0.0,1.0,6,6,1,False,False,no eligible row above threshold,False
+106550,item,62.0,21.0,41.0,173,173,22,False,False,best score below threshold (0.421 < 0.435),False
+107852,item,60.0,28.0,32.0,43,43,29,False,False,best score below threshold (0.016 < 0.435),False
+1016042,item,12.0,5.0,7.0,39,39,6,False,False,best score below threshold (0.151 < 0.435),False
+1394153,item,52.0,16.0,36.0,274,274,9,False,False,best score below threshold (0.160 < 0.435),False
+1900486,item,1.0,1.0,0.0,5,5,1,False,False,DC exhausted,False
+100054,item,8.0,8.0,0.0,2,2,1,True,False,DC exhausted,False
+101536,item,13.0,6.0,7.0,73,73,2,False,False,best score below threshold (0.003 < 0.435),False
+101949,item,6.0,4.0,2.0,27,27,3,False,False,best score below threshold (0.003 < 0.435),False
+105245,item,2.0,0.0,2.0,23,23,1,False,False,no eligible row above threshold,False
+105247,item,19.0,4.0,15.0,7,7,2,False,False,best score below threshold (0.001 < 0.435),False
+1006544,item,79.0,20.0,59.0,152,152,11,False,False,best score below threshold (0.010 < 0.435),False
+1262335,item,6.0,2.0,4.0,8,8,2,False,False,best score below threshold (0.003 < 0.435),False
+1385761,item,14.0,14.0,0.0,11,11,7,False,False,DC exhausted,False
+1731056,item,5.0,5.0,0.0,25,25,5,False,False,DC exhausted,False
+1801282,item,1.0,0.0,1.0,12,12,1,False,False,no eligible row above threshold,False
+1857813,item,3.0,2.0,1.0,8,8,2,False,False,best score below threshold (0.387 < 0.500),False
+1857817,item,2.0,2.0,0.0,4,4,2,False,False,DC exhausted,False
+1857818,item,5.0,4.0,1.0,4,4,5,False,False,best score below threshold (0.021 < 0.435),False
+1857819,item,10.0,10.0,0.0,18,18,10,False,False,DC exhausted,False
+1872124,item,8.0,4.0,4.0,9,9,5,False,False,best score below threshold (0.000 < 0.435),False
+1364144,item,3.0,3.0,0.0,5,5,3,False,False,DC exhausted,False
+1776842,item,9.0,8.0,1.0,53,53,5,False,False,best score below threshold (0.086 < 0.500),False
+1855889,item,2.0,2.0,0.0,19,19,1,False,False,DC exhausted,False
+1855890,item,2.0,2.0,0.0,24,24,2,False,False,DC exhausted,False
+1855893,item,36.0,36.0,0.0,108,108,9,False,False,DC exhausted,False
+1855895,item,10.0,9.0,1.0,13,13,4,False,False,best score below threshold (0.112 < 0.500),False
+1474636,item,1.0,1.0,0.0,6,6,1,False,False,DC exhausted,False
+108076,item,7.0,5.0,2.0,23,23,6,False,False,best score below threshold (0.006 < 0.435),False
+1015538,item,15.0,6.0,9.0,34,34,4,False,False,best score below threshold (0.003 < 0.435),False
+1680070,item,41.0,20.0,21.0,16,16,6,False,False,best score below threshold (0.004 < 0.435),False
+1866322,item,8.0,6.0,2.0,9,9,2,False,False,best score below threshold (0.044 < 0.500),False
+1866324,item,1.0,1.0,0.0,32,32,1,True,False,DC exhausted,False
+1870224,item,15.0,12.0,3.0,15,15,13,False,False,best score below threshold (0.032 < 0.435),False
+1904923,item,2.0,2.0,0.0,7,7,2,False,False,DC exhausted,False
+1904925,item,3.0,3.0,0.0,26,26,3,False,False,DC exhausted,False
+1015817,item,34.0,24.0,10.0,43,43,13,False,False,best score below threshold (0.002 < 0.435),False
+1980257,item,1.0,1.0,0.0,5,5,1,False,False,DC exhausted,False
+1875460,item,4.0,4.0,0.0,12,12,4,False,False,DC exhausted,False
+1895466,item,47.0,17.0,30.0,174,174,18,False,False,best score below threshold (0.010 < 0.435),False
+1895468,item,60.0,24.0,36.0,184,184,25,False,False,best score below threshold (0.368 < 0.435),False
+1941208,item,2.0,1.0,1.0,8,8,2,False,False,best score below threshold (0.000 < 0.435),False
+1174016,item,120.0,108.0,12.0,74,74,55,False,False,best score below threshold (0.034 < 0.435),False
+1215003,item,72.0,54.0,18.0,72,72,55,False,False,best score below threshold (0.258 < 0.435),False
+1866335,item,1.0,1.0,0.0,2,2,1,True,False,DC exhausted,False
+1895465,item,60.0,37.0,23.0,50,50,38,False,False,best score below threshold (0.176 < 0.435),False
+1952629,item,6.0,6.0,0.0,55,55,6,False,False,DC exhausted,False
+1960559,item,480.0,435.0,45.0,145,145,436,False,False,best score below threshold (0.002 < 0.435),False
+100670,item,10.0,10.0,0.0,12,12,5,False,False,DC exhausted,False
+1528513,item,8.0,0.0,8.0,12,12,1,False,False,no eligible row above threshold,False
+1917047,item,120.0,64.0,56.0,62,62,9,False,False,best score below threshold (0.005 < 0.435),False
+1990148,item,1.0,1.0,0.0,1,1,1,True,False,DC exhausted,False
+1918091,item,10.0,6.0,4.0,3,3,2,False,False,best score below threshold (0.201 < 0.500),False
+100820,item,144.0,36.0,108.0,19,19,4,False,False,best score below threshold (0.125 < 0.435),False
+100903,item,84.0,42.0,42.0,113,113,8,False,False,best score below threshold (0.000 < 0.435),False
+100909,item,12.0,12.0,0.0,55,55,2,False,False,DC exhausted,False
+1317575,item,50.0,50.0,0.0,3,3,1,False,False,DC exhausted,False
+1298555,item,75.0,68.0,7.0,66,66,18,False,False,best score below threshold (0.026 < 0.435),False
+1307113,item,12.0,12.0,0.0,61,61,6,False,False,DC exhausted,False
+1721335,item,30.0,20.0,10.0,181,181,11,False,False,best score below threshold (0.012 < 0.435),False
+1967922,item,4.0,0.0,4.0,7,7,1,False,False,best score below threshold (0.006 < 0.435),False
+1512101,item,22.0,22.0,0.0,8,8,3,True,False,DC exhausted,False
+1501179,item,36.0,36.0,0.0,22,22,3,False,False,DC exhausted,False
+1960228,item,6.0,6.0,0.0,8,8,1,False,False,DC exhausted,False
+1960234,item,1.0,1.0,0.0,3,3,1,True,False,DC exhausted,False
+108061,item,23.0,0.0,23.0,1,1,1,False,False,best score below threshold (0.238 < 0.500),False
+1955392,item,23.0,0.0,23.0,1,1,1,False,False,best score below threshold (0.027 < 0.500),False
+1262954,item,108.0,108.0,0.0,50,50,9,False,False,DC exhausted,False
+1740722,item,108.0,36.0,72.0,15,15,4,False,False,best score below threshold (0.001 < 0.435),False
+1836976,item,12.0,12.0,0.0,31,31,1,False,False,DC exhausted,False
+1004990,item,1.0,0.0,1.0,2,2,1,False,False,no eligible row above threshold,False
+1987289,item,6.0,6.0,0.0,3,3,6,False,False,DC exhausted,False
+1643347,item,140.0,120.0,20.0,22,22,13,False,False,best score below threshold (0.004 < 0.435),False
+1738940,item,24.0,16.0,8.0,13,13,3,False,False,best score below threshold (0.000 < 0.435),False
+1294277,item,84.0,84.0,0.0,9,9,7,False,False,DC exhausted,False
+1946806,item,12.0,12.0,0.0,7,7,1,False,False,DC exhausted,False
+1537392,item,12.0,12.0,0.0,4,4,2,False,False,DC exhausted,False
+1537396,item,6.0,0.0,6.0,2,2,1,False,False,best score below threshold (0.166 < 0.435),False
+1918094,item,1.0,1.0,0.0,3,3,1,True,False,DC exhausted,False
+1963405,item,568.0,568.0,0.0,76,76,71,False,False,DC exhausted,False
+1830074,item,268.0,248.0,20.0,129,129,125,False,False,best score below threshold (0.357 < 0.435),False
+1830087,item,52.0,49.0,3.0,35,35,50,False,False,best score below threshold (0.336 < 0.435),False
+1830095,item,54.0,54.0,0.0,16,16,9,False,False,DC exhausted,False
+1918155,item,5.0,5.0,0.0,88,88,5,False,False,DC exhausted,False
+1918156,item,58.0,32.0,26.0,145,145,9,False,False,best score below threshold (0.002 < 0.435),False
+1927244,item,242.0,120.0,122.0,348,348,61,False,False,best score below threshold (0.424 < 0.435),False
+1980786,item,5.0,5.0,0.0,7,7,5,False,False,DC exhausted,False
+1541950,item,292.0,248.0,44.0,169,169,63,False,False,best score below threshold (0.109 < 0.435),False
+1707240,item,169.0,26.0,143.0,216,216,14,False,False,best score below threshold (0.150 < 0.435),False
+1889895,item,10.0,6.0,4.0,15,15,4,False,False,best score below threshold (0.003 < 0.435),False
+100150,item,55.0,44.0,11.0,207,207,12,False,False,best score below threshold (0.005 < 0.435),False
+1715361,item,2.0,2.0,0.0,241,241,1,False,False,DC exhausted,False
+1910234,item,55.0,26.0,29.0,428,428,27,False,False,best score below threshold (0.056 < 0.435),False
+1915128,item,8.0,7.0,1.0,6,6,8,False,False,best score below threshold (0.100 < 0.435),False
+1982725,item,2.0,2.0,0.0,4,4,2,False,False,DC exhausted,False
+1483598,item,4.0,2.0,2.0,11,11,3,False,False,best score below threshold (0.001 < 0.435),False
+1491915,item,16.0,5.0,11.0,58,58,6,False,False,best score below threshold (0.002 < 0.435),False
+1553849,item,15.0,0.0,15.0,68,68,1,False,False,no eligible row above threshold,False
+1629324,item,2.0,2.0,0.0,3,3,2,False,False,DC exhausted,False
+1629325,item,6.0,1.0,5.0,36,36,2,False,False,best score below threshold (0.000 < 0.435),False
+1703401,item,1.0,1.0,0.0,17,17,1,False,False,DC exhausted,False
+1703403,item,2.0,1.0,1.0,9,9,2,False,False,best score below threshold (0.000 < 0.435),False
+1703408,item,5.0,0.0,5.0,45,45,1,False,False,no eligible row above threshold,False
+1824786,item,15.0,0.0,15.0,64,64,1,False,False,no eligible row above threshold,False
+1824788,item,16.0,6.0,10.0,73,73,4,False,False,best score below threshold (0.001 < 0.435),False
+1824789,item,14.0,4.0,10.0,67,67,3,False,False,best score below threshold (0.001 < 0.435),False
+1824792,item,9.0,4.0,5.0,32,32,3,False,False,best score below threshold (0.002 < 0.435),False
+1914579,item,6.0,0.0,6.0,56,56,1,False,False,no eligible row above threshold,False
+1914580,item,10.0,2.0,8.0,46,46,3,False,False,best score below threshold (0.001 < 0.435),False
+1944131,item,21.0,8.0,13.0,51,51,3,False,False,best score below threshold (0.002 < 0.435),False
+1757906,item,9.0,9.0,0.0,214,214,9,False,False,DC exhausted,False
+1757910,item,1.0,0.0,1.0,12,12,1,False,False,no eligible row above threshold,False
+1758323,item,2.0,2.0,0.0,60,60,2,False,False,DC exhausted,False
+1758325,item,5.0,4.0,1.0,130,130,5,False,False,best score below threshold (0.000 < 0.435),False
+1629419,item,1.0,1.0,0.0,6,6,1,False,False,DC exhausted,False
+1751591,item,1.0,1.0,0.0,4,4,1,False,False,DC exhausted,False
+1824811,item,23.0,0.0,23.0,40,40,1,False,False,no eligible row above threshold,False
+1824825,item,14.0,4.0,10.0,31,31,3,False,False,best score below threshold (0.001 < 0.435),False
+707009,item,82.0,78.0,4.0,198,198,14,False,False,best score below threshold (0.101 < 0.500),False
+1395272,item,48.0,48.0,0.0,18,18,8,False,False,DC exhausted,False
+1984063,item,6.0,6.0,0.0,2,2,1,False,False,DC exhausted,False
+1925594,item,96.0,48.0,48.0,161,161,25,False,False,best score below threshold (0.120 < 0.435),False
+1925599,item,19.0,18.0,1.0,44,44,10,False,False,best score below threshold (0.451 < 0.500),False
+100923,item,3.0,3.0,0.0,23,23,1,False,False,DC exhausted,False
+1888870,item,2.0,2.0,0.0,84,84,2,False,False,DC exhausted,False
+1898726,item,32.0,22.0,10.0,237,237,23,False,False,best score below threshold (0.015 < 0.435),False
+1197239,item,33.0,33.0,0.0,45,45,6,True,False,DC exhausted,False
+1431891,item,3.0,0.0,3.0,24,24,1,False,False,no eligible row above threshold,False
+1498414,item,26.0,18.0,8.0,50,50,10,False,False,best score below threshold (0.048 < 0.435),False
+1627350,item,1.0,0.0,1.0,66,66,1,False,False,no eligible row above threshold,False
+1871604,item,4.0,0.0,4.0,10,10,1,False,False,no eligible row above threshold,False
+1871606,item,4.0,4.0,0.0,16,16,2,False,False,DC exhausted,False
+1909936,item,18.0,8.0,10.0,20,20,9,False,False,best score below threshold (0.009 < 0.435),False
+1830072,item,1.0,1.0,0.0,55,55,1,True,False,DC exhausted,False
+1707239,item,44.0,28.0,16.0,193,193,15,False,False,best score below threshold (0.190 < 0.435),False
+1403405,item,71.0,60.0,11.0,47,47,31,False,False,best score below threshold (0.272 < 0.435),False
+1403447,item,95.0,95.0,0.0,59,59,48,True,False,DC exhausted,False
+1403456,item,72.0,52.0,20.0,39,39,27,False,False,best score below threshold (0.383 < 0.435),False
+1433793,item,180.0,110.0,70.0,69,69,56,False,False,best score below threshold (0.423 < 0.435),False
+1462447,item,72.0,54.0,18.0,50,50,28,False,False,best score below threshold (0.288 < 0.435),False
+1526605,item,179.0,140.0,39.0,76,76,71,False,False,best score below threshold (0.426 < 0.435),False
+1526609,item,72.0,42.0,30.0,28,28,22,False,False,best score below threshold (0.121 < 0.435),False
+1627755,item,96.0,80.0,16.0,53,53,41,False,False,best score below threshold (0.373 < 0.435),False
+1808305,item,180.0,164.0,16.0,112,112,83,False,False,best score below threshold (0.364 < 0.435),False
+1808308,item,240.0,180.0,60.0,94,94,91,False,False,best score below threshold (0.337 < 0.435),False
+1808310,item,120.0,68.0,52.0,58,58,35,False,False,best score below threshold (0.398 < 0.435),False
+1808324,item,240.0,228.0,12.0,125,125,115,False,False,best score below threshold (0.304 < 0.435),False
+1925586,item,144.0,86.0,58.0,107,107,44,False,False,best score below threshold (0.161 < 0.435),False
+1925587,item,120.0,64.0,56.0,84,84,33,False,False,best score below threshold (0.359 < 0.435),False
+1925588,item,120.0,54.0,66.0,93,93,28,False,False,best score below threshold (0.275 < 0.435),False
+1925589,item,144.0,46.0,98.0,75,75,24,False,False,best score below threshold (0.260 < 0.435),False
+1925591,item,180.0,128.0,52.0,110,110,65,False,False,best score below threshold (0.331 < 0.435),False
+1925592,item,142.0,90.0,52.0,112,112,46,False,False,best score below threshold (0.405 < 0.435),False
+1925593,item,180.0,118.0,62.0,105,105,60,False,False,best score below threshold (0.376 < 0.435),False
+1925595,item,72.0,26.0,46.0,63,63,14,False,False,best score below threshold (0.304 < 0.435),False
+1925596,item,180.0,88.0,92.0,99,99,45,False,False,best score below threshold (0.295 < 0.435),False
+1925598,item,180.0,86.0,94.0,109,109,44,False,False,best score below threshold (0.364 < 0.435),False
+1531391,item,1.0,0.0,1.0,4,4,1,False,False,no eligible row above threshold,False
+1757909,item,1.0,0.0,1.0,50,50,1,False,False,no eligible row above threshold,False
+1671407,item,1.0,1.0,0.0,29,29,1,False,False,DC exhausted,False
+1854239,item,1.0,1.0,0.0,19,19,1,False,False,DC exhausted,False
+100071,item,5.0,5.0,0.0,1,1,1,True,False,DC exhausted,False
+100846,item,8.0,4.0,4.0,12,12,2,False,False,best score below threshold (0.001 < 0.435),False
+101367,item,34.0,20.0,14.0,20,20,6,False,False,best score below threshold (0.336 < 0.435),False
+1870609,item,4.0,0.0,4.0,19,19,1,False,False,no eligible row above threshold,False
+1916196,item,8.0,0.0,8.0,2,2,1,False,False,no eligible row above threshold,False
+1916198,item,131.0,131.0,0.0,12,12,11,True,False,DC exhausted,False
+1898873,item,1.0,1.0,0.0,1,1,1,False,False,DC exhausted,False
+1101722,item,2.0,2.0,0.0,48,48,1,False,False,DC exhausted,False
+101064,item,4.0,2.0,2.0,8,8,2,False,False,best score below threshold (0.000 < 0.435),False
+1765296,item,1.0,0.0,1.0,7,7,1,False,False,best score below threshold (0.469 < 0.500),False
+106053,item,3.0,3.0,0.0,22,22,1,False,False,DC exhausted,False
+1330620,item,16.0,16.0,0.0,21,21,16,False,False,DC exhausted,False
+1449503,item,42.0,30.0,12.0,23,23,11,False,False,best score below threshold (0.251 < 0.435),False
+1462838,item,6.0,2.0,4.0,30,30,2,False,False,best score below threshold (0.000 < 0.435),False
+1531272,item,5.0,5.0,0.0,79,79,5,False,False,DC exhausted,False
+1870371,item,35.0,35.0,0.0,15,15,12,True,False,DC exhausted,False
+1917118,item,3.0,3.0,0.0,13,13,3,False,False,DC exhausted,False
+1967921,item,4.0,4.0,0.0,7,7,1,False,False,DC exhausted,False
+1739052,item,18.0,16.0,2.0,42,42,9,False,False,best score below threshold (0.013 < 0.435),False
+100544,item,35.0,35.0,0.0,11,11,6,True,False,DC exhausted,False
+1411505,item,1.0,1.0,0.0,7,7,1,True,False,DC exhausted,False
+1307505,item,3.0,3.0,0.0,11,11,1,False,False,DC exhausted,False
+1739053,item,2.0,0.0,2.0,75,75,1,False,False,best score below threshold (0.015 < 0.435),False

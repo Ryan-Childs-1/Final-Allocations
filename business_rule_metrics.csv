@@ -1,0 +1,14 @@
+metric,value
+group_over_allocated_count,0.0
+fallback_group_warning_count,0.0
+group_allocated_units,90083.0
+group_dc_start_units,455945.0
+cycle_count,26920.0
+partial_allocation_count,26.0
+over_rec_plus_1flm_count,0.0
+final_supply_over_d60_plus_1flm_count,4712.0
+final_supply_over_proj_plus_1flm_count,3008.0
+zero_demand_positive_alloc_count,1109.0
+review_positive_alloc_count,4389.0
+allocate_positive_alloc_count,13889.0
+non_eligible_positive_alloc_count,0.0

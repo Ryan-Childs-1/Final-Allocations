@@ -1,0 +1,15 @@
+{
+  "rows_to_score": 33567,
+  "allocate_rows": 15380,
+  "review_rows": 18187,
+  "eligible_rows": 33567,
+  "include_non_eligible": false,
+  "max_rows": 0,
+  "pickle_load_source_mode": "provided_dataframe_allocate_review_filter",
+  "pickle_rows_before_allocate_review_filter": 33567,
+  "pickle_rows_after_allocate_review_filter": 33567,
+  "iterative_step_scorer_loaded": true,
+  "cycle_trace_rows_recorded": 26920,
+  "step_scorer_training_examples_rebuilt_during_test": false,
+  "called_from": "evaluate_wrapper"
+}

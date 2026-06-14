@@ -1,0 +1,915 @@
+feature
+MIL
+FLM
+Cost
+L30
+D30
+D60
+LW
+TTM
+Supply
+Dc Avail
+Rank
+Proj. Demand
+Alloc. Rec.
+mil
+flm
+cost
+l30
+d30
+d60_month
+lw_month
+ttm_month
+supply
+dc_avail
+rank_score
+rank_inverse
+proj_units
+rec_units
+is_allocate_flag
+is_review_flag
+is_ak_state_or_site
+is_site802_by_rank_blank
+is_site802_by_site
+weighted_velocity
+sheet_need
+mean_demand_signal
+max_demand
+demand_signal_share_above_supply
+demand_signal_share_above_supply_plus_1flm
+demand_signal_count_above_supply
+demand_positive_count
+demand_zero_count
+demand_signal_range
+demand_signal_std
+demand_signal_cv
+recent_vs_long_term_disagreement
+short_term_vs_medium_term_disagreement
+trend_l30_vs_d30
+trend_d30_vs_d60_month
+trend_lw_month_vs_l30
+short_term_acceleration
+supply_gap_velocity
+supply_gap_sheet_need
+supply_gap_proj
+shortage_units
+shortage_sheet_units
+shortage_flms
+shortage_sheet_flms
+overstock_units
+supply_to_weighted_velocity
+supply_to_sheet_need
+supply_to_proj
+rec_flms
+proj_flms
+dc_flms
+proj_gap_units
+proj_gap_flms
+rec_minus_proj
+rec_minus_proj_flms
+proj_minus_rec_flms
+rec_proj_abs_gap
+rec_proj_gap_flms
+proj_rec_agreement
+post_rec_to_proj
+post_rec_to_velocity
+post_rec_to_sheet_need
+dc_after_rec
+dc_after_rec_flms
+proj_supported_by_rec
+rec_exceeds_proj_1flm
+proj_exceeds_rec_1flm
+has_proj_demand
+has_alloc_rec_signal
+rec_trust_score
+rec_trust_high_flag
+rec_trust_low_flag
+rec_cut_candidate
+rec_follow_candidate
+rec_add_candidate
+supply_after_1flm
+supply_after_2flm
+supply_after_3flm
+supply_after_rec
+need_after_1flm
+need_after_2flm
+gap_after_1flm_to_proj
+gap_after_2flm_to_proj
+gap_after_3flm_to_proj
+gap_after_1flm_to_velocity
+gap_after_2flm_to_velocity
+gap_after_3flm_to_velocity
+oversupply_after_1flm
+oversupply_after_2flm
+oversupply_after_3flm
+single_flm_oversupply_risk
+class_line_total_dc_avail
+class_line_total_rec
+class_line_total_shortage_flms
+class_line_row_count
+class_line_avg_supply
+class_line_avg_velocity
+class_line_positive_rec_rate
+class_line_need_percentile
+class_line_rank_percentile
+class_line_velocity_percentile
+class_line_rec_percentile
+shortage_flm_rank_in_class_line
+class_line_dc_pressure_score
+class_line_tight_dc_flag
+class_line_abundant_dc_flag
+top5_need_in_class_line
+top10_need_in_class_line
+site_total_shortage
+site_total_alloc_rec
+site_avg_velocity
+site_avg_supply_gap
+site_positive_rec_rate
+site_need_percentile
+site_velocity_percentile
+site_rec_percentile
+site_supply_pressure_percentile
+pressure_x_rank
+rank_x_weighted_velocity
+rank_x_proj_gap
+cost_log1p
+pressure_x_cost
+allocation_cost_if_1flm
+allocation_cost_if_rec
+cost_x_rec_flms
+zero_l30_flag
+zero_d30_flag
+zero_d60_flag
+zero_lw_flag
+zero_ttm_flag
+recent_sales_all_zero
+sparse_demand_count
+has_any_sales_flag
+review_priority_score
+review_top_5pct_need
+review_top_10pct_need
+review_above_group_median_need
+conservative_need_score
+aggressive_need_score
+allocate_cut_candidate
+allocate_rescue_candidate
+allocate_follow_rec_candidate
+allocate_reduce_to_1flm_candidate
+allocate_zero_out_candidate
+peer_avg_l30
+peer_avg_d30
+peer_avg_d60
+peer_avg_supply
+peer_avg_proj
+peer_avg_rec
+row_l30_vs_peer_avg
+row_proj_vs_peer_avg
+row_rec_vs_peer_avg
+row_supply_gap_vs_peer_avg
+site802_high_rec_low_velocity
+site802_proj_rec_disagreement
+site802_single_flm_risk
+site802_strong_demand_support
+ak_allocate_candidate
+ak_review_main_model_only
+dc_raw_empty
+dc_raw_1_25
+dc_raw_26_50
+dc_raw_51_100
+dc_raw_101_300
+dc_raw_301_600
+dc_raw_601_1000
+dc_raw_1001_2000
+dc_raw_2000_plus
+hash__Class Name__0
+hash__Class Name__1
+hash__Class Name__2
+hash__Class Name__3
+hash__Class Name__4
+hash__Class Name__5
+hash__Class Name__6
+hash__Class Name__7
+hash__Class Name__8
+hash__Class Name__9
+hash__Class Name__10
+hash__Class Name__11
+hash__Class Name__12
+hash__Class Name__13
+hash__Class Name__14
+hash__Class Name__15
+hash__Class Name__16
+hash__Class Name__17
+hash__Class Name__18
+hash__Class Name__19
+hash__Class Name__20
+hash__Class Name__21
+hash__Class Name__22
+hash__Class Name__23
+hash__Class Name__24
+hash__Class Name__25
+hash__Class Name__26
+hash__Class Name__27
+hash__Class Name__28
+hash__Class Name__29
+hash__Class Name__30
+hash__Class Name__31
+hash__Class Name__32
+hash__Class Name__33
+hash__Class Name__34
+hash__Class Name__35
+hash__Class Name__36
+hash__Class Name__37
+hash__Class Name__38
+hash__Class Name__39
+hash__Class Name__40
+hash__Class Name__41
+hash__Class Name__42
+hash__Class Name__43
+hash__Class Name__44
+hash__Class Name__45
+hash__Class Name__46
+hash__Class Name__47
+hash__Class Name__48
+hash__Class Name__49
+hash__Class Name__50
+hash__Class Name__51
+hash__Class Name__52
+hash__Class Name__53
+hash__Class Name__54
+hash__Class Name__55
+hash__Class Name__56
+hash__Class Name__57
+hash__Class Name__58
+hash__Class Name__59
+hash__Class Name__60
+hash__Class Name__61
+hash__Class Name__62
+hash__Class Name__63
+hash__Class Name__64
+hash__Class Name__65
+hash__Class Name__66
+hash__Class Name__67
+hash__Class Name__68
+hash__Class Name__69
+hash__Class Name__70
+hash__Class Name__71
+hash__Class Name__72
+hash__Class Name__73
+hash__Class Name__74
+hash__Class Name__75
+hash__Class Name__76
+hash__Class Name__77
+hash__Class Name__78
+hash__Class Name__79
+hash__Class Name__80
+hash__Class Name__81
+hash__Class Name__82
+hash__Class Name__83
+hash__Class Name__84
+hash__Class Name__85
+hash__Class Name__86
+hash__Class Name__87
+hash__Class Name__88
+hash__Class Name__89
+hash__Class Name__90
+hash__Class Name__91
+hash__Class Name__92
+hash__Class Name__93
+hash__Class Name__94
+hash__Class Name__95
+hash__Class Name__96
+hash__Class Name__97
+hash__Class Name__98
+hash__Class Name__99
+hash__Class Name__100
+hash__Class Name__101
+hash__Class Name__102
+hash__Class Name__103
+hash__Class Name__104
+hash__Class Name__105
+hash__Class Name__106
+hash__Class Name__107
+hash__Class Name__108
+hash__Class Name__109
+hash__Class Name__110
+hash__Class Name__111
+hash__Class Name__112
+hash__Class Name__113
+hash__Class Name__114
+hash__Class Name__115
+hash__Class Name__116
+hash__Class Name__117
+hash__Class Name__118
+hash__Class Name__119
+hash__Class Name__120
+hash__Class Name__121
+hash__Class Name__122
+hash__Class Name__123
+hash__Class Name__124
+hash__Class Name__125
+hash__Class Name__126
+hash__Class Name__127
+hash__Class Name__128
+hash__Class Name__129
+hash__Class Name__130
+hash__Class Name__131
+hash__Class Name__132
+hash__Class Name__133
+hash__Class Name__134
+hash__Class Name__135
+hash__Class Name__136
+hash__Class Name__137
+hash__Class Name__138
+hash__Class Name__139
+hash__Class Name__140
+hash__Class Name__141
+hash__Class Name__142
+hash__Class Name__143
+hash__Class Name__144
+hash__Class Name__145
+hash__Class Name__146
+hash__Class Name__147
+hash__Class Name__148
+hash__Class Name__149
+hash__Class Name__150
+hash__Class Name__151
+hash__Class Name__152
+hash__Class Name__153
+hash__Class Name__154
+hash__Class Name__155
+hash__Class Name__156
+hash__Class Name__157
+hash__Class Name__158
+hash__Class Name__159
+hash__Class Name__160
+hash__Class Name__161
+hash__Class Name__162
+hash__Class Name__163
+hash__Class Name__164
+hash__Class Name__165
+hash__Class Name__166
+hash__Class Name__167
+hash__Class Name__168
+hash__Class Name__169
+hash__Class Name__170
+hash__Class Name__171
+hash__Class Name__172
+hash__Class Name__173
+hash__Class Name__174
+hash__Class Name__175
+hash__Class Name__176
+hash__Class Name__177
+hash__Class Name__178
+hash__Class Name__179
+hash__Class Name__180
+hash__Class Name__181
+hash__Class Name__182
+hash__Class Name__183
+hash__Class Name__184
+hash__Class Name__185
+hash__Class Name__186
+hash__Class Name__187
+hash__Class Name__188
+hash__Class Name__189
+hash__Class Name__190
+hash__Class Name__191
+hash__Line Name__0
+hash__Line Name__1
+hash__Line Name__2
+hash__Line Name__3
+hash__Line Name__4
+hash__Line Name__5
+hash__Line Name__6
+hash__Line Name__7
+hash__Line Name__8
+hash__Line Name__9
+hash__Line Name__10
+hash__Line Name__11
+hash__Line Name__12
+hash__Line Name__13
+hash__Line Name__14
+hash__Line Name__15
+hash__Line Name__16
+hash__Line Name__17
+hash__Line Name__18
+hash__Line Name__19
+hash__Line Name__20
+hash__Line Name__21
+hash__Line Name__22
+hash__Line Name__23
+hash__Line Name__24
+hash__Line Name__25
+hash__Line Name__26
+hash__Line Name__27
+hash__Line Name__28
+hash__Line Name__29
+hash__Line Name__30
+hash__Line Name__31
+hash__Line Name__32
+hash__Line Name__33
+hash__Line Name__34
+hash__Line Name__35
+hash__Line Name__36
+hash__Line Name__37
+hash__Line Name__38
+hash__Line Name__39
+hash__Line Name__40
+hash__Line Name__41
+hash__Line Name__42
+hash__Line Name__43
+hash__Line Name__44
+hash__Line Name__45
+hash__Line Name__46
+hash__Line Name__47
+hash__Line Name__48
+hash__Line Name__49
+hash__Line Name__50
+hash__Line Name__51
+hash__Line Name__52
+hash__Line Name__53
+hash__Line Name__54
+hash__Line Name__55
+hash__Line Name__56
+hash__Line Name__57
+hash__Line Name__58
+hash__Line Name__59
+hash__Line Name__60
+hash__Line Name__61
+hash__Line Name__62
+hash__Line Name__63
+hash__Line Name__64
+hash__Line Name__65
+hash__Line Name__66
+hash__Line Name__67
+hash__Line Name__68
+hash__Line Name__69
+hash__Line Name__70
+hash__Line Name__71
+hash__Line Name__72
+hash__Line Name__73
+hash__Line Name__74
+hash__Line Name__75
+hash__Line Name__76
+hash__Line Name__77
+hash__Line Name__78
+hash__Line Name__79
+hash__Line Name__80
+hash__Line Name__81
+hash__Line Name__82
+hash__Line Name__83
+hash__Line Name__84
+hash__Line Name__85
+hash__Line Name__86
+hash__Line Name__87
+hash__Line Name__88
+hash__Line Name__89
+hash__Line Name__90
+hash__Line Name__91
+hash__Line Name__92
+hash__Line Name__93
+hash__Line Name__94
+hash__Line Name__95
+hash__Line Name__96
+hash__Line Name__97
+hash__Line Name__98
+hash__Line Name__99
+hash__Line Name__100
+hash__Line Name__101
+hash__Line Name__102
+hash__Line Name__103
+hash__Line Name__104
+hash__Line Name__105
+hash__Line Name__106
+hash__Line Name__107
+hash__Line Name__108
+hash__Line Name__109
+hash__Line Name__110
+hash__Line Name__111
+hash__Line Name__112
+hash__Line Name__113
+hash__Line Name__114
+hash__Line Name__115
+hash__Line Name__116
+hash__Line Name__117
+hash__Line Name__118
+hash__Line Name__119
+hash__Line Name__120
+hash__Line Name__121
+hash__Line Name__122
+hash__Line Name__123
+hash__Line Name__124
+hash__Line Name__125
+hash__Line Name__126
+hash__Line Name__127
+hash__Line Name__128
+hash__Line Name__129
+hash__Line Name__130
+hash__Line Name__131
+hash__Line Name__132
+hash__Line Name__133
+hash__Line Name__134
+hash__Line Name__135
+hash__Line Name__136
+hash__Line Name__137
+hash__Line Name__138
+hash__Line Name__139
+hash__Line Name__140
+hash__Line Name__141
+hash__Line Name__142
+hash__Line Name__143
+hash__Line Name__144
+hash__Line Name__145
+hash__Line Name__146
+hash__Line Name__147
+hash__Line Name__148
+hash__Line Name__149
+hash__Line Name__150
+hash__Line Name__151
+hash__Line Name__152
+hash__Line Name__153
+hash__Line Name__154
+hash__Line Name__155
+hash__Line Name__156
+hash__Line Name__157
+hash__Line Name__158
+hash__Line Name__159
+hash__Line Name__160
+hash__Line Name__161
+hash__Line Name__162
+hash__Line Name__163
+hash__Line Name__164
+hash__Line Name__165
+hash__Line Name__166
+hash__Line Name__167
+hash__Line Name__168
+hash__Line Name__169
+hash__Line Name__170
+hash__Line Name__171
+hash__Line Name__172
+hash__Line Name__173
+hash__Line Name__174
+hash__Line Name__175
+hash__Line Name__176
+hash__Line Name__177
+hash__Line Name__178
+hash__Line Name__179
+hash__Line Name__180
+hash__Line Name__181
+hash__Line Name__182
+hash__Line Name__183
+hash__Line Name__184
+hash__Line Name__185
+hash__Line Name__186
+hash__Line Name__187
+hash__Line Name__188
+hash__Line Name__189
+hash__Line Name__190
+hash__Line Name__191
+hash__Line Name__192
+hash__Line Name__193
+hash__Line Name__194
+hash__Line Name__195
+hash__Line Name__196
+hash__Line Name__197
+hash__Line Name__198
+hash__Line Name__199
+hash__Line Name__200
+hash__Line Name__201
+hash__Line Name__202
+hash__Line Name__203
+hash__Line Name__204
+hash__Line Name__205
+hash__Line Name__206
+hash__Line Name__207
+hash__Line Name__208
+hash__Line Name__209
+hash__Line Name__210
+hash__Line Name__211
+hash__Line Name__212
+hash__Line Name__213
+hash__Line Name__214
+hash__Line Name__215
+hash__Line Name__216
+hash__Line Name__217
+hash__Line Name__218
+hash__Line Name__219
+hash__Line Name__220
+hash__Line Name__221
+hash__Line Name__222
+hash__Line Name__223
+hash__Line Name__224
+hash__Line Name__225
+hash__Line Name__226
+hash__Line Name__227
+hash__Line Name__228
+hash__Line Name__229
+hash__Line Name__230
+hash__Line Name__231
+hash__Line Name__232
+hash__Line Name__233
+hash__Line Name__234
+hash__Line Name__235
+hash__Line Name__236
+hash__Line Name__237
+hash__Line Name__238
+hash__Line Name__239
+hash__Line Name__240
+hash__Line Name__241
+hash__Line Name__242
+hash__Line Name__243
+hash__Line Name__244
+hash__Line Name__245
+hash__Line Name__246
+hash__Line Name__247
+hash__Line Name__248
+hash__Line Name__249
+hash__Line Name__250
+hash__Line Name__251
+hash__Line Name__252
+hash__Line Name__253
+hash__Line Name__254
+hash__Line Name__255
+hash__Site__0
+hash__Site__1
+hash__Site__2
+hash__Site__3
+hash__Site__4
+hash__Site__5
+hash__Site__6
+hash__Site__7
+hash__Site__8
+hash__Site__9
+hash__Site__10
+hash__Site__11
+hash__Site__12
+hash__Site__13
+hash__Site__14
+hash__Site__15
+hash__Site__16
+hash__Site__17
+hash__Site__18
+hash__Site__19
+hash__Site__20
+hash__Site__21
+hash__Site__22
+hash__Site__23
+hash__Site__24
+hash__Site__25
+hash__Site__26
+hash__Site__27
+hash__Site__28
+hash__Site__29
+hash__Site__30
+hash__Site__31
+hash__Site__32
+hash__Site__33
+hash__Site__34
+hash__Site__35
+hash__Site__36
+hash__Site__37
+hash__Site__38
+hash__Site__39
+hash__Site__40
+hash__Site__41
+hash__Site__42
+hash__Site__43
+hash__Site__44
+hash__Site__45
+hash__Site__46
+hash__Site__47
+hash__Site__48
+hash__Site__49
+hash__Site__50
+hash__Site__51
+hash__Site__52
+hash__Site__53
+hash__Site__54
+hash__Site__55
+hash__Site__56
+hash__Site__57
+hash__Site__58
+hash__Site__59
+hash__Site__60
+hash__Site__61
+hash__Site__62
+hash__Site__63
+hash__Site__64
+hash__Site__65
+hash__Site__66
+hash__Site__67
+hash__Site__68
+hash__Site__69
+hash__Site__70
+hash__Site__71
+hash__Site__72
+hash__Site__73
+hash__Site__74
+hash__Site__75
+hash__Site__76
+hash__Site__77
+hash__Site__78
+hash__Site__79
+hash__Site__80
+hash__Site__81
+hash__Site__82
+hash__Site__83
+hash__Site__84
+hash__Site__85
+hash__Site__86
+hash__Site__87
+hash__Site__88
+hash__Site__89
+hash__Site__90
+hash__Site__91
+hash__Site__92
+hash__Site__93
+hash__Site__94
+hash__Site__95
+hash__Site__96
+hash__Site__97
+hash__Site__98
+hash__Site__99
+hash__Site__100
+hash__Site__101
+hash__Site__102
+hash__Site__103
+hash__Site__104
+hash__Site__105
+hash__Site__106
+hash__Site__107
+hash__Site__108
+hash__Site__109
+hash__Site__110
+hash__Site__111
+hash__Site__112
+hash__Site__113
+hash__Site__114
+hash__Site__115
+hash__Site__116
+hash__Site__117
+hash__Site__118
+hash__Site__119
+hash__Site__120
+hash__Site__121
+hash__Site__122
+hash__Site__123
+hash__Site__124
+hash__Site__125
+hash__Site__126
+hash__Site__127
+hash__Site__128
+hash__Site__129
+hash__Site__130
+hash__Site__131
+hash__Site__132
+hash__Site__133
+hash__Site__134
+hash__Site__135
+hash__Site__136
+hash__Site__137
+hash__Site__138
+hash__Site__139
+hash__Site__140
+hash__Site__141
+hash__Site__142
+hash__Site__143
+hash__Site__144
+hash__Site__145
+hash__Site__146
+hash__Site__147
+hash__Site__148
+hash__Site__149
+hash__Site__150
+hash__Site__151
+hash__Site__152
+hash__Site__153
+hash__Site__154
+hash__Site__155
+hash__Site__156
+hash__Site__157
+hash__Site__158
+hash__Site__159
+hash__Site__160
+hash__Site__161
+hash__Site__162
+hash__Site__163
+hash__Site__164
+hash__Site__165
+hash__Site__166
+hash__Site__167
+hash__Site__168
+hash__Site__169
+hash__Site__170
+hash__Site__171
+hash__Site__172
+hash__Site__173
+hash__Site__174
+hash__Site__175
+hash__Site__176
+hash__Site__177
+hash__Site__178
+hash__Site__179
+hash__Site__180
+hash__Site__181
+hash__Site__182
+hash__Site__183
+hash__Site__184
+hash__Site__185
+hash__Site__186
+hash__Site__187
+hash__Site__188
+hash__Site__189
+hash__Site__190
+hash__Site__191
+hash__State__0
+hash__State__1
+hash__State__2
+hash__State__3
+hash__State__4
+hash__State__5
+hash__State__6
+hash__State__7
+hash__State__8
+hash__State__9
+hash__State__10
+hash__State__11
+hash__State__12
+hash__State__13
+hash__State__14
+hash__State__15
+hash__State__16
+hash__State__17
+hash__State__18
+hash__State__19
+hash__State__20
+hash__State__21
+hash__State__22
+hash__State__23
+hash__State__24
+hash__State__25
+hash__State__26
+hash__State__27
+hash__State__28
+hash__State__29
+hash__State__30
+hash__State__31
+hash__RankText__0
+hash__RankText__1
+hash__RankText__2
+hash__RankText__3
+hash__RankText__4
+hash__RankText__5
+hash__RankText__6
+hash__RankText__7
+hash__RankText__8
+hash__RankText__9
+hash__RankText__10
+hash__RankText__11
+hash__RankText__12
+hash__RankText__13
+hash__RankText__14
+hash__RankText__15
+hash__Flag__0
+hash__Flag__1
+hash__Flag__2
+hash__Flag__3
+hash__Flag__4
+hash__Flag__5
+hash__Flag__6
+hash__Flag__7
+hash__Flag__8
+hash__Flag__9
+hash__Flag__10
+hash__Flag__11
+hash__Flag__12
+hash__Flag__13
+hash__Flag__14
+hash__Flag__15
+hash__DcBucket__0
+hash__DcBucket__1
+hash__DcBucket__2
+hash__DcBucket__3
+hash__DcBucket__4
+hash__DcBucket__5
+hash__DcBucket__6
+hash__DcBucket__7
+hash__DcBucket__8
+hash__DcBucket__9
+hash__DcBucket__10
+hash__DcBucket__11
+hash__DcBucket__12
+hash__DcBucket__13
+hash__DcBucket__14
+hash__DcBucket__15
+hash__RawDcBucket__0
+hash__RawDcBucket__1
+hash__RawDcBucket__2
+hash__RawDcBucket__3
+hash__RawDcBucket__4
+hash__RawDcBucket__5
+hash__RawDcBucket__6
+hash__RawDcBucket__7
+hash__RawDcBucket__8
+hash__RawDcBucket__9
+hash__RawDcBucket__10
+hash__RawDcBucket__11

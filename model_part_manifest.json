@@ -1,0 +1,60 @@
+{
+  "max_model_mb": 24.0,
+  "models": {
+    "allocate_auxiliary_model.npz": {
+      "file": "allocate_auxiliary_model.npz",
+      "split": false,
+      "size_mb": 3.102
+    },
+    "allocate_classifier_model.npz": {
+      "file": "allocate_classifier_model.npz",
+      "split": false,
+      "size_mb": 6.131
+    },
+    "allocate_ranker_model.npz": {
+      "file": "allocate_ranker_model.npz",
+      "split": false,
+      "size_mb": 4.58
+    },
+    "allocate_regressor_model.npz": {
+      "file": "allocate_regressor_model.npz",
+      "split": false,
+      "size_mb": 8.255
+    },
+    "iterative_flm_step_scorer_model.npz": {
+      "file": "iterative_flm_step_scorer_model.npz",
+      "split": false,
+      "size_mb": 2.117
+    },
+    "review_auxiliary_model.npz": {
+      "file": "review_auxiliary_model.npz",
+      "split": false,
+      "size_mb": 3.091
+    },
+    "review_classifier_model.npz": {
+      "file": "review_classifier_model.npz",
+      "split": false,
+      "size_mb": 6.15
+    },
+    "review_ranker_model.npz": {
+      "file": "review_ranker_model.npz",
+      "split": false,
+      "size_mb": 4.598
+    },
+    "review_regressor_model.npz": {
+      "file": "review_regressor_model.npz",
+      "split": false,
+      "size_mb": 8.278
+    },
+    "shared_demand_model.npz": {
+      "file": "shared_demand_model.npz",
+      "split": false,
+      "size_mb": 2.295
+    },
+    "shared_final_supply_model.npz": {
+      "file": "shared_final_supply_model.npz",
+      "split": false,
+      "size_mb": 2.325
+    }
+  }
+}

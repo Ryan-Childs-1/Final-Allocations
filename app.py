@@ -34,7 +34,25 @@ from allocation_iterative_flm_optimizer import (
     apply_iterative_flm_allocator,
     load_optimizer_config,
 )
-from allocation_nn_core import NumpyMLP, make_meta_features
+try:
+    from allocation_nn_core import NumpyMLP, make_meta_features
+except ImportError:
+    from allocation_nn_core import NumpyMLP
+
+    def make_meta_features(x, classifier_probs=None, rank_scores=None, aux_outputs=None):
+        """Fallback for older core files; keeps Streamlit deploys from crashing."""
+        x = np.asarray(x, dtype=np.float32)
+        parts = [x]
+        if classifier_probs is not None:
+            parts.append(np.asarray(classifier_probs, dtype=np.float32).reshape(-1, 1))
+        if rank_scores is not None:
+            parts.append(np.asarray(rank_scores, dtype=np.float32).reshape(-1, 1))
+        if aux_outputs is not None:
+            aux = np.asarray(aux_outputs, dtype=np.float32)
+            if aux.ndim == 1:
+                aux = aux.reshape(-1, 1)
+            parts.append(aux)
+        return np.concatenate(parts, axis=1).astype(np.float32)
 
 APP_DIR = Path(__file__).resolve().parent
 ART = APP_DIR
@@ -223,8 +241,10 @@ def load_bundle():
         "models": models,
         "model_summary": read_json(ART / "model_summary.json", {}),
         "training_history": read_json(ART / "training_history.json", {}),
+        "tuning_output": read_json(ART / "tuning_output.json", {}),
         "early_stopping": read_json(ART / "early_stopping_summary.json", {}),
         "step_cache_meta": read_json(ART / "iterative_step_scorer_training_cache_metadata.json", {}),
+        "test_input_audit": read_json(ART / "test_input_audit.json", {}),
         "part_manifest": manifest,
     }
     return meta
@@ -553,6 +573,8 @@ registry = bundle["registry"]
 summary = bundle["model_summary"]
 early = bundle["early_stopping"]
 step_meta = bundle["step_cache_meta"]
+tuning_output = bundle.get("tuning_output", {})
+test_input_audit = bundle.get("test_input_audit", {})
 
 # -----------------------------------------------------------------------------
 # Sidebar
@@ -572,12 +594,13 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # Tabs
 # -----------------------------------------------------------------------------
-predict_tab, audit_tab, model_tab, features_tab, optimizer_tab, diagnostics_tab, files_tab = st.tabs([
+predict_tab, audit_tab, model_tab, features_tab, optimizer_tab, test_tab, diagnostics_tab, files_tab = st.tabs([
     "Predict",
     "Audit",
     "Model overview",
     "Feature intelligence",
     "Iterative FLM optimizer",
+    "Test results",
     "Diagnostics",
     "Files",
 ])
@@ -810,6 +833,28 @@ with model_tab:
         "training_mode": registry.get("training_mode"),
     })
 
+    st.markdown("### Full packaged model parameters")
+    st.markdown("These files are included in the flat package so the Streamlit app can explain the model even when the GitHub repo only contains the `.npz` model weights.")
+    with st.expander("registry.json — model map, thresholds, approved columns", expanded=False):
+        st.json(registry)
+    with st.expander("feature_config.json — approved columns, feature names, means/stds, hash dimensions", expanded=False):
+        fc = bundle["feature_config"]
+        st.json({
+            "version": getattr(fc, "version", None),
+            "approved_columns": getattr(fc, "approved_columns", []),
+            "target_column": getattr(fc, "target_column", TARGET_COLUMN),
+            "numeric_feature_names": getattr(fc, "numeric_feature_names", []),
+            "extra_feature_count": len(getattr(fc, "extra_feature_names", []) or []),
+            "final_feature_count": len(getattr(fc, "final_feature_names", []) or []),
+            "hash_dims": getattr(fc, "hash_dims", {}),
+        })
+    with st.expander("iterative_flm_optimizer.json — hard rules and neural step thresholds", expanded=False):
+        st.json(bundle["optimizer_config"])
+    with st.expander("training_history.json — training metrics and model configuration", expanded=False):
+        st.json(bundle.get("training_history", {}))
+    with st.expander("tuning_output.json — tuned thresholds", expanded=False):
+        st.json(tuning_output)
+
 # -----------------------------------------------------------------------------
 # Feature intelligence tab
 # -----------------------------------------------------------------------------
@@ -858,15 +903,56 @@ with features_tab:
     )
 
     if not feature_importance.empty:
-        st.markdown("### Top model feature dashboard")
-        numeric_cols = [c for c in feature_importance.columns if c.lower() not in {"feature", "model", "family"} and pd.api.types.is_numeric_dtype(pd.to_numeric(feature_importance[c], errors="coerce"))]
-        feature_col = "feature" if "feature" in feature_importance.columns else feature_importance.columns[0]
-        chosen_metric = st.selectbox("Feature-importance metric", numeric_cols or [feature_importance.columns[-1]])
-        tmp = feature_importance.copy()
-        tmp[chosen_metric] = pd.to_numeric(tmp[chosen_metric], errors="coerce").fillna(0.0)
-        top = tmp.sort_values(chosen_metric, ascending=False).head(30)
-        show_plot(plot_bar(top.sort_values(chosen_metric), chosen_metric, feature_col, f"Top 30 features by {chosen_metric}", orientation="h"))
-        st.dataframe(feature_importance.head(250), use_container_width=True)
+        st.markdown("### Top 100 features by model")
+        st.markdown(
+            "This table comes from the packaged neural weight-path importance report. "
+            "Each model has its own top-100 feature list, so the shared demand model, final-supply model, Allocate stack, Review stack, and iterative step scorer can be inspected separately."
+        )
+        # Normalize expected column names from the feature dashboard export.
+        fi = feature_importance.copy()
+        model_col = "model_name" if "model_name" in fi.columns else ("model" if "model" in fi.columns else fi.columns[0])
+        feature_col = "feature_name" if "feature_name" in fi.columns else ("feature" if "feature" in fi.columns else fi.columns[0])
+        family_col = "feature_family" if "feature_family" in fi.columns else ("family" if "family" in fi.columns else None)
+        rank_col = "feature_rank" if "feature_rank" in fi.columns else None
+        importance_col = "importance_percent" if "importance_percent" in fi.columns else ("importance_normalized" if "importance_normalized" in fi.columns else None)
+        if importance_col is None:
+            numeric_cols = [c for c in fi.columns if pd.to_numeric(fi[c], errors="coerce").notna().any()]
+            importance_col = numeric_cols[-1] if numeric_cols else fi.columns[-1]
+        fi[importance_col] = pd.to_numeric(fi[importance_col], errors="coerce").fillna(0.0)
+
+        model_options = sorted(fi[model_col].dropna().astype(str).unique().tolist())
+        selected_model = st.selectbox("Select model to inspect", model_options, key="feature_top100_model_select") if model_options else None
+        if selected_model:
+            model_view = fi.loc[fi[model_col].astype(str).eq(selected_model)].copy()
+            if rank_col and rank_col in model_view.columns:
+                model_view = model_view.sort_values(rank_col)
+            else:
+                model_view = model_view.sort_values(importance_col, ascending=False)
+            chart_view = model_view.head(30).copy()
+            title = f"Top 30 features for {selected_model}"
+            show_plot(plot_bar(chart_view.sort_values(importance_col, ascending=True), importance_col, feature_col, title, orientation="h"))
+            if family_col and family_col in model_view.columns:
+                fam = model_view[family_col].fillna("Unknown").value_counts().reset_index()
+                fam.columns = ["family", "count"]
+                show_plot(plot_bar(fam.sort_values("count", ascending=True), "count", "family", f"Top-100 feature families: {selected_model}", orientation="h"))
+            show_cols = [c for c in [rank_col, model_col, "model_role", "model_task", "model_input_dim", "model_output_dim", "hidden_layers", feature_col, family_col, "importance_raw", "importance_normalized", "importance_percent", "cumulative_importance_percent", "importance_method"] if c and c in model_view.columns]
+            st.dataframe(model_view[show_cols], use_container_width=True)
+
+        st.markdown("### Cross-model feature coverage")
+        summary_rows = []
+        for model_name, g in fi.groupby(model_col):
+            row = {"model": model_name, "top_features_reported": int(len(g))}
+            if family_col and family_col in g.columns:
+                row["feature_families"] = int(g[family_col].nunique())
+                row["top_family"] = str(g[family_col].fillna("Unknown").value_counts().index[0]) if len(g) else "—"
+            if "model_input_dim" in g.columns:
+                row["input_dim"] = int(pd.to_numeric(g["model_input_dim"], errors="coerce").dropna().iloc[0]) if pd.to_numeric(g["model_input_dim"], errors="coerce").notna().any() else None
+            summary_rows.append(row)
+        fi_summary = pd.DataFrame(summary_rows)
+        if not fi_summary.empty:
+            st.dataframe(fi_summary, use_container_width=True)
+            show_plot(plot_bar(fi_summary.sort_values("top_features_reported", ascending=True), "top_features_reported", "model", "Top-feature rows packaged by model", orientation="h"))
+        st.download_button("Download top-100 feature dashboard", fi.to_csv(index=False).encode("utf-8"), file_name="model_feature_dashboard_top100.csv", mime="text/csv", key="feature_top100_download")
     elif not feature_catalog_file.empty:
         st.markdown("### Packaged feature catalog")
         st.dataframe(feature_catalog_file.head(500), use_container_width=True)
@@ -930,6 +1016,129 @@ with optimizer_tab:
 
     st.markdown("### Optimizer configuration")
     st.json(opt)
+
+
+# -----------------------------------------------------------------------------
+# Test results tab
+# -----------------------------------------------------------------------------
+with test_tab:
+    st.subheader("Packaged test results")
+    st.markdown(
+        "These are the held-out/test outputs generated from the trained iterative model. "
+        "The test path confirms the app uses only Allocate and Review rows, loads the iterative step scorer, and does not rebuild the old million-row step-scorer training set during testing."
+    )
+    overall = read_csv_if_exists("overall_segment_metrics.csv")
+    business = read_csv_if_exists("business_rule_metrics.csv")
+    component = read_csv_if_exists("component_model_metrics.csv")
+    grouped = read_csv_if_exists("grouped_metrics_all.csv")
+    group_audit_static = read_csv_if_exists("iterative_group_audit.csv")
+    cycle_static = read_csv_if_exists("iterative_cycle_trace.csv")
+    largest = read_csv_if_exists("largest_errors_top500.csv")
+    prediction_detail = read_csv_if_exists("prediction_detail.csv")
+    report_path = ART / "TEST_REPORT.md"
+
+    if test_input_audit:
+        c1, c2, c3, c4, c5 = st.columns(5)
+        c1.metric("Rows scored", fmt_int(test_input_audit.get("rows_to_score", 0)))
+        c2.metric("Allocate rows", fmt_int(test_input_audit.get("allocate_rows", 0)))
+        c3.metric("Review rows", fmt_int(test_input_audit.get("review_rows", 0)))
+        c4.metric("Cycle rows", fmt_int(test_input_audit.get("cycle_trace_rows_recorded", 0)))
+        c5.metric("Step scorer loaded", "Yes" if test_input_audit.get("iterative_step_scorer_loaded") else "No")
+        with st.expander("Full test input audit", expanded=False):
+            st.json(test_input_audit)
+
+    if not overall.empty:
+        all_row = overall.loc[overall["segment"].astype(str).str.lower().eq("all")].head(1)
+        if not all_row.empty:
+            r = all_row.iloc[0]
+            c1, c2, c3, c4, c5 = st.columns(5)
+            c1.metric("Overall exact", fmt_pct(r.get("exact_rate")))
+            c2.metric("Within 1 FLM", fmt_pct(r.get("within_1_flm_rate")))
+            c3.metric("MAE units", fmt_num(r.get("mae_units")))
+            c4.metric("Pred units", fmt_int(r.get("pred_units")))
+            c5.metric("Unit delta", fmt_int(r.get("unit_delta")))
+        plot_df = overall[[c for c in ["segment", "exact_rate", "within_1_flm_rate"] if c in overall.columns]].copy()
+        if {"segment", "exact_rate", "within_1_flm_rate"}.issubset(plot_df.columns):
+            melted = plot_df.melt("segment", var_name="metric", value_name="rate")
+            fig = px.bar(melted, x="segment", y="rate", color="metric", barmode="group", title="Test accuracy by segment")
+            fig.update_yaxes(tickformat=".0%")
+            st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(overall, use_container_width=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if not business.empty:
+            st.markdown("### Business rule results")
+            if {"metric", "value"}.issubset(business.columns):
+                show_plot(plot_bar(business.sort_values("value", ascending=True), "value", "metric", "Business rule metrics", orientation="h"))
+            st.dataframe(business, use_container_width=True)
+    with col2:
+        if not component.empty:
+            st.markdown("### Component model test metrics")
+            metric_options = [c for c in ["accuracy", "precision", "recall", "f1", "mae", "rmse", "rank_corr", "brier"] if c in component.columns and pd.to_numeric(component[c], errors="coerce").notna().any()]
+            metric = st.selectbox("Component metric to chart", metric_options, key="test_component_metric") if metric_options else None
+            if metric and "component" in component.columns:
+                tmp = component.copy()
+                tmp[metric] = pd.to_numeric(tmp[metric], errors="coerce").fillna(0)
+                show_plot(plot_bar(tmp.sort_values(metric, ascending=True), metric, "component", f"Component model metric: {metric}", orientation="h"))
+            st.dataframe(component, use_container_width=True)
+
+    if not grouped.empty:
+        st.markdown("### Grouped test metrics")
+        if {"group_col", "group_value", "mae_units"}.issubset(grouped.columns):
+            group_col = st.selectbox("Group metric split", sorted(grouped["group_col"].dropna().astype(str).unique().tolist()), key="test_group_col")
+            tmp = grouped.loc[grouped["group_col"].astype(str).eq(group_col)].copy()
+            tmp["mae_units"] = pd.to_numeric(tmp["mae_units"], errors="coerce").fillna(0)
+            show_plot(plot_bar(tmp.sort_values("mae_units", ascending=True).tail(25), "mae_units", "group_value", f"Worst 25 {group_col} groups by MAE", orientation="h"))
+        st.dataframe(grouped.head(1500), use_container_width=True)
+
+    if not group_audit_static.empty:
+        st.markdown("### Iterative item group audit")
+        c1, c2, c3, c4 = st.columns(4)
+        c1.metric("Groups", fmt_int(len(group_audit_static)))
+        if "over_allocated" in group_audit_static.columns:
+            c2.metric("Over-allocated groups", fmt_int(group_audit_static["over_allocated"].astype(bool).sum()))
+        if "allocated_units" in group_audit_static.columns:
+            c3.metric("Allocated units", fmt_int(pd.to_numeric(group_audit_static["allocated_units"], errors="coerce").sum()))
+        if "cycles_run" in group_audit_static.columns:
+            c4.metric("Cycles", fmt_int(pd.to_numeric(group_audit_static["cycles_run"], errors="coerce").sum()))
+        st.dataframe(group_audit_static.head(1000), use_container_width=True)
+
+    if not cycle_static.empty:
+        st.markdown("### Iterative cycle trace")
+        if {"model_segment", "cycle_score"}.issubset(cycle_static.columns):
+            tmp = cycle_static.copy()
+            tmp["cycle_score"] = pd.to_numeric(tmp["cycle_score"], errors="coerce")
+            fig = px.histogram(tmp.dropna(subset=["cycle_score"]).sample(min(len(tmp), 20000), random_state=42), x="cycle_score", color="model_segment", nbins=40, title="Recorded neural step-score distribution")
+            st.plotly_chart(fig, use_container_width=True)
+        st.dataframe(cycle_static.head(1500), use_container_width=True)
+
+    if not largest.empty:
+        st.markdown("### Largest errors")
+        st.dataframe(largest.head(500), use_container_width=True)
+
+    if not prediction_detail.empty:
+        st.markdown("### Prediction detail sample")
+        cols = [c for c in ["Class Name", "Line Name", "Item", "Site", "State", "Flag", "Supply", "Dc Avail", "Proj. Demand", "Alloc. Rec.", "Final Alloc.", "Predicted Final Alloc", "predicted_final_alloc", "classifier_probability", "rank_priority", "pred_flms_raw", "shared_demand_score", "target_final_supply_prediction", "decision_reason"] if c in prediction_detail.columns]
+        st.dataframe(prediction_detail[cols].head(1000) if cols else prediction_detail.head(1000), use_container_width=True)
+
+    if report_path.exists():
+        with st.expander("Full markdown test report", expanded=False):
+            st.markdown(report_path.read_text(encoding="utf-8", errors="ignore"))
+
+    downloads = []
+    for name in ["overall_segment_metrics.csv", "business_rule_metrics.csv", "component_model_metrics.csv", "grouped_metrics_all.csv", "iterative_group_audit.csv", "iterative_cycle_trace.csv", "largest_errors_top500.csv", "prediction_detail.csv", "TEST_REPORT.md"]:
+        fp = ART / name
+        if fp.exists():
+            downloads.append(name)
+    if downloads:
+        with zipfile.ZipFile(io.BytesIO(), "w") as _:
+            pass
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_DEFLATED) as z:
+            for name in downloads:
+                z.write(ART / name, arcname=name)
+        st.download_button("Download packaged test results", buf.getvalue(), file_name="allocation_test_results_packaged.zip", mime="application/zip", key="download_packaged_test_results")
 
 # -----------------------------------------------------------------------------
 # Diagnostics tab
@@ -1025,4 +1234,9 @@ review_auxiliary_model.npz
 review_regressor_model.npz
 iterative_flm_step_scorer_model.npz""")
 
-    st.markdown("Optional diagnostics files such as `model_feature_dashboard_top100.csv`, `business_rule_metrics.csv`, `component_model_metrics.csv`, `grouped_metrics_all.csv`, `iterative_group_audit.csv`, and `iterative_cycle_trace.csv` unlock the richer model-review visualizations.")
+    st.markdown("### Packaged metadata and diagnostics included in this zip")
+    st.markdown(
+        "The flat package also includes `registry.json`, `feature_config.json`, `iterative_flm_optimizer.json`, `model_summary.json`, "
+        "`training_history.json`, `tuning_output.json`, `early_stopping_summary.json`, `model_feature_dashboard_top100.csv`, and the packaged test-result CSV/Markdown files. "
+        "Those files let the app explain model parameters, top features, and test results even if your GitHub repo only had the `.npz` weights before adding this package."
+    )

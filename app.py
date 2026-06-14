@@ -568,6 +568,231 @@ def build_feature_catalog_table(bundle: Dict) -> pd.DataFrame:
 
 
 # -----------------------------------------------------------------------------
+# Model dependency / model-usage helpers
+# -----------------------------------------------------------------------------
+
+META_OUTPUT_MAP = {
+    "meta_output_0": "classifier_probability",
+    "meta_output_1": "rank_priority",
+    "meta_output_2": "aux_cut_rec",
+    "meta_output_3": "aux_follow_rec",
+    "meta_output_4": "aux_one_flm",
+    "meta_output_5": "aux_zero_out",
+    "meta_output_6": "aux_below_flm_remainder",
+}
+
+UPSTREAM_SIGNAL_TO_SOURCE = {
+    "shared_demand_score": "shared_demand",
+    "shared_demand_gap_flm_before": "shared_demand",
+    "shared_demand_gap_flm_after": "shared_demand",
+    "target_final_supply_prediction": "shared_final_supply",
+    "final_supply_gap_flm_before": "shared_final_supply",
+    "final_supply_gap_flm_after": "shared_final_supply",
+    "target_supply_gap_flm_before": "shared_final_supply",
+    "target_supply_gap_flm_after": "shared_final_supply",
+    "classifier_probability": "segment_classifier",
+    "classifier_above_threshold": "segment_classifier",
+    "rank_priority": "segment_ranker",
+    "pred_flms_raw": "segment_regressor",
+    "pred_remaining_flm_before": "segment_regressor",
+    "pred_remaining_flm_after": "segment_regressor",
+    "aux_cut_rec": "segment_auxiliary",
+    "aux_follow_rec": "segment_auxiliary",
+    "aux_one_flm": "segment_auxiliary",
+    "aux_zero_out": "segment_auxiliary",
+    "aux_below_flm_remainder": "segment_auxiliary",
+}
+
+DYNAMIC_STEP_WORDS = [
+    "allocated_", "dc_remaining", "row_cap_remaining", "current_supply", "after_step",
+    "gap_flm", "remaining_flm", "over_", "candidate_score_formula", "step_units",
+    "step_flms", "cycle", "before", "after", "review_soft_excess",
+]
+
+BASE_STEP_FEATURES = {
+    "segment_allocate", "segment_review", "flm", "mil", "supply", "alloc_rec",
+    "proj_demand", "d60_month", "weighted_velocity", "demand_target",
+}
+
+
+def normalize_feature_importance(fi: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
+    """Return a consistent view of the model_feature_dashboard_top100.csv export."""
+    if fi is None or fi.empty:
+        return pd.DataFrame(), {}
+    out = fi.copy()
+    cols = {
+        "model": "model_name" if "model_name" in out.columns else ("model" if "model" in out.columns else out.columns[0]),
+        "feature": "feature_name" if "feature_name" in out.columns else ("feature" if "feature" in out.columns else out.columns[0]),
+        "family": "feature_family" if "feature_family" in out.columns else ("family" if "family" in out.columns else None),
+        "rank": "feature_rank" if "feature_rank" in out.columns else None,
+        "importance": "importance_percent" if "importance_percent" in out.columns else ("importance_normalized" if "importance_normalized" in out.columns else None),
+    }
+    if cols["importance"] is None:
+        numeric_cols = [c for c in out.columns if pd.to_numeric(out[c], errors="coerce").notna().any()]
+        cols["importance"] = numeric_cols[-1] if numeric_cols else out.columns[-1]
+    out[cols["importance"]] = pd.to_numeric(out[cols["importance"]], errors="coerce").fillna(0.0)
+    out[cols["model"]] = out[cols["model"]].astype(str)
+    out[cols["feature"]] = out[cols["feature"]].astype(str)
+    if cols["family"]:
+        out[cols["family"]] = out[cols["family"]].astype(str)
+    return out, cols
+
+
+def model_signal_category(feature_name: str, model_name: str = "") -> str:
+    """Classify a top feature by whether it comes from another model, a rule/state value, or base features."""
+    f = str(feature_name)
+    low = f.lower()
+    if f in META_OUTPUT_MAP:
+        return "Stacked neural output"
+    if f in {"shared_demand_score", "shared_demand_gap_flm_before", "shared_demand_gap_flm_after"}:
+        return "Shared demand output"
+    if f in {"target_final_supply_prediction", "final_supply_gap_flm_before", "final_supply_gap_flm_after", "target_supply_gap_flm_before", "target_supply_gap_flm_after"}:
+        return "Shared final-supply output"
+    if f in {"classifier_probability", "rank_priority", "pred_flms_raw"} or low.startswith("aux_"):
+        return "Segment neural output"
+    if str(model_name) == "iterative_flm_step_scorer" and (f in BASE_STEP_FEATURES):
+        return "Base worksheet / demand state"
+    if str(model_name) == "iterative_flm_step_scorer" and any(word in low for word in DYNAMIC_STEP_WORDS):
+        return "Iterative cycle state / rule context"
+    if low.startswith("hash__"):
+        return "Base categorical identity"
+    return "Base worksheet / engineered feature"
+
+
+def dependency_share_for_features(fi: pd.DataFrame, cols: Dict[str, str], model_name: str, feature_names: List[str]) -> Tuple[float, str]:
+    if fi.empty or not feature_names:
+        return 0.0, ""
+    model_col, feature_col, imp_col = cols["model"], cols["feature"], cols["importance"]
+    g = fi.loc[fi[model_col].astype(str).eq(model_name)].copy()
+    if g.empty:
+        return 0.0, ""
+    denom = float(g[imp_col].sum()) or 1.0
+    hit = g.loc[g[feature_col].isin(feature_names)].copy()
+    share = float(hit[imp_col].sum()) / denom
+    evidence = ", ".join(hit.sort_values(imp_col, ascending=False)[feature_col].head(5).astype(str).tolist())
+    return share, evidence
+
+
+def dependency_share_by_prefix(fi: pd.DataFrame, cols: Dict[str, str], model_name: str, prefixes: List[str]) -> Tuple[float, str]:
+    if fi.empty or not prefixes:
+        return 0.0, ""
+    model_col, feature_col, imp_col = cols["model"], cols["feature"], cols["importance"]
+    g = fi.loc[fi[model_col].astype(str).eq(model_name)].copy()
+    if g.empty:
+        return 0.0, ""
+    denom = float(g[imp_col].sum()) or 1.0
+    mask = pd.Series(False, index=g.index)
+    for p in prefixes:
+        mask = mask | g[feature_col].astype(str).str.startswith(p)
+    hit = g.loc[mask].copy()
+    share = float(hit[imp_col].sum()) / denom
+    evidence = ", ".join(hit.sort_values(imp_col, ascending=False)[feature_col].head(5).astype(str).tolist())
+    return share, evidence
+
+
+def build_dependency_edges(fi: pd.DataFrame) -> pd.DataFrame:
+    fi, cols = normalize_feature_importance(fi)
+    rows = []
+
+    def add(source, target, relationship, feature_names=None, prefixes=None, always_used=True, note=""):
+        if prefixes:
+            share, evidence = dependency_share_by_prefix(fi, cols, target, prefixes)
+        else:
+            share, evidence = dependency_share_for_features(fi, cols, target, feature_names or [])
+        rows.append({
+            "source_model": source,
+            "downstream_model": target,
+            "relationship": relationship,
+            "top100_importance_share": share,
+            "top100_importance_pct": share * 100.0,
+            "evidence_features_in_downstream_top100": evidence or "Not in top-100; still wired as an input" if always_used else evidence,
+            "design_dependency": bool(always_used),
+            "note": note,
+        })
+
+    shared_targets = [
+        "allocate_classifier", "allocate_ranker", "allocate_auxiliary", "allocate_regressor",
+        "review_classifier", "review_ranker", "review_auxiliary", "review_regressor",
+    ]
+    for target in shared_targets:
+        add("shared_demand", target, "Appended learned demand context", ["shared_demand_score"])
+        add("shared_final_supply", target, "Appended learned final-supply context", ["target_final_supply_prediction"])
+
+    # Regressors are stacked on top of their classifier, ranker, and auxiliary outputs.
+    for segment in ["allocate", "review"]:
+        reg = f"{segment}_regressor"
+        add(f"{segment}_classifier", reg, "Meta feature into FLM sizing regressor", ["meta_output_0"], note="meta_output_0 = classifier_probability")
+        add(f"{segment}_ranker", reg, "Meta feature into FLM sizing regressor", ["meta_output_1"], note="meta_output_1 = rank_priority")
+        add(f"{segment}_auxiliary", reg, "Auxiliary behavior outputs into FLM sizing regressor", ["meta_output_2", "meta_output_3", "meta_output_4", "meta_output_5", "meta_output_6"], note="meta_output_2..6 = cut/follow/one-FLM/zero/remainder signals")
+
+    # Iterative step scorer consumes shared and segment-model outputs directly.
+    add("shared_demand", "iterative_flm_step_scorer", "Direct marginal-step feature", ["shared_demand_score", "shared_demand_gap_flm_before", "shared_demand_gap_flm_after"])
+    add("shared_final_supply", "iterative_flm_step_scorer", "Direct marginal-step feature", ["target_final_supply_prediction", "target_supply_gap_flm_before", "target_supply_gap_flm_after", "final_supply_gap_flm_before", "final_supply_gap_flm_after"])
+    add("allocate/review_classifier", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["classifier_probability", "classifier_above_threshold"])
+    add("allocate/review_ranker", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["rank_priority"])
+    add("allocate/review_regressor", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["pred_flms_raw", "pred_remaining_flm_before", "pred_remaining_flm_after"])
+    add("allocate/review_auxiliary", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["aux_cut_rec", "aux_follow_rec", "aux_one_flm", "aux_zero_out", "aux_below_flm_remainder"])
+
+    out = pd.DataFrame(rows)
+    if not out.empty:
+        out["top100_importance_pct"] = out["top100_importance_pct"].round(2)
+    return out
+
+
+def build_model_signal_mix(fi: pd.DataFrame) -> pd.DataFrame:
+    fi, cols = normalize_feature_importance(fi)
+    if fi.empty:
+        return pd.DataFrame()
+    model_col, feature_col, imp_col = cols["model"], cols["feature"], cols["importance"]
+    work = fi.copy()
+    work["signal_source"] = [model_signal_category(f, m) for f, m in zip(work[feature_col], work[model_col])]
+    grouped = work.groupby([model_col, "signal_source"], as_index=False)[imp_col].sum()
+    totals = grouped.groupby(model_col)[imp_col].transform("sum").replace(0, np.nan)
+    grouped["share_of_top100_importance"] = (grouped[imp_col] / totals).fillna(0.0)
+    grouped["share_pct"] = grouped["share_of_top100_importance"] * 100.0
+    grouped = grouped.rename(columns={model_col: "model", imp_col: "importance_sum"})
+    return grouped.sort_values(["model", "share_pct"], ascending=[True, False])
+
+
+def build_iterative_insight_table(fi: pd.DataFrame) -> pd.DataFrame:
+    fi, cols = normalize_feature_importance(fi)
+    if fi.empty:
+        return pd.DataFrame()
+    model_col, feature_col, imp_col = cols["model"], cols["feature"], cols["importance"]
+    rank_col = cols.get("rank")
+    step = fi.loc[fi[model_col].astype(str).eq("iterative_flm_step_scorer")].copy()
+    if step.empty:
+        return pd.DataFrame()
+    step["signal_source"] = [model_signal_category(f, "iterative_flm_step_scorer") for f in step[feature_col]]
+    step["source_detail"] = step[feature_col].map(lambda f: UPSTREAM_SIGNAL_TO_SOURCE.get(str(f), "optimizer_state_or_base_feature"))
+    cols_out = [c for c in [rank_col, feature_col, "signal_source", "source_detail", cols.get("family"), imp_col, "importance_normalized", "cumulative_importance_percent"] if c and c in step.columns]
+    return step[cols_out].sort_values(rank_col if rank_col else imp_col, ascending=True if rank_col else False)
+
+
+def sankey_from_dependency_edges(edges: pd.DataFrame):
+    if edges is None or edges.empty:
+        return None
+    show = edges.copy()
+    show["value"] = pd.to_numeric(show["top100_importance_share"], errors="coerce").fillna(0.0)
+    # Keep zero-evidence wired dependencies visible but much thinner.
+    show["value"] = np.where(show["value"] > 0, show["value"] * 100.0, 1.0)
+    labels = pd.Index(pd.concat([show["source_model"], show["downstream_model"]]).astype(str).unique())
+    index = {name: i for i, name in enumerate(labels)}
+    fig = go.Figure(data=[go.Sankey(
+        node=dict(label=list(labels), pad=18, thickness=15),
+        link=dict(
+            source=show["source_model"].astype(str).map(index),
+            target=show["downstream_model"].astype(str).map(index),
+            value=show["value"],
+            customdata=show["relationship"].astype(str),
+            hovertemplate="%{source.label} → %{target.label}<br>Weight: %{value:.2f}<br>%{customdata}<extra></extra>",
+        ),
+    )])
+    fig.update_layout(title="Model-to-model usage map", height=620, margin=dict(l=10, r=10, t=60, b=10))
+    return fig
+
+
+# -----------------------------------------------------------------------------
 # Load app bundle
 # -----------------------------------------------------------------------------
 try:
@@ -617,10 +842,11 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # Tabs
 # -----------------------------------------------------------------------------
-predict_tab, audit_tab, model_tab, features_tab, optimizer_tab, test_tab, diagnostics_tab, files_tab = st.tabs([
+predict_tab, audit_tab, model_tab, dependency_tab, features_tab, optimizer_tab, test_tab, diagnostics_tab, files_tab = st.tabs([
     "Predict",
     "Audit",
     "Model overview",
+    "Model usage map",
     "Feature intelligence",
     "Iterative FLM optimizer",
     "Test results",
@@ -880,6 +1106,117 @@ with model_tab:
         st.json(bundle.get("training_history", {}))
     with st.expander("tuning_output.json — tuned thresholds", expanded=False):
         st.json(tuning_output)
+
+
+# -----------------------------------------------------------------------------
+# Model usage / dependency tab
+# -----------------------------------------------------------------------------
+with dependency_tab:
+    st.subheader("Model usage map: how the neural stack feeds itself")
+    st.markdown(
+        """
+        This page answers two related questions: **which model outputs are reused downstream**, and **how much of the final iterative FLM decision comes from neural-network insight versus rule/cycle-state context**. The percentages below are based on the packaged `model_feature_dashboard_top100.csv` weight-path importance file, so they describe the visible top-feature reliance inside each downstream model rather than pretending to be exact causal attribution.
+        """
+    )
+
+    feature_importance = read_csv_if_exists("model_feature_dashboard_top100.csv")
+    dependency_edges = build_dependency_edges(feature_importance)
+    signal_mix = build_model_signal_mix(feature_importance)
+    iterative_table = build_iterative_insight_table(feature_importance)
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Models in registry", fmt_int(len(registry.get("models", {}))))
+    c2.metric("Dependency edges shown", fmt_int(len(dependency_edges)))
+    c3.metric("Shared outputs", "2")
+    c4.metric("Iterative step inputs", fmt_int(len(STEP_FEATURE_NAMES)))
+
+    if not dependency_edges.empty:
+        fig = sankey_from_dependency_edges(dependency_edges)
+        show_plot(fig)
+        st.markdown("### Model-to-model dependency table")
+        display_edges = dependency_edges.copy()
+        display_edges["top100_importance_pct"] = display_edges["top100_importance_pct"].map(lambda x: f"{x:.2f}%")
+        st.dataframe(display_edges, use_container_width=True)
+
+        st.markdown("### Shared-model usage by downstream model")
+        shared = dependency_edges.loc[dependency_edges["source_model"].isin(["shared_demand", "shared_final_supply"])].copy()
+        if not shared.empty:
+            shared_chart = shared.copy()
+            shared_chart["top100_importance_pct"] = pd.to_numeric(shared_chart["top100_importance_pct"], errors="coerce").fillna(0.0)
+            fig = px.bar(
+                shared_chart,
+                x="downstream_model",
+                y="top100_importance_pct",
+                color="source_model",
+                barmode="group",
+                title="Direct shared-output presence in each downstream model's top features",
+                labels={"top100_importance_pct": "Share of downstream top-feature importance (%)", "downstream_model": "Downstream model"},
+            )
+            fig.update_layout(height=520, margin=dict(l=20, r=20, t=60, b=120), xaxis_tickangle=-35)
+            show_plot(fig)
+            st.caption("A zero bar does not mean the shared model is absent. It means that specific shared output was not strong enough to appear in that downstream model's top-100 feature list. The shared outputs are still appended into the downstream feature matrix by design.")
+
+    if not signal_mix.empty:
+        st.markdown("### Source mix inside each model's top features")
+        signal_chart = signal_mix.copy()
+        fig = px.bar(
+            signal_chart,
+            x="model",
+            y="share_pct",
+            color="signal_source",
+            title="Where each model's visible top-feature strength comes from",
+            labels={"share_pct": "Share of top-feature importance (%)", "signal_source": "Signal source"},
+        )
+        fig.update_layout(height=560, margin=dict(l=20, r=20, t=60, b=130), xaxis_tickangle=-35)
+        show_plot(fig)
+        st.dataframe(signal_mix, use_container_width=True)
+
+    st.markdown("### How the iterative model gets its insight")
+    st.markdown(
+        """
+        The final `iterative_flm_step_scorer` is intentionally a **meta-decision model**. It does not only look at raw worksheet demand. It sees the shared demand estimate, shared final-supply estimate, Allocate/Review classifier probability, rank priority, raw FLM sizing estimate, auxiliary behavior outputs, and the live state of the item cycle after each FLM is placed.
+
+        In practical terms:
+
+        - **Shared models** contribute broad demand and target-final-supply context.
+        - **Allocate/Review classifiers** indicate whether a row deserves any units.
+        - **Allocate/Review rankers** provide store priority within an item group.
+        - **Allocate/Review regressors** estimate how many FLMs the row wants before DC constraints.
+        - **Auxiliary heads** describe behavior such as cut recommendation, follow recommendation, one-FLM, zero-out, or below-FLM remainder.
+        - **Cycle-state features** tell the scorer what has already been allocated, how much DC remains, whether another FLM would exceed recommendation room, and whether supply would become risky after the next step.
+        """
+    )
+
+    if not iterative_table.empty:
+        source_mix = iterative_table.copy()
+        imp_col = "importance_percent" if "importance_percent" in source_mix.columns else None
+        if imp_col:
+            mix = source_mix.groupby("signal_source", as_index=False)[imp_col].sum()
+            total = float(mix[imp_col].sum()) or 1.0
+            mix["share_pct"] = mix[imp_col] / total * 100.0
+            show_plot(plot_bar(mix.sort_values("share_pct", ascending=True), "share_pct", "signal_source", "Iterative step-scorer insight sources", orientation="h"))
+        st.dataframe(iterative_table, use_container_width=True)
+
+    st.markdown("### Architecture facts")
+    arch_rows = [
+        {"layer": "Base feature matrix", "output_used_by": "Shared models + Allocate/Review stacks", "details": f"{registry.get('feature_count_base', summary.get('features_base', '—'))} base features"},
+        {"layer": "shared_demand", "output_used_by": "Allocate stack, Review stack, iterative step scorer", "details": "Adds learned demand score to downstream models."},
+        {"layer": "shared_final_supply", "output_used_by": "Allocate stack, Review stack, iterative step scorer", "details": "Adds learned target final-supply estimate."},
+        {"layer": "Allocate classifier/ranker/aux/regressor", "output_used_by": "Iterative step scorer", "details": "Produces allocate probability, priority, behavior signals, and raw FLM size."},
+        {"layer": "Review classifier/ranker/aux/regressor", "output_used_by": "Iterative step scorer", "details": "Same structure as Allocate, but tuned for Review rows."},
+        {"layer": "iterative_flm_step_scorer", "output_used_by": "Final item optimizer", "details": f"{registry.get('step_scorer_feature_count', len(STEP_FEATURE_NAMES))} marginal-step features; allocates one FLM at a time."},
+        {"layer": "Hard optimizer repair", "output_used_by": "Final output", "details": "Protects DC inventory, excludes non-eligible rows, and caps Final Alloc. at Alloc. Rec. + 1 FLM."},
+    ]
+    st.dataframe(pd.DataFrame(arch_rows), use_container_width=True)
+
+    if not dependency_edges.empty:
+        st.download_button(
+            "Download model dependency table",
+            dependency_edges.to_csv(index=False).encode("utf-8"),
+            file_name="model_dependency_usage_map.csv",
+            mime="text/csv",
+            key="download_model_dependency_usage_map",
+        )
 
 # -----------------------------------------------------------------------------
 # Feature intelligence tab

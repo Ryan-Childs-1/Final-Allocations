@@ -100,7 +100,7 @@ st.markdown(
     <div class="soft-card">
       <b>Upload an allocation workbook, predict Final Alloc., audit against existing allocations, and inspect exactly how the model uses features.</b>
       <div class="small-muted" style="margin-top:.35rem;">
-        This app is built for the current Model 3 single-review neural system: shared demand, shared final supply, direct Allocate neural sizing, Review-only neural iterative 1-FLM scoring, and no AK/Site 802 specialist routing.
+        This app is built for the current Model 3 single-review neural system: shared demand, shared final supply, Allocate/Review neural stacks, an all-row neural iterative 1-FLM scorer, and no AK/Site 802 specialist routing.
       </div>
     </div>
     """,
@@ -435,9 +435,8 @@ def _final_hard_safety_repair(
 ) -> Tuple[np.ndarray, pd.DataFrame]:
     """Final non-negotiable safety layer for the Streamlit app.
 
-    This is intentionally applied after the Allocate direct path and the Review
-    iterative path are combined. It guarantees two business rules regardless of
-    upstream model behavior:
+    This is intentionally applied after the all-row iterative optimizer. It
+    guarantees two business rules regardless of upstream model behavior:
 
     1. Row cap: Final Alloc. <= Alloc. Rec. + max_above_rec_flm * FLM.
     2. Item/DC cap: total Final Alloc. for an item group <= Left in DC / Dc Avail.
@@ -556,6 +555,47 @@ def _combine_group_audit(canon: pd.DataFrame, allocate_units: np.ndarray, review
     return pd.DataFrame(rows)
 
 
+
+def _group_audit_from_iterative_final(canon: pd.DataFrame, final_units: np.ndarray, optimizer_group_audit: pd.DataFrame) -> pd.DataFrame:
+    """Summarize item/DC groups after the all-row iterative allocator and final safety repair.
+
+    The optimizer is still the decision engine for both Allocate and Review rows.
+    This helper recomputes the displayed group totals from the final repaired
+    units, so the UI reflects the actual downloadable recommendations.
+    """
+    keys = item_group_key(canon).reset_index(drop=True)
+    quality = item_group_quality(canon).reset_index(drop=True)
+    units = np.maximum(np.asarray(final_units, dtype=float), 0.0)
+    opt_map = {}
+    if isinstance(optimizer_group_audit, pd.DataFrame) and not optimizer_group_audit.empty and "allocation_group" in optimizer_group_audit.columns:
+        opt_map = optimizer_group_audit.set_index("allocation_group").to_dict(orient="index")
+    rows = []
+    for group, positions in keys.groupby(keys, sort=False).groups.items():
+        idxs = np.asarray(list(positions), dtype=int)
+        if len(idxs) == 0:
+            continue
+        dc_start = _group_dc_pool(canon, idxs)
+        allocated = float(units[idxs].sum())
+        rg = opt_map.get(group, {})
+        rows.append({
+            "allocation_group": group,
+            "allocation_group_quality": str(quality.iloc[idxs[0]]) if len(idxs) else "unknown",
+            "dc_start": float(dc_start),
+            "allocated_units": float(allocated),
+            "allocate_iterative_units": float(units[idxs[allocate_mask(canon)[idxs]]].sum()) if len(idxs) else 0.0,
+            "review_iterative_units": float(units[idxs[review_mask(canon)[idxs]]].sum()) if len(idxs) else 0.0,
+            "dc_remaining": float(dc_start - allocated),
+            "rows_in_group": int(len(idxs)),
+            "eligible_rows_in_group": int(eligible_mask(canon)[idxs].sum()),
+            "cycles_run": int(rg.get("cycles_run", rg.get("cycle_count", 0)) or 0),
+            "partial_used": bool(rg.get("partial_used", False)),
+            "over_allocated": bool(allocated > dc_start + 1e-9),
+            "stop_reason": str(rg.get("stop_reason", "all eligible rows processed by iterative FLM scorer")),
+            "trace_truncated": bool(rg.get("trace_truncated", False)),
+        })
+    return pd.DataFrame(rows)
+
+
 def predict_dataframe(df: pd.DataFrame, bundle: Dict) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     canon = ensure_columns(df.copy(), include_target=True).reset_index(drop=True)
     X_base, _, canon = build_feature_matrix(canon, config=bundle["feature_config"], fit=False)
@@ -596,85 +636,47 @@ def predict_dataframe(df: pd.DataFrame, bundle: Dict) -> Tuple[pd.DataFrame, pd.
                     signals.loc[idx, name] = aux[:, j]
 
     # Final routing:
-    #   • Allocate rows use the trained Allocate neural regressor directly.
-    #   • Review rows use the neural iterative FLM step scorer.
-    # The Review cycle sees only the DC remaining after the direct Allocate path.
+    #   • Allocate rows use their Allocate neural stack to produce signals.
+    #   • Review rows use their Review neural stack to produce signals.
+    #   • Both segments then go through the same neural iterative FLM optimizer.
+    # This restores the intended final decision layer: the iterative step scorer
+    # is the last allocator for every eligible row, not only Review rows.
     optimizer_config = dict(bundle["optimizer_config"] or {})
-    priority = pd.to_numeric(signals["classifier_probability"], errors="coerce").fillna(0.0).to_numpy(float)
-    allocate_units = _direct_allocate_neural_units(canon, signals, optimizer_config)
-    allocate_units = _repair_units_to_group_dc(canon, allocate_units, priority=priority)
+    raw_final_units, row_explain, optimizer_group_audit, cycle_trace = apply_iterative_flm_allocator(
+        canon,
+        signals,
+        config=optimizer_config,
+        step_scorer_model=models.get("iterative_flm_step_scorer"),
+    )
 
-    review_units = np.zeros(len(canon), dtype=int)
-    row_explain = pd.DataFrame({
-        "row_index": np.arange(len(canon), dtype=int),
-        "allocation_group": item_group_key(canon).to_numpy(),
-        "allocation_group_quality": item_group_quality(canon).to_numpy(),
-        "model_segment": signals["model_segment"].to_numpy(),
-        "classifier_probability": signals["classifier_probability"].to_numpy(float),
-        "rank_priority": signals["rank_priority"].to_numpy(float),
-        "pred_flms_raw": signals["pred_flms_raw"].to_numpy(float),
-        "shared_demand_score": signals["shared_demand_score"].to_numpy(float),
-        "target_final_supply_prediction": signals["target_final_supply_prediction"].to_numpy(float),
-        "row_cap_units": _row_cap_units(canon, optimizer_config),
-        "predicted_final_alloc": np.zeros(len(canon), dtype=int),
-        "predicted_final_supply": numeric_series(canon, "Supply").to_numpy(float),
-        "allocated_flms": np.zeros(len(canon), dtype=float),
-        "decision_reason": np.where(
-            allocate_mask(canon),
-            "allocated by direct Allocate neural regressor; Review rows use iterative FLM scorer",
-            "pending Review iterative scorer",
-        ),
-        "final_decision_path": np.where(allocate_mask(canon), "Allocate direct neural regressor", "Review iterative FLM scorer"),
-    })
-
-    review_group_audit = pd.DataFrame()
-    cycle_trace = pd.DataFrame()
-    rev_mask = review_mask(canon)
-    if np.any(rev_mask):
-        review_canon = canon.loc[rev_mask].copy().reset_index(drop=True)
-        review_signals = signals.loc[rev_mask].copy().reset_index(drop=True)
-        review_original_idx = np.where(rev_mask)[0]
-        remaining_dc_all = _remaining_dc_for_review(canon, allocate_units)
-        review_canon["Dc Avail"] = remaining_dc_all[rev_mask]
-        r_units, r_explain, review_group_audit, cycle_trace = apply_iterative_flm_allocator(
-            review_canon,
-            review_signals,
-            config=optimizer_config,
-            step_scorer_model=models.get("iterative_flm_step_scorer"),
-        )
-        review_units[review_original_idx] = np.asarray(r_units, dtype=int)
-        if not r_explain.empty:
-            mapped = r_explain.copy()
-            mapped["row_index"] = review_original_idx[mapped["row_index"].astype(int).to_numpy()]
-            for _, row in mapped.iterrows():
-                idx = int(row["row_index"])
-                for col in mapped.columns:
-                    if col == "row_index":
-                        continue
-                    row_explain.at[idx, col] = row[col]
-                row_explain.at[idx, "final_decision_path"] = "Review iterative FLM scorer"
-
-    raw_final_units = np.asarray(allocate_units, dtype=int) + np.asarray(review_units, dtype=int)
     final_units, final_safety = _final_hard_safety_repair(canon, raw_final_units, signals, optimizer_config)
-
-    # Keep path-level unit columns consistent after final safety repairs. Since
-    # rows are routed either to Allocate direct or Review iterative, the repaired
-    # final value can be assigned back to the same path without ambiguity.
-    alloc_mask = allocate_mask(canon)
-    rev_mask_all = review_mask(canon)
-    allocate_units = np.where(alloc_mask, final_units, 0).astype(int)
-    review_units = np.where(rev_mask_all, final_units, 0).astype(int)
-    group_audit = _combine_group_audit(canon, allocate_units, review_units, review_group_audit)
+    group_audit = _group_audit_from_iterative_final(canon, final_units, optimizer_group_audit)
 
     flm = np.maximum(numeric_series(canon, "FLM").to_numpy(float), 1.0)
     supply = numeric_series(canon, "Supply").to_numpy(float)
+    if not isinstance(row_explain, pd.DataFrame) or len(row_explain) != len(canon):
+        row_explain = pd.DataFrame({"row_index": np.arange(len(canon), dtype=int)})
+    else:
+        row_explain = row_explain.reset_index(drop=True).copy()
+        if "row_index" not in row_explain.columns:
+            row_explain.insert(0, "row_index", np.arange(len(canon), dtype=int))
+
+    # Avoid duplicate safety columns if a prior app version already created them.
+    safety_cols = [c for c in row_explain.columns if str(c).startswith("final_safety_")]
+    if safety_cols:
+        row_explain = row_explain.drop(columns=safety_cols)
     row_explain = pd.concat([row_explain, final_safety.drop(columns=["row_index"])], axis=1)
     row_explain["predicted_final_alloc"] = final_units.astype(int)
     row_explain["predicted_final_supply"] = supply + final_units
     row_explain["allocated_flms"] = final_units / flm
-    row_explain.loc[allocate_mask(canon) & (final_units <= 0), "decision_reason"] = "blank: direct Allocate neural regressor recommended zero"
-    row_explain.loc[allocate_mask(canon) & (final_units > 0), "decision_reason"] = "allocated by direct Allocate neural regressor"
-    row_explain.loc[review_mask(canon) & (final_units <= 0) & row_explain["decision_reason"].eq("pending Review iterative scorer"), "decision_reason"] = "blank: Review iterative scorer recommended zero"
+    row_explain["final_decision_path"] = "Iterative FLM scorer"
+    if "decision_reason" not in row_explain.columns:
+        row_explain["decision_reason"] = np.where(final_units > 0, "allocated by iterative FLM scorer", "blank: iterative FLM scorer recommended zero")
+    else:
+        row_explain["decision_reason"] = row_explain["decision_reason"].fillna("").astype(str)
+        blank_reason = row_explain["decision_reason"].str.strip().eq("")
+        row_explain.loc[blank_reason & (final_units > 0), "decision_reason"] = "allocated by iterative FLM scorer"
+        row_explain.loc[blank_reason & (final_units <= 0), "decision_reason"] = "blank: iterative FLM scorer recommended zero"
     row_explain.loc[row_explain["final_safety_row_cap_reduction_units"] > 0, "decision_reason"] = row_explain["decision_reason"].astype(str) + "; final safety cap: reduced to Alloc. Rec. + 1 FLM"
     row_explain.loc[row_explain["final_safety_dc_reduction_units"] > 0, "decision_reason"] = row_explain["decision_reason"].astype(str) + "; final safety repair: reduced to available Left in DC"
 
@@ -1004,18 +1006,16 @@ def build_dependency_edges(fi: pd.DataFrame) -> pd.DataFrame:
         add(f"{segment}_ranker", reg, "Meta feature into FLM sizing regressor", ["meta_output_1"], note="meta_output_1 = rank_priority")
         add(f"{segment}_auxiliary", reg, "Auxiliary behavior outputs into FLM sizing regressor", ["meta_output_2", "meta_output_3", "meta_output_4", "meta_output_5", "meta_output_6"], note="meta_output_2..6 = cut/follow/one-FLM/zero/remainder signals")
 
-    # Final runtime routing. Allocate rows use the direct Allocate neural regressor.
-    add("allocate_classifier", "final_allocate_direct_path", "Runtime classifier gate for Allocate rows", ["classifier_probability", "classifier_above_threshold"], note="Allocate rows do not use the iterative FLM scorer at runtime.")
-    add("allocate_ranker", "final_allocate_direct_path", "Priority/repair signal for Allocate rows", ["rank_priority"], note="Used for visibility and DC repair priority around direct Allocate predictions.")
-    add("allocate_regressor", "final_allocate_direct_path", "Direct FLM sizing output for Allocate rows", ["pred_flms_raw"], note="The app converts the Allocate regressor's predicted FLMs into Final Alloc units.")
-    add("allocate_auxiliary", "final_allocate_direct_path", "Behavior signals available beside direct Allocate sizing", ["aux_cut_rec", "aux_follow_rec", "aux_one_flm", "aux_zero_out", "aux_below_flm_remainder"])
-
-    # Review iterative step scorer consumes shared and Review-model outputs directly.
-    add("shared_demand", "iterative_flm_step_scorer", "Direct marginal-step feature for Review rows", ["shared_demand_score", "shared_demand_gap_flm_before", "shared_demand_gap_flm_after"])
-    add("shared_final_supply", "iterative_flm_step_scorer", "Direct marginal-step feature for Review rows", ["target_final_supply_prediction", "target_supply_gap_flm_before", "target_supply_gap_flm_after", "final_supply_gap_flm_before", "final_supply_gap_flm_after"])
-    add("review_classifier", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["classifier_probability", "classifier_above_threshold"])
-    add("review_ranker", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["rank_priority"])
-    add("review_regressor", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["pred_flms_raw", "pred_remaining_flm_before", "pred_remaining_flm_after"])
+    # Final runtime routing. Both Allocate and Review rows use the all-row
+    # iterative FLM step scorer after their segment-specific neural stack builds
+    # the runtime signals.
+    add("shared_demand", "iterative_flm_step_scorer", "Direct marginal-step feature for all eligible rows", ["shared_demand_score", "shared_demand_gap_flm_before", "shared_demand_gap_flm_after"])
+    add("shared_final_supply", "iterative_flm_step_scorer", "Direct marginal-step feature for all eligible rows", ["target_final_supply_prediction", "target_supply_gap_flm_before", "target_supply_gap_flm_after", "final_supply_gap_flm_before", "final_supply_gap_flm_after"])
+    for segment in ["allocate", "review"]:
+        add(f"{segment}_classifier", "iterative_flm_step_scorer", "Direct marginal-step classifier signal", ["classifier_probability", "classifier_above_threshold"])
+        add(f"{segment}_ranker", "iterative_flm_step_scorer", "Direct marginal-step rank signal", ["rank_priority"])
+        add(f"{segment}_regressor", "iterative_flm_step_scorer", "Direct marginal-step FLM sizing signal", ["pred_flms_raw", "pred_remaining_flm_before", "pred_remaining_flm_after"])
+        add(f"{segment}_auxiliary", "iterative_flm_step_scorer", "Direct marginal-step auxiliary behavior signals", ["aux_cut_rec", "aux_follow_rec", "aux_one_flm", "aux_zero_out", "aux_below_flm_remainder"])
     add("review_auxiliary", "iterative_flm_step_scorer", "Direct marginal-step neural signal", ["aux_cut_rec", "aux_follow_rec", "aux_one_flm", "aux_zero_out", "aux_below_flm_remainder"])
 
     out = pd.DataFrame(rows)
@@ -1127,15 +1127,13 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # Tabs
 # -----------------------------------------------------------------------------
-predict_tab, audit_tab, model_tab, dependency_tab, features_tab, optimizer_tab, test_tab, diagnostics_tab, files_tab = st.tabs([
+predict_tab, audit_tab, model_tab, dependency_tab, features_tab, optimizer_tab, files_tab = st.tabs([
     "Predict",
     "Audit",
     "Model overview",
     "Model usage map",
     "Feature intelligence",
     "Iterative FLM optimizer",
-    "Test results",
-    "Diagnostics",
     "Files",
 ])
 
@@ -1166,8 +1164,8 @@ with predict_tab:
             c1.metric("Rows", fmt_int(len(output)))
             c2.metric("Nonzero rows", fmt_int((pred > 0).sum()))
             c3.metric("Predicted units", fmt_int(pred.sum()))
-            c4.metric("Allocate direct units", fmt_int(group_audit.get("allocate_neural_units", pd.Series(dtype=float)).sum() if not group_audit.empty else 0))
-            c5.metric("Review iterative units", fmt_int(group_audit.get("review_iterative_units", pd.Series(dtype=float)).sum() if not group_audit.empty else 0))
+            c4.metric("Allocate iterative units", fmt_int(pred[allocate_mask(canon)].sum()))
+            c5.metric("Review iterative units", fmt_int(pred[review_mask(canon)].sum()))
             c6.metric("Group overspends", fmt_int(group_audit.get("over_allocated", pd.Series(dtype=bool)).astype(bool).sum() if not group_audit.empty else 0))
 
             seg_units = pd.DataFrame({
@@ -1308,7 +1306,7 @@ with model_tab:
     st.subheader("Model overview")
     st.markdown(
         """
-        The current deployment is a **single-review, no-specialist neural allocation stack**. It uses shared context models first, routes rows into Allocate or Review neural stacks, then uses two final decision paths: Allocate rows are sized directly by the trained Allocate neural regressor, while Review rows are handled by the neural iterative FLM step scorer one FLM at a time. The final repair layer still protects item-level DC and the Alloc. Rec. + 1 FLM cap.
+        The current deployment is a **single-review, no-specialist neural allocation stack**. It uses shared context models first, routes rows into Allocate or Review neural stacks to create probability, rank, auxiliary, and raw sizing signals, then sends **both Allocate and Review rows through the neural iterative FLM step scorer** one FLM at a time. The final repair layer protects item-level DC and the Alloc. Rec. + 1 FLM cap.
         """
     )
     c1, c2, c3, c4, c5 = st.columns(5)
@@ -1330,10 +1328,9 @@ with model_tab:
           D [label="Shared final-supply model"];
           E [label="Allocate neural stack\nclassifier + ranker + aux + sizer"];
           F [label="Review neural stack\nclassifier + ranker + aux + sizer"];
-          G [label="Allocate direct neural regressor\nAllocate rows only"];
-          H [label="Review neural FLM step scorer\nReview rows only"];
-          I [label="Final Alloc.\nDC-safe mixed output"];
-          A -> B; B -> C; B -> D; C -> E; C -> F; D -> E; D -> F; E -> G; F -> H; G -> I; H -> I;
+          G [label="Neural iterative FLM step scorer\nAllocate + Review rows"];
+          I [label="Final Alloc.\nDC-safe iterative output"];
+          A -> B; B -> C; B -> D; C -> E; C -> F; D -> E; D -> F; E -> G; F -> G; G -> I;
         }
         """
     )
@@ -1401,7 +1398,7 @@ with dependency_tab:
     st.subheader("Model usage map: how the neural stack feeds itself")
     st.markdown(
         """
-        This page answers two related questions: **which model outputs are reused downstream**, and **how the final mixed decision is split**. Allocate rows now use the direct Allocate neural regressor, while Review rows use the neural iterative FLM step scorer. The percentages below are based on the packaged `model_feature_dashboard_top100.csv` weight-path importance file, so they describe visible top-feature reliance rather than pretending to be exact causal attribution.
+        This page answers two related questions: **which model outputs are reused downstream**, and **how the final iterative decision is built**. Allocate and Review rows both use the neural iterative FLM step scorer, but each segment first contributes its own classifier, ranker, auxiliary, and regressor signals. The percentages below are based on the packaged `model_feature_dashboard_top100.csv` weight-path importance file, so they describe visible top-feature reliance rather than pretending to be exact causal attribution.
         """
     )
 
@@ -1457,17 +1454,17 @@ with dependency_tab:
         show_plot(fig)
         st.dataframe(signal_mix, use_container_width=True)
 
-    st.markdown("### How the Review iterative model gets its insight")
+    st.markdown("### How the iterative model gets its insight")
     st.markdown(
         """
-        The Review-side `iterative_flm_step_scorer` is intentionally a **meta-decision model**. It does not only look at raw worksheet demand. At runtime it is applied to Review rows and sees the shared demand estimate, shared final-supply estimate, Review classifier probability, Review rank priority, Review raw FLM sizing estimate, Review auxiliary behavior outputs, and the live state of the item cycle after each FLM is placed.
+        The `iterative_flm_step_scorer` is intentionally a **meta-decision model**. It does not only look at raw worksheet demand. At runtime it is applied to both Allocate and Review rows and sees the shared demand estimate, shared final-supply estimate, segment classifier probability, segment rank priority, segment raw FLM sizing estimate, segment auxiliary behavior outputs, and the live state of the item cycle after each FLM is placed.
 
         In practical terms:
 
         - **Shared models** contribute broad demand and target-final-supply context.
-        - **Review classifiers** indicate whether a Review row deserves to compete for units.
-        - **Review rankers** provide store priority within an item group.
-        - **Review regressors** estimate how many FLMs the Review row wants before DC constraints.
+        - **Segment classifiers** indicate whether an Allocate or Review row deserves to compete for units.
+        - **Segment rankers** provide store priority within an item group.
+        - **Segment regressors** estimate how many FLMs the row wants before DC constraints.
         - **Auxiliary heads** describe behavior such as cut recommendation, follow recommendation, one-FLM, zero-out, or below-FLM remainder.
         - **Cycle-state features** tell the scorer what has already been allocated, how much DC remains, whether another FLM would exceed recommendation room, and whether supply would become risky after the next step.
         """
@@ -1488,9 +1485,9 @@ with dependency_tab:
         {"layer": "Base feature matrix", "output_used_by": "Shared models + Allocate/Review stacks", "details": f"{registry.get('feature_count_base', summary.get('features_base', '—'))} base features"},
         {"layer": "shared_demand", "output_used_by": "Allocate stack, Review stack, iterative step scorer", "details": "Adds learned demand score to downstream models."},
         {"layer": "shared_final_supply", "output_used_by": "Allocate stack, Review stack, iterative step scorer", "details": "Adds learned target final-supply estimate."},
-        {"layer": "Allocate classifier/ranker/aux/regressor", "output_used_by": "Final Allocate direct path", "details": "Produces the direct Allocate row decision and raw FLM size. The app converts this neural FLM prediction into Allocate Final Alloc units."},
-        {"layer": "Review classifier/ranker/aux/regressor", "output_used_by": "Review iterative step scorer", "details": "Produces Review probability, priority, behavior signals, and raw FLM size for the marginal step scorer."},
-        {"layer": "iterative_flm_step_scorer", "output_used_by": "Final Review path", "details": f"{registry.get('step_scorer_feature_count', len(STEP_FEATURE_NAMES))} marginal-step features; applied to Review rows one FLM at a time."},
+        {"layer": "Allocate classifier/ranker/aux/regressor", "output_used_by": "All-row iterative step scorer", "details": "Produces Allocate probability, priority, behavior signals, and raw FLM size for the all-row marginal step scorer."},
+        {"layer": "Review classifier/ranker/aux/regressor", "output_used_by": "All-row iterative step scorer", "details": "Produces Review probability, priority, behavior signals, and raw FLM size for the all-row marginal step scorer."},
+        {"layer": "iterative_flm_step_scorer", "output_used_by": "Final allocation path", "details": f"{registry.get('step_scorer_feature_count', len(STEP_FEATURE_NAMES))} marginal-step features; applied to Allocate and Review rows one FLM at a time."},
         {"layer": "Hard optimizer repair", "output_used_by": "Final output", "details": "Protects DC inventory, excludes non-eligible rows, and caps Final Alloc. at Alloc. Rec. + 1 FLM."},
     ]
     st.dataframe(pd.DataFrame(arch_rows), use_container_width=True)
@@ -1619,10 +1616,10 @@ with features_tab:
 # Optimizer tab
 # -----------------------------------------------------------------------------
 with optimizer_tab:
-    st.subheader("Review iterative FLM optimizer + Allocate direct neural path")
+    st.subheader("All-row iterative FLM optimizer")
     st.markdown(
         """
-        The final allocation layer now uses a mixed path. **Allocate rows use the direct Allocate neural regressor** trained on Allocate rows. **Review rows use the neural iterative FLM step scorer**, which cycles through Review candidates one FLM at a time using the DC left after direct Allocate decisions. After each Review FLM, current supply, remaining demand gap, recommendation room, and remaining DC are updated before the next cycle.
+        The final allocation layer uses the neural iterative FLM step scorer for **both Allocate and Review rows**. The Allocate and Review neural stacks still produce segment-specific probability, rank, auxiliary, and raw FLM sizing signals, but the final allocator cycles through item candidates one FLM at a time and updates current supply, demand gap, recommendation room, and remaining DC before the next cycle.
         """
     )
     opt = bundle["optimizer_config"]
@@ -1666,189 +1663,6 @@ with optimizer_tab:
     st.markdown("### Optimizer configuration")
     st.json(opt)
 
-
-# -----------------------------------------------------------------------------
-# Test results tab
-# -----------------------------------------------------------------------------
-with test_tab:
-    st.subheader("Packaged test results")
-    st.markdown(
-        "These are the held-out/test outputs generated from the trained iterative model. "
-        "The test path confirms the app uses only Allocate and Review rows, loads the iterative step scorer, and does not rebuild the old million-row step-scorer training set during testing."
-    )
-    overall = read_csv_if_exists("overall_segment_metrics.csv")
-    business = read_csv_if_exists("business_rule_metrics.csv")
-    component = read_csv_if_exists("component_model_metrics.csv")
-    grouped = read_csv_if_exists("grouped_metrics_all.csv")
-    group_audit_static = read_csv_if_exists("iterative_group_audit.csv")
-    cycle_static = read_csv_if_exists("iterative_cycle_trace.csv")
-    largest = read_csv_if_exists("largest_errors_top500.csv")
-    prediction_detail = read_csv_if_exists("prediction_detail.csv")
-    report_path = ART / "TEST_REPORT.md"
-
-    if test_input_audit:
-        c1, c2, c3, c4, c5 = st.columns(5)
-        c1.metric("Rows scored", fmt_int(test_input_audit.get("rows_to_score", 0)))
-        c2.metric("Allocate rows", fmt_int(test_input_audit.get("allocate_rows", 0)))
-        c3.metric("Review rows", fmt_int(test_input_audit.get("review_rows", 0)))
-        c4.metric("Cycle rows", fmt_int(test_input_audit.get("cycle_trace_rows_recorded", 0)))
-        c5.metric("Step scorer loaded", "Yes" if test_input_audit.get("iterative_step_scorer_loaded") else "No")
-        with st.expander("Full test input audit", expanded=False):
-            st.json(test_input_audit)
-
-    if not overall.empty:
-        all_row = overall.loc[overall["segment"].astype(str).str.lower().eq("all")].head(1)
-        if not all_row.empty:
-            r = all_row.iloc[0]
-            c1, c2, c3, c4, c5 = st.columns(5)
-            c1.metric("Overall exact", fmt_pct(r.get("exact_rate")))
-            c2.metric("Within 1 FLM", fmt_pct(r.get("within_1_flm_rate")))
-            c3.metric("MAE units", fmt_num(r.get("mae_units")))
-            c4.metric("Pred units", fmt_int(r.get("pred_units")))
-            c5.metric("Unit delta", fmt_int(r.get("unit_delta")))
-        plot_df = overall[[c for c in ["segment", "exact_rate", "within_1_flm_rate"] if c in overall.columns]].copy()
-        if {"segment", "exact_rate", "within_1_flm_rate"}.issubset(plot_df.columns):
-            melted = plot_df.melt("segment", var_name="metric", value_name="rate")
-            fig = px.bar(melted, x="segment", y="rate", color="metric", barmode="group", title="Test accuracy by segment")
-            fig.update_yaxes(tickformat=".0%")
-            st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
-        st.dataframe(overall, use_container_width=True)
-
-    col1, col2 = st.columns(2)
-    with col1:
-        if not business.empty:
-            st.markdown("### Business rule results")
-            if {"metric", "value"}.issubset(business.columns):
-                show_plot(plot_bar(business.sort_values("value", ascending=True), "value", "metric", "Business rule metrics", orientation="h"))
-            st.dataframe(business, use_container_width=True)
-    with col2:
-        if not component.empty:
-            st.markdown("### Component model test metrics")
-            metric_options = [c for c in ["accuracy", "precision", "recall", "f1", "mae", "rmse", "rank_corr", "brier"] if c in component.columns and pd.to_numeric(component[c], errors="coerce").notna().any()]
-            metric = st.selectbox("Component metric to chart", metric_options, key="test_component_metric") if metric_options else None
-            if metric and "component" in component.columns:
-                tmp = component.copy()
-                tmp[metric] = pd.to_numeric(tmp[metric], errors="coerce").fillna(0)
-                show_plot(plot_bar(tmp.sort_values(metric, ascending=True), metric, "component", f"Component model metric: {metric}", orientation="h"))
-            st.dataframe(component, use_container_width=True)
-
-    if not grouped.empty:
-        st.markdown("### Grouped test metrics")
-        if {"group_col", "group_value", "mae_units"}.issubset(grouped.columns):
-            group_col = st.selectbox("Group metric split", sorted(grouped["group_col"].dropna().astype(str).unique().tolist()), key="test_group_col")
-            tmp = grouped.loc[grouped["group_col"].astype(str).eq(group_col)].copy()
-            tmp["mae_units"] = pd.to_numeric(tmp["mae_units"], errors="coerce").fillna(0)
-            show_plot(plot_bar(tmp.sort_values("mae_units", ascending=True).tail(25), "mae_units", "group_value", f"Worst 25 {group_col} groups by MAE", orientation="h"))
-        st.dataframe(grouped.head(1500), use_container_width=True)
-
-    if not group_audit_static.empty:
-        st.markdown("### Iterative item group audit")
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Groups", fmt_int(len(group_audit_static)))
-        if "over_allocated" in group_audit_static.columns:
-            c2.metric("Over-allocated groups", fmt_int(group_audit_static["over_allocated"].astype(bool).sum()))
-        if "allocated_units" in group_audit_static.columns:
-            c3.metric("Allocated units", fmt_int(pd.to_numeric(group_audit_static["allocated_units"], errors="coerce").sum()))
-        if "cycles_run" in group_audit_static.columns:
-            c4.metric("Cycles", fmt_int(pd.to_numeric(group_audit_static["cycles_run"], errors="coerce").sum()))
-        st.dataframe(group_audit_static.head(1000), use_container_width=True)
-
-    if not cycle_static.empty:
-        st.markdown("### Iterative cycle trace")
-        if {"model_segment", "cycle_score"}.issubset(cycle_static.columns):
-            tmp = cycle_static.copy()
-            tmp["cycle_score"] = pd.to_numeric(tmp["cycle_score"], errors="coerce")
-            fig = px.histogram(tmp.dropna(subset=["cycle_score"]).sample(min(len(tmp), 20000), random_state=42), x="cycle_score", color="model_segment", nbins=40, title="Recorded neural step-score distribution")
-            st.plotly_chart(fig, use_container_width=True, key=f"plotly_chart_{next(_PLOTLY_CHART_COUNTER)}")
-        st.dataframe(cycle_static.head(1500), use_container_width=True)
-
-    if not largest.empty:
-        st.markdown("### Largest errors")
-        st.dataframe(largest.head(500), use_container_width=True)
-
-    if not prediction_detail.empty:
-        st.markdown("### Prediction detail sample")
-        cols = [c for c in ["Class Name", "Line Name", "Item", "Site", "State", "Flag", "Supply", "Dc Avail", "Proj. Demand", "Alloc. Rec.", "Final Alloc.", "Predicted Final Alloc", "predicted_final_alloc", "classifier_probability", "rank_priority", "pred_flms_raw", "shared_demand_score", "target_final_supply_prediction", "decision_reason"] if c in prediction_detail.columns]
-        st.dataframe(prediction_detail[cols].head(1000) if cols else prediction_detail.head(1000), use_container_width=True)
-
-    if report_path.exists():
-        with st.expander("Full markdown test report", expanded=False):
-            st.markdown(report_path.read_text(encoding="utf-8", errors="ignore"))
-
-    downloads = []
-    for name in ["overall_segment_metrics.csv", "business_rule_metrics.csv", "component_model_metrics.csv", "grouped_metrics_all.csv", "iterative_group_audit.csv", "iterative_cycle_trace.csv", "largest_errors_top500.csv", "prediction_detail.csv", "TEST_REPORT.md"]:
-        fp = ART / name
-        if fp.exists():
-            downloads.append(name)
-    if downloads:
-        with zipfile.ZipFile(io.BytesIO(), "w") as _:
-            pass
-        buf = io.BytesIO()
-        with zipfile.ZipFile(buf, "w", compression=zipfile.ZIP_DEFLATED) as z:
-            for name in downloads:
-                z.write(ART / name, arcname=name)
-        st.download_button("Download packaged test results", buf.getvalue(), file_name="allocation_test_results_packaged.zip", mime="application/zip", key="download_packaged_test_results")
-
-# -----------------------------------------------------------------------------
-# Diagnostics tab
-# -----------------------------------------------------------------------------
-with diagnostics_tab:
-    st.subheader("Packaged diagnostics")
-    st.markdown("These reports are loaded when their CSV files are present in the repo root. They are not required for prediction, but they make the Streamlit site much more useful for model review.")
-    business = read_csv_if_exists("business_rule_metrics.csv")
-    component = read_csv_if_exists("component_model_metrics.csv")
-    grouped = read_csv_if_exists("grouped_metrics_all.csv")
-    largest = read_csv_if_exists("largest_errors_top500.csv")
-    group_audit_static = read_csv_if_exists("iterative_group_audit.csv")
-    cycle_static = read_csv_if_exists("iterative_cycle_trace.csv")
-
-    if not business.empty:
-        st.markdown("### Business rule metrics")
-        if "metric" in business.columns and "value" in business.columns:
-            show_plot(plot_bar(business.sort_values("value", ascending=True), "value", "metric", "Business rule metrics", orientation="h"))
-        st.dataframe(business, use_container_width=True)
-
-    if not component.empty:
-        st.markdown("### Component model metrics")
-        st.dataframe(component, use_container_width=True)
-        numeric_candidates = [c for c in component.columns if c not in {"component"}]
-        numeric_candidates = [c for c in numeric_candidates if pd.to_numeric(component[c], errors="coerce").notna().any()]
-        if numeric_candidates and "component" in component.columns:
-            metric = st.selectbox("Component metric", numeric_candidates)
-            tmp = component.copy()
-            tmp[metric] = pd.to_numeric(tmp[metric], errors="coerce").fillna(0)
-            show_plot(plot_bar(tmp.sort_values(metric, ascending=True), metric, "component", f"Component comparison: {metric}", orientation="h"))
-
-    if not grouped.empty:
-        st.markdown("### Grouped metrics")
-        if {"group_col", "group_value", "mae_units"}.issubset(grouped.columns):
-            group_col = st.selectbox("Group column", sorted(grouped["group_col"].dropna().unique().tolist()))
-            tmp = grouped.loc[grouped["group_col"].eq(group_col)].copy()
-            tmp["mae_units"] = pd.to_numeric(tmp["mae_units"], errors="coerce").fillna(0)
-            show_plot(plot_bar(tmp.sort_values("mae_units", ascending=True).tail(25), "mae_units", "group_value", f"Worst groups by MAE: {group_col}", orientation="h"))
-        st.dataframe(grouped.head(1000), use_container_width=True)
-
-    if not group_audit_static.empty:
-        st.markdown("### Iterative group audit")
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Groups audited", fmt_int(len(group_audit_static)))
-        if "over_allocated" in group_audit_static.columns:
-            c2.metric("Over-allocated groups", fmt_int(group_audit_static["over_allocated"].astype(bool).sum()))
-        if "allocated_units" in group_audit_static.columns:
-            c3.metric("Allocated units", fmt_int(pd.to_numeric(group_audit_static["allocated_units"], errors="coerce").sum()))
-        if {"allocated_units", "allocation_group"}.issubset(group_audit_static.columns):
-            tmp = group_audit_static.copy()
-            tmp["allocated_units"] = pd.to_numeric(tmp["allocated_units"], errors="coerce").fillna(0)
-            show_plot(plot_bar(tmp.sort_values("allocated_units").tail(25), "allocated_units", "allocation_group", "Top groups by iterative allocated units", orientation="h"))
-        st.dataframe(group_audit_static.head(1000), use_container_width=True)
-
-    if not largest.empty:
-        st.markdown("### Largest errors")
-        st.dataframe(largest.head(500), use_container_width=True)
-
-    if not cycle_static.empty:
-        st.markdown("### Packaged cycle trace sample")
-        st.dataframe(cycle_static.head(1000), use_container_width=True)
 
 # -----------------------------------------------------------------------------
 # Files tab
